@@ -4129,6 +4129,20 @@ body.showing-admin .global-back-btn {
   width: 18px;
   height: 18px;
 }
+/* Content editor */
+.ce-section { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+.ce-section h4 { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; }
+.ce-field { margin-bottom: 14px; }
+.ce-field label { display: block; font-size: 12px; font-weight: 500; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.ce-field input, .ce-field textarea { width: 100%; padding: 10px 14px; border: 1.5px solid #e8e8e8; border-radius: 10px; font-size: 14px; font-family: 'Poppins', sans-serif; outline: none; transition: border-color 0.2s; background: #fafafa; color: #1a1a1a; }
+.ce-field input:focus, .ce-field textarea:focus { border-color: #d4a574; background: #fff; }
+.ce-field textarea { min-height: 80px; resize: vertical; line-height: 1.5; }
+.ce-step { border: 1.5px solid #f0f0f0; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+.ce-step-label { font-size: 12px; font-weight: 600; color: #d4a574; margin-bottom: 8px; }
+.ce-donate-row { display: grid; grid-template-columns: 100px 1fr; gap: 8px; margin-bottom: 8px; }
+.ce-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #2d8a4e; color: #fff; padding: 12px 28px; border-radius: 12px; font-size: 14px; font-weight: 500; z-index: 10001; transition: transform 0.3s ease; pointer-events: none; }
+.ce-toast.show { transform: translateX(-50%) translateY(0); }
+.ce-toast.error { background: #c0392b; }
 .admin-stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -5946,6 +5960,7 @@ body.showing-admin .global-back-btn {
         <div class="admin-tab active" onclick="switchAdminTab(this, 'cats')">Kocky</div>
         <div class="admin-tab" onclick="switchAdminTab(this, 'donors')">Darci</div>
         <div class="admin-tab" onclick="switchAdminTab(this, 'expenses')">Vydaje</div>
+        <div class="admin-tab" onclick="switchAdminTab(this, 'content')">Obsah webu</div>
       </div>
       
       <div class="admin-content">
@@ -6053,6 +6068,20 @@ body.showing-admin .global-back-btn {
               </div>
               <div class="admin-expense-amount">- 4 200 Kc</div>
             </div>
+          </div>
+        </div>
+
+        <!-- OBSAH WEBU TAB -->
+        <div class="admin-tab-content" id="admin-content">
+          <div class="admin-section-header">
+            <h3>Úprava obsahu webu</h3>
+            <button class="admin-add-btn" id="adminContentSaveBtn" onclick="adminSaveContent()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Uložit změny
+            </button>
+          </div>
+          <div id="adminContentEditor" style="padding-bottom:40px;">
+            <div class="admin-loading">Načítání obsahu...</div>
           </div>
         </div>
       </div>
@@ -8332,6 +8361,184 @@ if (mobileLayout) {
   mobileLayout.addEventListener('scroll', updateMobileHeader);
   updateMobileHeader(); // init
 }
+</script>
+
+<!-- CMS: Admin content editor -->
+<div class="ce-toast" id="ceToast"></div>
+<script>
+var ceContent = null;
+var ceSha = '';
+
+function adminLoadContent() {
+  fetch('content.json?' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      ceContent = data;
+      renderContentEditor();
+    })
+    .catch(function() {
+      document.getElementById('adminContentEditor').innerHTML = '<div style="color:#c0392b;padding:20px;">Chyba pri nacitani obsahu.</div>';
+    });
+}
+
+function renderContentEditor() {
+  var sections = [
+    { key: 'hero', title: 'Uvodni stranka (Hero)', fields: [
+      { k: 'subtitle', l: 'Podnadpis', t: 'input' },
+      { k: 'title_line1', l: 'Nadpis — radek 1', t: 'input' },
+      { k: 'title_line2', l: 'Nadpis — radek 2', t: 'input' },
+      { k: 'title_line3', l: 'Nadpis — radek 3 (zvyrazneny)', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'textarea' },
+      { k: 'tagline', l: 'Slogan', t: 'input' }
+    ]},
+    { key: 'about', title: 'O nas', fields: [
+      { k: 'subtitle', l: 'Podnadpis', t: 'input' },
+      { k: 'name', l: 'Nazev', t: 'input' },
+      { k: 'location', l: 'Misto', t: 'input' },
+      { k: 'bio', l: 'Popis (bio)', t: 'textarea' }
+    ]},
+    { key: 'support', title: 'Podpore nas', fields: [
+      { k: 'subtitle', l: 'Podnadpis', t: 'input' },
+      { k: 'title', l: 'Nadpis', t: 'input' }
+    ], custom: 'donate' },
+    { key: 'adoption', title: 'Adopce', fields: [
+      { k: 'subtitle', l: 'Podnadpis', t: 'input' },
+      { k: 'title', l: 'Nadpis', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'textarea' }
+    ]},
+    { key: 'contact', title: 'Kontakt', fields: [
+      { k: 'subtitle', l: 'Podnadpis', t: 'input' },
+      { k: 'title', l: 'Nadpis', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'textarea' },
+      { k: 'email', l: 'E-mail', t: 'input' },
+      { k: 'phone', l: 'Telefon', t: 'input' },
+      { k: 'address', l: 'Adresa', t: 'input' },
+      { k: 'hours_weekday', l: 'Po — Pa', t: 'input' },
+      { k: 'hours_saturday', l: 'Sobota', t: 'input' },
+      { k: 'hours_sunday', l: 'Nedele', t: 'input' }
+    ]},
+    { key: 'foster', title: 'Docasna pece', fields: [
+      { k: 'title', l: 'Nadpis', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'textarea' }
+    ], custom: 'steps' },
+    { key: 'stories', title: 'Pribehy', fields: [
+      { k: 'issue', l: 'Stitek', t: 'input' },
+      { k: 'title_line1', l: 'Nadpis — radek 1', t: 'input' },
+      { k: 'title_line2', l: 'Nadpis — radek 2', t: 'input' },
+      { k: 'subtitle', l: 'Popis', t: 'input' }
+    ]}
+  ];
+
+  var html = '';
+  sections.forEach(function(s) {
+    html += '<div class="ce-section"><h4>' + s.title + '</h4>';
+    s.fields.forEach(function(f) {
+      var val = ceContent[s.key][f.k] || '';
+      var esc = String(val).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+      if (f.t === 'textarea') {
+        html += '<div class="ce-field"><label>' + f.l + '</label><textarea data-ce="' + s.key + '.' + f.k + '">' + esc.replace(/&quot;/g,'"') + '</textarea></div>';
+      } else {
+        html += '<div class="ce-field"><label>' + f.l + '</label><input type="text" data-ce="' + s.key + '.' + f.k + '" value="' + esc + '"></div>';
+      }
+    });
+    if (s.custom === 'donate' && ceContent.support.donate_amounts) {
+      html += '<label style="font-size:12px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;">Castky daru</label>';
+      ceContent.support.donate_amounts.forEach(function(d, i) {
+        html += '<div class="ce-donate-row"><input type="number" data-ce="support.donate_amounts.' + i + '.amount" value="' + d.amount + '" placeholder="Kc"><input type="text" data-ce="support.donate_amounts.' + i + '.label" value="' + String(d.label).replace(/"/g,'&quot;') + '" placeholder="Popis"></div>';
+      });
+    }
+    if (s.custom === 'steps' && ceContent.foster.steps) {
+      ceContent.foster.steps.forEach(function(step, i) {
+        html += '<div class="ce-step"><div class="ce-step-label">Krok ' + step.num + '</div>';
+        html += '<div class="ce-field"><label>Nazev</label><input type="text" data-ce="foster.steps.' + i + '.title" value="' + String(step.title).replace(/"/g,'&quot;') + '"></div>';
+        html += '<div class="ce-field"><label>Popis</label><input type="text" data-ce="foster.steps.' + i + '.text" value="' + String(step.text).replace(/"/g,'&quot;') + '"></div>';
+        html += '</div>';
+      });
+    }
+    html += '</div>';
+  });
+  document.getElementById('adminContentEditor').innerHTML = html;
+}
+
+function ceCollectValues() {
+  document.querySelectorAll('[data-ce]').forEach(function(el) {
+    var path = el.dataset.ce.split('.');
+    var obj = ceContent;
+    for (var i = 0; i < path.length - 1; i++) {
+      var k = path[i].match(/^\d+$/) ? parseInt(path[i]) : path[i];
+      obj = obj[k];
+    }
+    var lastKey = path[path.length - 1];
+    if (el.type === 'number') obj[lastKey] = parseInt(el.value) || 0;
+    else obj[lastKey] = el.value;
+  });
+}
+
+function adminSaveContent() {
+  ceCollectValues();
+  var btn = document.getElementById('adminContentSaveBtn');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M12 2v4m0 12v4m-7-7H1m22 0h-4m-1.3-7.3l-2.8 2.8m-5.8 5.8l-2.8 2.8m0-11.4l2.8 2.8m5.8 5.8l2.8 2.8"/></svg> Ukladam...';
+
+  // Save locally first (updates the page immediately)
+  var jsonStr = JSON.stringify(ceContent, null, 2);
+
+  // Try saving to GitHub via API
+  var ghToken = localStorage.getItem('gh_token_admin');
+  if (!ghToken) {
+    ghToken = prompt('Pro uložení zadejte GitHub Personal Access Token (s oprávněním repo):');
+    if (!ghToken) {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Ulozit zmeny';
+      return;
+    }
+    localStorage.setItem('gh_token_admin', ghToken);
+  }
+
+  // Get current SHA
+  fetch('https://api.github.com/repos/JakubSpernoga/Utulek/contents/content.json', {
+    headers: { Authorization: 'token ' + ghToken }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    return fetch('https://api.github.com/repos/JakubSpernoga/Utulek/contents/content.json', {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + ghToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: 'Aktualizace obsahu webu z administrace',
+        content: btoa(unescape(encodeURIComponent(jsonStr))),
+        sha: data.sha
+      })
+    });
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('Chyba');
+    return r.json();
+  })
+  .then(function() {
+    showCeToast('Zmeny ulozeny a publikovany!');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Ulozit zmeny';
+  })
+  .catch(function(e) {
+    localStorage.removeItem('gh_token_admin');
+    showCeToast('Chyba pri ukladani. Zkuste to znovu.', true);
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Ulozit zmeny';
+  });
+}
+
+function showCeToast(msg, isError) {
+  var t = document.getElementById('ceToast');
+  t.textContent = msg;
+  t.className = 'ce-toast show' + (isError ? ' error' : '');
+  setTimeout(function() { t.className = 'ce-toast'; }, 3000);
+}
+
+// Load content when switching to content tab
+var origSwitchAdminTab = switchAdminTab;
+switchAdminTab = function(tabEl, tabName) {
+  origSwitchAdminTab(tabEl, tabName);
+  if (tabName === 'content' && !ceContent) {
+    adminLoadContent();
+  }
+};
 </script>
 
 <!-- CMS: Load content from content.json -->
