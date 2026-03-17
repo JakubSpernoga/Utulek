@@ -17,9 +17,18 @@
     "subtitle": "Podpořte nás",
     "title": "Pomozte našim kočkám",
     "donate_amounts": [
-      {"amount": 100, "label": "Pamlsek"},
-      {"amount": 200, "label": "Krmivo"},
-      {"amount": 500, "label": "Veterina"}
+      {
+        "amount": 100,
+        "label": "Pamlsek"
+      },
+      {
+        "amount": 200,
+        "label": "Krmivo"
+      },
+      {
+        "amount": 500,
+        "label": "Veterina"
+      }
     ]
   },
   "adoption": {
@@ -48,7 +57,7 @@
     "label": "Podpořte nás",
     "button": "Darovat"
   },
-  "support_mode": "finance",
+  "support_mode": "help",
   "support_help": {
     "title": "Pomozte jinak než penězi",
     "description": "Není potřeba darovat finance. Můžete nám pomoci i jinak — navštívit nás, pomazlit se s kočkami, sdílet náš příběh nebo přinést krmivo.",
