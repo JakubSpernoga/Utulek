@@ -3071,36 +3071,39 @@ body.showing-admin .global-back-btn {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
   }
-  body.show-views #view-kocky .header.dark {
-    position: static !important;
+  #view-kocky .header.dark {
+    position: relative !important;
     display: flex !important;
     align-items: center;
-    padding: 16px;
+    padding: 14px 16px !important;
     background: #1a1410;
+    z-index: 1 !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
   }
-  body.show-views #view-kocky .header.dark .logo,
-  body.show-views #view-kocky .header.dark .nav {
+  #view-kocky .header.dark .logo,
+  #view-kocky .header.dark .nav {
     display: none !important;
   }
-  body.show-views #view-kocky .header.dark .logo-icon {
+  #view-kocky .header.dark .logo-icon {
     margin-right: auto;
   }
-  body.show-views #view-kocky .header.dark .header-right {
+  #view-kocky .header.dark .header-right {
     display: flex !important;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     margin-left: auto;
   }
-  body.show-views #view-kocky .header.dark .header-right svg {
+  #view-kocky .header.dark .header-right svg {
     width: 22px;
     height: 22px;
     stroke: #fff;
     fill: none;
     stroke-width: 1.5;
   }
-  body.show-views .kocky-filter-bar {
-    padding: 16px;
-    margin-top: 8px;
+  .kocky-filter-bar {
+    padding: 16px !important;
   }
   /* Cats main area */
   body.show-views .cats-area {
