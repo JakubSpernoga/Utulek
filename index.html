@@ -6767,14 +6767,18 @@ function showCatDetail(catId, fromLanding) {
         '</div></div>';
     }
     
+    // Ulozit fotky pro galerii
+    window.currentCatPhotos = allPhotos;
+    window.currentCatName = cat.name;
+
     // Galerie
     var galleryHtml = '';
     if (allPhotos.length > 1) {
       galleryHtml = '<div class="cat-detail-section">' +
         '<div class="cat-detail-section-title">Galerie</div>' +
         '<div class="cat-detail-gallery">';
-      allPhotos.forEach(function(photo) {
-        galleryHtml += '<div class="cat-detail-gallery-item"><img src="' + photo + '" alt="' + cat.name + '"></div>';
+      allPhotos.forEach(function(photo, idx) {
+        galleryHtml += '<div class="cat-detail-gallery-item" onclick="openGalleryAt(' + idx + ')" style="cursor:pointer;"><img src="' + photo + '" alt="' + cat.name + '"></div>';
       });
       galleryHtml += '</div></div>';
     }
@@ -7368,6 +7372,43 @@ function openPhotoGallery(catId) {
     .catch(function(err) {
       console.error('Chyba pri nacitani galerie:', err);
     });
+}
+
+function openGalleryAt(startIndex) {
+  var photos = window.currentCatPhotos || [];
+  var catName = window.currentCatName || '';
+  if (!photos.length) return;
+
+  var oldModal = document.getElementById('photoGalleryModal');
+  if (oldModal) oldModal.remove();
+
+  var galleryHtml =
+    '<div class="photo-gallery-modal" id="photoGalleryModal" onclick="closePhotoGallery(event)">' +
+      '<button class="gallery-close" onclick="closePhotoGallery()">' +
+        '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+      '</button>' +
+      '<div class="gallery-container" onclick="event.stopPropagation()">' +
+        '<div class="gallery-main">' +
+          '<button class="gallery-arrow gallery-prev" onclick="galleryPrev()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>' +
+          '<img src="' + photos[startIndex] + '" alt="' + catName + '" id="galleryMainImg">' +
+          '<button class="gallery-arrow gallery-next" onclick="galleryNext()"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+        '</div>' +
+        '<div class="gallery-caption">' + catName + '</div>' +
+        '<div class="gallery-counter"><span id="galleryCurrentIndex">' + (startIndex + 1) + '</span> / ' + photos.length + '</div>' +
+        '<div class="gallery-thumbs" id="galleryThumbs">' +
+          photos.map(function(photo, i) {
+            return '<div class="gallery-thumb' + (i === startIndex ? ' active' : '') + '" onclick="galleryGoTo(' + i + ')">' +
+              '<img src="' + photo + '" alt="">' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  document.body.insertAdjacentHTML('beforeend', galleryHtml);
+  window.galleryPhotos = photos;
+  window.galleryIndex = startIndex;
+  document.body.style.overflow = 'hidden';
 }
 
 function closePhotoGallery(event) {
