@@ -3787,37 +3787,9 @@ body.showing-admin .global-back-btn {
     width: 50px;
     height: 50px;
   }
-  /* Support Help hero - mobile */
+  /* Support Help hero - skryt na mobilu, uz je na landing page */
   .sh-hero {
-    flex-direction: column !important;
-    min-height: auto !important;
-    padding: 0 !important;
-  }
-  .sh-hero-img {
-    position: relative !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: 55vw !important;
-    pointer-events: none;
-    display: flex !important;
-    align-items: flex-end !important;
-    justify-content: center !important;
-  }
-  .sh-hero-img img {
-    width: 70% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    object-position: bottom center !important;
-  }
-  .sh-hero-text {
-    max-width: 100% !important;
-    padding: 28px 20px !important;
-    text-align: center;
-    order: 2;
-  }
-  .sh-hero-img {
-    order: 1;
+    display: none !important;
   }
 }
 
@@ -5939,6 +5911,7 @@ body.showing-admin .global-back-btn {
         <span class="current">Podpora</span>
       </div>
       <div style="flex:1; overflow-y:auto; background:#faf7f4;">
+        <!-- Hero: pouze na desktopu -->
         <div class="sh-hero" style="position:relative; min-height:50vh; display:flex; align-items:center; padding:40px 24px; overflow:hidden;">
           <div class="sh-hero-text" style="position:relative; z-index:2; max-width:55%;">
             <div style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#d4a574; margin-bottom:12px;">PODPORA</div>
