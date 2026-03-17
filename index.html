@@ -9081,32 +9081,23 @@ switchAdminTab = function(tabEl, tabName) {
               leftSide.innerHTML = '<div class="text-content"><div class="subtitle">Podpora</div><h2>' + (c.support_help.title || 'Pomozte jinak') + '</h2><p style="font-size:15px;color:rgba(0,0,0,0.5);margin-top:16px;line-height:1.6;">' + (c.support_help.description || '') + '</p></div><div class="donate-buttons"><button class="donate-btn-main" onclick="showView(\'view-support-help\')">Zjistit vice</button></div>';
             }
           }
-          // Mobilni support sekce - help mode = stejna stranka jako view-support-help
+          // Mobilni support sekce - help mode: jen hero s fotkou, karty az po kliknuti na Zjistit vice
           var mobileSupport = document.getElementById('mobileSupportSection');
           if (mobileSupport && c.support_help) {
             mobileSupport.style.background = '#faf7f4';
             mobileSupport.style.padding = '0';
-            mobileSupport.style.overflow = 'auto';
-            mobileSupport.style.display = 'block';
-            mobileSupport.innerHTML = '<div style="position:relative;min-height:45vh;display:flex;align-items:center;padding:30px 20px;overflow:hidden;">' +
-              '<div style="position:relative;z-index:2;max-width:60%;">' +
-              '<div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#d4a574;margin-bottom:10px;">PODPORA</div>' +
-              '<h2 style="font-size:26px;font-weight:600;color:#1a1a1a;line-height:1.15;margin:0 0 12px;">' + (c.support_help.title || 'Pomozte jinak nez penezi') + '</h2>' +
-              '<p style="font-size:13px;color:rgba(0,0,0,0.5);line-height:1.6;margin:0 0 20px;">' + (c.support_help.description || '') + '</p>' +
-              '<a onclick="showView(\'view-support-help\')" style="display:inline-block;padding:12px 28px;background:#1a1a1a;color:#fff;border-radius:30px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;">Zjistit vice</a>' +
-              '</div>' +
-              '<div style="position:absolute;right:-5%;bottom:0;width:50%;height:100%;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;">' +
-              '<img src="6.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:bottom center;">' +
-              '</div>' +
-              '</div>' +
-              '<div style="padding:24px 16px;">' +
-              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
-              '<div style="background:#fff;border-radius:16px;padding:20px 14px;text-align:center;"><div style="font-size:24px;font-weight:700;color:#d4a574;margin-bottom:6px;">01</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:4px;">' + (c.support_help.card1_title || '') + '</div><div style="font-size:11px;color:rgba(0,0,0,0.4);line-height:1.4;">' + (c.support_help.card1_text || '') + '</div></div>' +
-              '<div style="background:#fff;border-radius:16px;padding:20px 14px;text-align:center;"><div style="font-size:24px;font-weight:700;color:#d4a574;margin-bottom:6px;">02</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:4px;">' + (c.support_help.card2_title || '') + '</div><div style="font-size:11px;color:rgba(0,0,0,0.4);line-height:1.4;">' + (c.support_help.card2_text || '') + '</div></div>' +
-              '<div style="background:#fff;border-radius:16px;padding:20px 14px;text-align:center;"><div style="font-size:24px;font-weight:700;color:#d4a574;margin-bottom:6px;">03</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:4px;">' + (c.support_help.card3_title || '') + '</div><div style="font-size:11px;color:rgba(0,0,0,0.4);line-height:1.4;">' + (c.support_help.card3_text || '') + '</div></div>' +
-              '<div style="background:#fff;border-radius:16px;padding:20px 14px;text-align:center;"><div style="font-size:24px;font-weight:700;color:#d4a574;margin-bottom:6px;">04</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:4px;">' + (c.support_help.card4_title || '') + '</div><div style="font-size:11px;color:rgba(0,0,0,0.4);line-height:1.4;">' + (c.support_help.card4_text || '') + '</div></div>' +
-              '</div>' +
-              '<div style="margin-top:20px;text-align:center;"><a onclick="showView(\'view-kontakt\')" style="display:inline-block;padding:16px 40px;background:#d4a574;color:#fff;border:none;border-radius:30px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;">Kontaktujte nas</a></div>' +
+            mobileSupport.style.display = 'flex';
+            mobileSupport.style.flexDirection = 'column';
+            mobileSupport.style.justifyContent = 'center';
+            mobileSupport.style.alignItems = 'center';
+            mobileSupport.style.position = 'relative';
+            mobileSupport.style.overflow = 'hidden';
+            mobileSupport.innerHTML = '<div style="position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;">' +
+              '<div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#d4a574;margin-bottom:12px;">PODPORA</div>' +
+              '<h2 style="font-size:28px;font-weight:600;color:#1a1a1a;line-height:1.2;margin:0 0 14px;">' + (c.support_help.title || 'Pomozte jinak nez penezi') + '</h2>' +
+              '<p style="font-size:13px;color:rgba(0,0,0,0.5);line-height:1.6;margin:0 0 24px;max-width:300px;">' + (c.support_help.description || '') + '</p>' +
+              '<div style="width:65%;max-width:260px;margin-bottom:24px;"><img src="6.png" alt="" style="width:100%;height:auto;"></div>' +
+              '<a onclick="showView(\'view-support-help\')" style="display:inline-block;padding:16px 40px;background:#1a1a1a;color:#fff;border-radius:30px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;">Zjistit vice</a>' +
               '</div>';
           }
         }
