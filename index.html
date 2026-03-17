@@ -3065,11 +3065,41 @@ body.showing-admin .global-back-btn {
     overflow: visible;
     left: auto;
     right: auto;
-    padding: 70px 0 40px;
+    padding: 0 0 40px;
   }
   body.show-views #view-kocky {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
+  }
+  body.show-views #view-kocky .header.dark {
+    position: static !important;
+    display: flex !important;
+    align-items: center;
+    padding: 16px;
+    background: #1a1410;
+  }
+  body.show-views #view-kocky .header.dark .logo,
+  body.show-views #view-kocky .header.dark .nav {
+    display: none !important;
+  }
+  body.show-views #view-kocky .header.dark .logo-icon {
+    margin-right: auto;
+  }
+  body.show-views #view-kocky .header.dark .header-right {
+    display: flex !important;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+  body.show-views #view-kocky .header.dark .header-right svg {
+    width: 22px;
+    height: 22px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 1.5;
+  }
+  body.show-views .kocky-filter-bar {
+    padding: 12px 16px;
   }
   /* Cats main area */
   body.show-views .cats-area {
