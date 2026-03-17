@@ -1900,6 +1900,11 @@ body::before {
   background: #fff; outline: none; transition: border-color 0.2s;
 }
 .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: #d4a574; }
+.form-field.field-error input, .form-field.field-error textarea { border-color: #e74c3c !important; }
+.form-field .field-error-msg { font-size: 12px; color: #e74c3c; margin-top: 4px; display: none; }
+.form-field.field-error .field-error-msg { display: block; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+.form-field.field-error { animation: shake 0.3s ease; }
 .form-field textarea { min-height: 100px; resize: vertical; }
 .form-submit {
   width: 100%; padding: 18px; background: #d4a574; color: #fff;
@@ -5828,6 +5833,68 @@ body.showing-admin .global-back-btn {
   </div>
 
   <!-- ================================================================
+       VIEW: PODPORTE NAS - POMOC (nefinancni)
+       ================================================================ -->
+  <div class="view glass-bg" id="view-support-help">
+    <div class="page-card">
+      <header class="sub-header">
+        <a onclick="goHome()" class="logo-icon">
+          <img src="logo.png" alt="Logo" class="logo-img">
+        </a>
+        <div class="logo">U Tří Psů</div>
+        <nav class="nav">
+          <a onclick="showView('view-kocky')">Naše kočky</a>
+          <a onclick="goToSupport()">Podpořte nás</a>
+          <a onclick="showView('view-pribehy')">Příběhy</a>
+          <a onclick="showView('view-landing'); setTimeout(function(){scrollToSection(4)},100)">Kontakt</a>
+        </nav>
+        <div class="header-right">
+          <svg viewBox="0 0 24 24" onclick="goToSupport()"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" onclick="openLoginModal()" class="user-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor"/><circle cx="12" cy="7" r="4" stroke="currentColor"/></svg>
+          <svg class="sub-hamburger" viewBox="0 0 24 24" onclick="openMobileMenu()"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </div>
+      </header>
+      <div class="breadcrumb-bar">
+        <div class="back-btn" onclick="showView('view-landing')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+        <span onclick="showView('view-landing')">Hlavní stránka</span>
+        <span class="sep">/</span>
+        <span class="current">Podpora</span>
+      </div>
+      <div class="depo-page">
+        <div class="depo-hero">
+          <h2 id="supportHelpTitle">Pomozte jinak než penězi</h2>
+          <p id="supportHelpDesc">Není potřeba darovat finance. Můžete nám pomoci i jinak — navštívit nás, pomazlit se s kočkami, sdílet náš příběh nebo přinést krmivo.</p>
+        </div>
+        <div class="depo-steps" id="supportHelpCards">
+          <div class="depo-step">
+            <div class="depo-step-num" style="font-size:28px;">🐱</div>
+            <div class="depo-step-title" id="helpCard1Title">Navštivte nás</div>
+            <div class="depo-step-text" id="helpCard1Text">Přijďte se podívat do depozita, pomazlit se s kočkami a udělat jim radost svou přítomností.</div>
+          </div>
+          <div class="depo-step">
+            <div class="depo-step-num" style="font-size:28px;">📢</div>
+            <div class="depo-step-title" id="helpCard2Title">Sdílejte náš příběh</div>
+            <div class="depo-step-text" id="helpCard2Text">Sdílejte nás na sociálních sítích. Čím víc lidí o nás ví, tím víc koček najde domov.</div>
+          </div>
+          <div class="depo-step">
+            <div class="depo-step-num" style="font-size:28px;">📦</div>
+            <div class="depo-step-title" id="helpCard3Title">Přineste krmivo</div>
+            <div class="depo-step-text" id="helpCard3Text">Uvítáme granule, konzervy, podestýlky i hračky. Můžete je přinést osobně nebo poslat.</div>
+          </div>
+          <div class="depo-step">
+            <div class="depo-step-num" style="font-size:28px;">🤝</div>
+            <div class="depo-step-title" id="helpCard4Title">Staňte se dobrovolníkem</div>
+            <div class="depo-step-text" id="helpCard4Text">Pomáhejte s úklidem, krmením nebo focením koček pro adopční inzeráty.</div>
+          </div>
+        </div>
+        <div class="depo-cta" style="margin-top:20px; text-align:center;">
+          <a onclick="showView('view-kontakt')" class="btn" style="display:inline-block; padding:18px 48px; background:#d4a574; color:#fff; border:none; border-radius:30px; font-family:'Poppins',sans-serif; font-size:15px; font-weight:600; cursor:pointer; text-decoration:none;">Kontaktujte nás</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
        VIEW: ADOPCNI FORMULAR
        ================================================================ -->
   <div class="view glass-bg" id="view-adopce-form">
@@ -5854,14 +5921,14 @@ body.showing-admin .global-back-btn {
         <div class="form-center">
           <div style="font-size:28px; font-weight:600; color:#1a1a1a; text-align:center; margin-bottom:8px;">Žádost o adopci</div>
           <div style="font-size:14px; color:rgba(0,0,0,0.4); text-align:center; margin-bottom:32px;" id="adopceFormCatName">Vyplňte formulář a my se vám ozveme.</div>
-          <div class="form-field"><label>Jméno a příjmení</label><input type="text" placeholder="Vaše jméno"></div>
-          <div class="form-field"><label>E-mail</label><input type="email" placeholder="vas@email.cz"></div>
-          <div class="form-field"><label>Telefon</label><input type="tel" placeholder="+420"></div>
+          <div class="form-field" data-required><label>Jméno a příjmení *</label><input type="text" placeholder="Vaše jméno" required></div>
+          <div class="form-field" data-required><label>E-mail *</label><input type="email" placeholder="vas@email.cz" required></div>
+          <div class="form-field" data-required><label>Telefon *</label><input type="tel" placeholder="+420" required></div>
           <div class="form-field"><label>Typ bydlení</label><select><option>Byt</option><option>Dům se zahradou</option><option>Dům bez zahrady</option></select></div>
           <div class="form-field"><label>Máte děti?</label><select><option>Ne</option><option>Ano, do 6 let</option><option>Ano, 6-15 let</option><option>Ano, nad 15 let</option></select></div>
           <div class="form-field"><label>Máte jiná zvířata?</label><input type="text" placeholder="např. pes, jiná kočka ..."></div>
-          <div class="form-field"><label>Proč chcete adoptovat?</label><textarea placeholder="Řekněte nám něco o sobě a proč hledáte kočičího kamaráda ..."></textarea></div>
-          <button class="form-submit" onclick="alert('Děkujeme za váš zájem! Ozveme se vám do 48 hodin.')">Odeslat žádost o adopci</button>
+          <div class="form-field" data-required><label>Proč chcete adoptovat? *</label><textarea placeholder="Řekněte nám něco o sobě a proč hledáte kočičího kamaráda ..." required></textarea></div>
+          <button class="form-submit" onclick="submitAdopceForm(event)">Odeslat žádost o adopci</button>
         </div>
       </div>
     </div>
@@ -6276,6 +6343,11 @@ function showView(id) {
   } else {
     document.body.classList.remove('showing-cat-detail');
   }
+
+  /* Skryt globalni zpet na strankach s breadcrumb */
+  if (id === 'view-donate' || id === 'view-kontakt' || id === 'view-adopce-form' || id === 'view-pribehy' || id === 'view-support-help') {
+    document.body.classList.add('hide-global-back');
+  }
   
   /* Nastavit tridu pro admin */
   if (id === 'view-admin') {
@@ -6308,12 +6380,18 @@ function goBack() {
 
 /* Go to Support - mobile vs desktop */
 function goToSupport() {
+  // Check support mode from content.json
+  var mode = window._supportMode || 'finance';
+  if (mode === 'help') {
+    showView('view-support-help');
+    return;
+  }
   if (window.innerWidth <= 768) {
     // Na mobilu - vrat se na mobilni landing a scrolluj na mobile-support sekci
     document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
     document.getElementById('view-landing').classList.add('active');
     document.body.classList.remove('show-views'); // Tohle zobrazi mobilni layout
-    
+
     var supportSection = document.getElementById('mobileSupportSection');
     if (supportSection) {
       setTimeout(function() {
@@ -6743,6 +6821,45 @@ function openAdoptForm(catName, catId) {
   document.getElementById('adopceFormTitle').textContent = 'Adopce - ' + catName;
   document.getElementById('adopceFormCatName').textContent = 'Žádost o adopci pro kočku ' + catName;
   showView('view-adopce-form');
+}
+
+function submitAdopceForm(e) {
+  e.preventDefault();
+  var form = document.querySelector('#view-adopce-form .form-center');
+  var fields = form.querySelectorAll('[data-required]');
+  var firstError = null;
+  // Clear previous errors
+  fields.forEach(function(f) { f.classList.remove('field-error'); var em = f.querySelector('.field-error-msg'); if (em) em.remove(); });
+  fields.forEach(function(f) {
+    var input = f.querySelector('input, textarea');
+    if (input && !input.value.trim()) {
+      f.classList.add('field-error');
+      var msg = document.createElement('div');
+      msg.className = 'field-error-msg';
+      msg.textContent = 'Toto pole je povinné';
+      f.appendChild(msg);
+      if (!firstError) firstError = f;
+    }
+    // Email validation
+    if (input && input.type === 'email' && input.value.trim()) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+        f.classList.add('field-error');
+        var msg = document.createElement('div');
+        msg.className = 'field-error-msg';
+        msg.textContent = 'Zadejte platný e-mail';
+        f.appendChild(msg);
+        if (!firstError) firstError = f;
+      }
+    }
+  });
+  if (firstError) {
+    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var input = firstError.querySelector('input, textarea');
+    if (input) setTimeout(function() { input.focus(); }, 400);
+    return;
+  }
+  // Success
+  form.innerHTML = '<div style="text-align:center; padding:60px 20px;"><div style="font-size:48px; margin-bottom:16px;">✓</div><div style="font-size:24px; font-weight:600; color:#1a1a1a; margin-bottom:8px;">Děkujeme!</div><div style="font-size:15px; color:rgba(0,0,0,0.5);">Vaše žádost byla odeslána. Ozveme se vám do 48 hodin.</div></div>';
 }
 
 function goBackFromAdoptForm() {
@@ -8422,9 +8539,22 @@ function renderContentEditor() {
       { k: 'title_line2', l: 'Nadpis — radek 2', t: 'input' },
       { k: 'subtitle', l: 'Popis', t: 'input' }
     ]},
-    { key: 'donate_page', title: 'Stranka Podpora (darovaní)', fields: [
+    { key: 'donate_page', title: 'Podpora — Financni', fields: [
       { k: 'label', l: 'Stitek', t: 'input' },
       { k: 'button', l: 'Tlacitko darovat', t: 'input' }
+    ]},
+    { key: 'support_help', title: 'Podpora — Nefinancni pomoc', fields: [
+      { k: 'title', l: 'Nadpis', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'textarea' },
+      { k: 'card1_title', l: 'Karta 1 — nazev', t: 'input' },
+      { k: 'card1_text', l: 'Karta 1 — text', t: 'input' },
+      { k: 'card2_title', l: 'Karta 2 — nazev', t: 'input' },
+      { k: 'card2_text', l: 'Karta 2 — text', t: 'input' },
+      { k: 'card3_title', l: 'Karta 3 — nazev', t: 'input' },
+      { k: 'card3_text', l: 'Karta 3 — text', t: 'input' },
+      { k: 'card4_title', l: 'Karta 4 — nazev', t: 'input' },
+      { k: 'card4_text', l: 'Karta 4 — text', t: 'input' },
+      { k: 'button', l: 'Tlacitko', t: 'input' }
     ]},
     { key: 'kontakt_page', title: 'Stranka Kontakt', fields: [
       { k: 'title', l: 'Nadpis', t: 'input' },
@@ -8444,7 +8574,14 @@ function renderContentEditor() {
     ]}
   ];
 
-  var html = '';
+  var curMode = ceContent.support_mode || 'finance';
+  var html = '<div class="ce-section"><h4>Aktivni stranka Podpory</h4>';
+  html += '<div style="display:flex;gap:12px;margin-bottom:8px;">';
+  html += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:12px 20px;border-radius:12px;border:2px solid ' + (curMode==='finance'?'#d4a574':'rgba(0,0,0,0.1)') + ';background:' + (curMode==='finance'?'rgba(212,165,116,0.1)':'#fff') + ';"><input type="radio" name="support_mode" value="finance"' + (curMode==='finance'?' checked':'') + ' onchange="ceContent.support_mode=this.value" style="accent-color:#d4a574;"> Financni podpora</label>';
+  html += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:12px 20px;border-radius:12px;border:2px solid ' + (curMode==='help'?'#d4a574':'rgba(0,0,0,0.1)') + ';background:' + (curMode==='help'?'rgba(212,165,116,0.1)':'#fff') + ';"><input type="radio" name="support_mode" value="help"' + (curMode==='help'?' checked':'') + ' onchange="ceContent.support_mode=this.value" style="accent-color:#d4a574;"> Nefinancni pomoc</label>';
+  html += '</div>';
+  html += '<div style="font-size:12px;color:rgba(0,0,0,0.4);">Zvolte, ktera stranka Podpory se zobrazi navstevnikum.</div></div>';
+
   sections.forEach(function(s) {
     html += '<div class="ce-section"><h4>' + s.title + '</h4>';
     s.fields.forEach(function(f) {
@@ -8634,6 +8771,22 @@ switchAdminTab = function(tabEl, tabName) {
         if (title) title.innerHTML = c.stories.title_line1 + '<br><span>' + c.stories.title_line2 + '</span>';
         const sub = mag.querySelector('.subtitle');
         if (sub) sub.textContent = c.stories.subtitle;
+      }
+      // Support mode
+      if (c.support_mode) {
+        window._supportMode = c.support_mode;
+      }
+      // Support help page
+      if (c.support_help) {
+        const sh = document.getElementById('view-support-help');
+        if (sh) {
+          const h2 = sh.querySelector('#supportHelpTitle');
+          if (h2) h2.textContent = c.support_help.title;
+          const p = sh.querySelector('#supportHelpDesc');
+          if (p) p.textContent = c.support_help.description;
+          const ids = [['helpCard1Title','card1_title'],['helpCard1Text','card1_text'],['helpCard2Title','card2_title'],['helpCard2Text','card2_text'],['helpCard3Title','card3_title'],['helpCard3Text','card3_text'],['helpCard4Title','card4_title'],['helpCard4Text','card4_text']];
+          ids.forEach(pair => { const el = sh.querySelector('#'+pair[0]); if (el && c.support_help[pair[1]]) el.textContent = c.support_help[pair[1]]; });
+        }
       }
       // Donate page
       if (c.donate_page) {

@@ -48,6 +48,20 @@
     "label": "Podpořte nás",
     "button": "Darovat"
   },
+  "support_mode": "finance",
+  "support_help": {
+    "title": "Pomozte jinak než penězi",
+    "description": "Není potřeba darovat finance. Můžete nám pomoci i jinak — navštívit nás, pomazlit se s kočkami, sdílet náš příběh nebo přinést krmivo.",
+    "card1_title": "Navštivte nás",
+    "card1_text": "Přijďte se podívat do depozita, pomazlit se s kočkami a udělat jim radost svou přítomností.",
+    "card2_title": "Sdílejte náš příběh",
+    "card2_text": "Sdílejte nás na sociálních sítích. Čím víc lidí o nás ví, tím víc koček najde domov.",
+    "card3_title": "Přineste krmivo",
+    "card3_text": "Uvítáme granule, konzervy, podestýlky i hračky. Můžete je přinést osobně nebo poslat.",
+    "card4_title": "Staňte se dobrovolníkem",
+    "card4_text": "Pomáhejte s úklidem, krmením nebo focením koček pro adopční inzeráty.",
+    "button": "Kontaktujte nás"
+  },
   "kontakt_page": {
     "title": "Kontaktujte nás",
     "description": "Chcete nás navštívit nebo adoptovat kočku? Ozvěte se nám, rádi vám poradíme. Odpovídáme do 24 hodin.",
