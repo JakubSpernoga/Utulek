@@ -5935,6 +5935,47 @@ body.showing-admin .global-back-btn {
   </div>
 
   <!-- ================================================================
+       VIEW: FORMULAR DOCASNA PECE
+       ================================================================ -->
+  <div class="view glass-bg" id="view-docasna-form">
+    <div class="page-card">
+      <header class="sub-header">
+        <a onclick="goHome()" class="logo-icon">
+          <img src="logo.png" alt="Logo" class="logo-img">
+        </a>
+        <div class="logo">U Tří Psů</div>
+        <nav class="nav">
+          <a onclick="showView('view-kocky')">Naše kočky</a>
+          <a onclick="goToSupport()">Podpořte nás</a>
+          <a onclick="showView('view-pribehy')">Příběhy</a>
+          <a onclick="showView('view-landing'); setTimeout(function(){scrollToSection(4)},100)">Kontakt</a>
+        </nav>
+      </header>
+      <div class="breadcrumb-bar">
+        <div class="back-btn" onclick="goBackFromAdoptForm()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+        <span onclick="goBackFromAdoptForm()">Zpět</span>
+        <span class="sep">/</span>
+        <span class="current" id="docasnaFormTitle">Dočasná péče</span>
+      </div>
+      <div style="flex:1; overflow-y:auto;">
+        <div class="form-center">
+          <div style="font-size:28px; font-weight:600; color:#1a1a1a; text-align:center; margin-bottom:8px;">Žádost o dočasnou péči</div>
+          <div style="font-size:14px; color:rgba(0,0,0,0.4); text-align:center; margin-bottom:32px;" id="docasnaFormCatName">Staňte se dočasným pečovatelem a pomozte kočce najít cestu domů.</div>
+          <div class="form-field" data-required><label>Jméno a příjmení *</label><input type="text" placeholder="Vaše jméno" required></div>
+          <div class="form-field" data-required><label>E-mail *</label><input type="email" placeholder="vas@email.cz" required></div>
+          <div class="form-field" data-required><label>Telefon *</label><input type="tel" placeholder="+420" required></div>
+          <div class="form-field"><label>Typ bydlení</label><select><option>Byt</option><option>Dům se zahradou</option><option>Dům bez zahrady</option></select></div>
+          <div class="form-field"><label>Máte jiná zvířata?</label><input type="text" placeholder="např. pes, jiná kočka ..."></div>
+          <div class="form-field" data-required><label>Jak dlouho můžete pečovat? *</label><select required><option value="">Vyberte...</option><option>1–2 týdny</option><option>2–4 týdny</option><option>1–3 měsíce</option><option>Neomezeně</option></select></div>
+          <div class="form-field"><label>Máte zkušenosti s péčí o kočky?</label><select><option>Ne, jsem začátečník</option><option>Ano, mám/měl jsem kočku</option><option>Ano, zkušený pečovatel</option></select></div>
+          <div class="form-field" data-required><label>Proč chcete pečovat? *</label><textarea placeholder="Řekněte nám něco o sobě a proč chcete dočasně pečovat ..." required></textarea></div>
+          <button class="form-submit" onclick="submitDocasnaForm(event)">Odeslat žádost o dočasnou péči</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
        VIEW: KONTAKT
        ================================================================ -->
   <div class="view glass-bg" id="view-kontakt">
@@ -6345,7 +6386,7 @@ function showView(id) {
   }
 
   /* Skryt globalni zpet na strankach s breadcrumb */
-  if (id === 'view-donate' || id === 'view-kontakt' || id === 'view-adopce-form' || id === 'view-pribehy' || id === 'view-support-help') {
+  if (id === 'view-donate' || id === 'view-kontakt' || id === 'view-adopce-form' || id === 'view-docasna-form' || id === 'view-pribehy' || id === 'view-support-help') {
     document.body.classList.add('hide-global-back');
   }
   
@@ -6663,7 +6704,12 @@ function showCatDetail(catId, fromLanding) {
       buttonsHtml += '<button class="sponsor-btn" onclick="scrollToCatDetailSection()">Vice informaci</button>';
     } else if (cat.status !== 'adoptovana') {
       // K adopci - Chci adoptovat + Vice informaci
-      buttonsHtml += '<button class="adopt-btn" onclick="openAdoptForm(\'' + cat.name + '\', \'' + cat.id + '\')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Chci adoptovat</button>';
+      var formType = cat.formType || 'adopce';
+      if (formType === 'docasna') {
+        buttonsHtml += '<button class="adopt-btn" onclick="openDocasnaForm(\'' + cat.name + '\', \'' + cat.id + '\')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Chci pečovat</button>';
+      } else {
+        buttonsHtml += '<button class="adopt-btn" onclick="openAdoptForm(\'' + cat.name + '\', \'' + cat.id + '\')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Chci adoptovat</button>';
+      }
       buttonsHtml += '<button class="sponsor-btn" onclick="scrollToCatDetailSection()">Vice informaci</button>';
     }
     buttonsHtml += '</div>';
@@ -6868,6 +6914,49 @@ function goBackFromAdoptForm() {
   } else {
     showView('view-kocky');
   }
+}
+
+function openDocasnaForm(catName, catId) {
+  lastCatIdForAdopt = catId;
+  document.getElementById('docasnaFormTitle').textContent = 'Dočasná péče - ' + catName;
+  document.getElementById('docasnaFormCatName').textContent = 'Žádost o dočasnou péči pro kočku ' + catName;
+  showView('view-docasna-form');
+}
+
+function submitDocasnaForm(e) {
+  e.preventDefault();
+  var form = document.querySelector('#view-docasna-form .form-center');
+  var fields = form.querySelectorAll('[data-required]');
+  var firstError = null;
+  fields.forEach(function(f) { f.classList.remove('field-error'); var em = f.querySelector('.field-error-msg'); if (em) em.remove(); });
+  fields.forEach(function(f) {
+    var input = f.querySelector('input, textarea, select');
+    if (input && !input.value.trim()) {
+      f.classList.add('field-error');
+      var msg = document.createElement('div');
+      msg.className = 'field-error-msg';
+      msg.textContent = 'Toto pole je povinné';
+      f.appendChild(msg);
+      if (!firstError) firstError = f;
+    }
+    if (input && input.type === 'email' && input.value.trim()) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+        f.classList.add('field-error');
+        var msg = document.createElement('div');
+        msg.className = 'field-error-msg';
+        msg.textContent = 'Zadejte platný e-mail';
+        f.appendChild(msg);
+        if (!firstError) firstError = f;
+      }
+    }
+  });
+  if (firstError) {
+    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var input = firstError.querySelector('input, textarea, select');
+    if (input) setTimeout(function() { input.focus(); }, 400);
+    return;
+  }
+  form.innerHTML = '<div style="text-align:center; padding:60px 20px;"><div style="font-size:48px; margin-bottom:16px;">✓</div><div style="font-size:24px; font-weight:600; color:#1a1a1a; margin-bottom:8px;">Děkujeme!</div><div style="font-size:15px; color:rgba(0,0,0,0.5);">Vaše žádost o dočasnou péči byla odeslána. Ozveme se vám do 48 hodin.</div></div>';
 }
 
 function sponsorCat(catName) {
@@ -7438,7 +7527,14 @@ function openAddCatModal() {
     '<div class="form-field"><label>Badge</label><select id="catBadge"><option value="">Žádný</option><option value="Nová">Nová</option><option value="Urgentní">Urgentní</option><option value="Speciální péče">Speciální péče</option></select></div>' +
     '</div>' +
     '<div class="form-field"><label>Interní poznámky (nezobrazí se veřejně)</label><textarea id="catNotes" placeholder="Poznámky pro správce..."></textarea></div>' +
-    
+
+    '<div class="form-section-title">Formulář pro návštěvníky</div>' +
+    '<div style="display:flex;gap:12px;margin-bottom:16px;">' +
+    '<label style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;padding:14px 16px;border-radius:12px;border:2px solid #d4a574;background:rgba(212,165,116,0.1);font-size:14px;color:#1a1a1a;text-transform:none;letter-spacing:0;"><input type="radio" name="catFormType" value="adopce" checked style="accent-color:#d4a574;"> Adopční formulář</label>' +
+    '<label style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;padding:14px 16px;border-radius:12px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-size:14px;color:#1a1a1a;text-transform:none;letter-spacing:0;"><input type="radio" name="catFormType" value="docasna" style="accent-color:#d4a574;"> Dočasná péče</label>' +
+    '</div>' +
+    '<div style="font-size:12px;color:rgba(0,0,0,0.4);margin-bottom:16px;">Zvolte, který formulář se zobrazí návštěvníkovi, když klikne na tlačítko u této kočky.</div>' +
+
     '<button class="admin-add-btn" style="width:100%;margin-top:24px;" onclick="submitNewCat()">' +
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>' +
     'Ulozit kocku</button>' +
@@ -7512,9 +7608,10 @@ function submitNewCat() {
     tags: tags,
     personality: personality,
     handicap: document.getElementById('catHandicap').value,
-    notes: document.getElementById('catNotes').value
+    notes: document.getElementById('catNotes').value,
+    formType: (document.querySelector('input[name="catFormType"]:checked') || {}).value || 'adopce'
   };
-  
+
   var mainPhotoFile = document.getElementById('catPhotoFile').files[0];
   var extraPhotoFiles = document.getElementById('catPhotosExtra').files;
   
@@ -7774,7 +7871,13 @@ function openEditCatModal(cat) {
     '<option value="Speciální péče"' + (cat.badge === 'Speciální péče' ? ' selected' : '') + '>Speciální péče</option></select></div>' +
     '</div>' +
     '<div class="form-field"><label>Interní poznámky</label><textarea id="editCatNotes">' + (cat.notes || '') + '</textarea></div>' +
-    
+
+    '<div class="form-section-title">Formulář pro návštěvníky</div>' +
+    '<div style="display:flex;gap:12px;margin-bottom:16px;">' +
+    '<label style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;padding:14px 16px;border-radius:12px;border:2px solid ' + ((!cat.formType || cat.formType === 'adopce') ? '#d4a574' : 'rgba(0,0,0,0.1)') + ';background:' + ((!cat.formType || cat.formType === 'adopce') ? 'rgba(212,165,116,0.1)' : '#fff') + ';font-size:14px;color:#1a1a1a;text-transform:none;letter-spacing:0;"><input type="radio" name="editCatFormType" value="adopce"' + ((!cat.formType || cat.formType === 'adopce') ? ' checked' : '') + ' style="accent-color:#d4a574;"> Adopční formulář</label>' +
+    '<label style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;padding:14px 16px;border-radius:12px;border:2px solid ' + (cat.formType === 'docasna' ? '#d4a574' : 'rgba(0,0,0,0.1)') + ';background:' + (cat.formType === 'docasna' ? 'rgba(212,165,116,0.1)' : '#fff') + ';font-size:14px;color:#1a1a1a;text-transform:none;letter-spacing:0;"><input type="radio" name="editCatFormType" value="docasna"' + (cat.formType === 'docasna' ? ' checked' : '') + ' style="accent-color:#d4a574;"> Dočasná péče</label>' +
+    '</div>' +
+
     '<button class="admin-add-btn" style="width:100%;margin-top:24px;" onclick="submitEditCat()">' +
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>' +
     'Ulozit zmeny</button>' +
@@ -7819,9 +7922,10 @@ function submitEditCat() {
     tags: tags,
     personality: personality,
     handicap: document.getElementById('editCatHandicap').value,
-    notes: document.getElementById('editCatNotes').value
+    notes: document.getElementById('editCatNotes').value,
+    formType: (document.querySelector('input[name="editCatFormType"]:checked') || {}).value || 'adopce'
   };
-  
+
   var mainPhotoFile = document.getElementById('editCatPhotoFile').files[0];
   var extraPhotoFiles = document.getElementById('editCatPhotosExtra').files;
   
