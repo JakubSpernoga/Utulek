@@ -6432,6 +6432,23 @@ function showView(id) {
       document.body.classList.remove('hide-global-back');
     }
   }
+
+  /* JS fix pro mobilni kocky header - bypass CSS cache */
+  if (id === 'view-kocky' && window.innerWidth <= 768) {
+    var kH = document.querySelector('#view-kocky .header.dark');
+    if (kH) {
+      kH.style.position = 'relative';
+      kH.style.display = 'flex';
+      kH.style.alignItems = 'center';
+      kH.style.padding = '14px 16px';
+      kH.style.background = '#1a1410';
+      kH.style.zIndex = '1';
+      var kLogo = kH.querySelector('.logo');
+      var kNav = kH.querySelector('.nav');
+      if (kLogo) kLogo.style.display = 'none';
+      if (kNav) kNav.style.display = 'none';
+    }
+  }
   
   /* Nastavit tridu pro cat-detail */
   if (id === 'view-cat-detail') {
