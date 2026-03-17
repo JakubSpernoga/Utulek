@@ -1,57 +1,82 @@
 {
   "hero": {
-    "subtitle": "Kočičí depozitum U Tří Psů",
-    "title_line1": "Zachraňujeme.",
-    "title_line2": "Léčíme.",
-    "title_line3": "Hledáme domov.",
-    "description": "Jsme malé depozitum s velkým srdcem. Každá kočka si zaslouží druhou šanci. Staráme se o opuštěné, zraněné a nezadané kočky, dokud nenajdou svůj navždy domov.",
-    "tagline": "Každý život má cenu."
+    "subtitle": "Kočičí depozitum u Tří Psů ",
+    "title_line1": "ZachraÅujeme.",
+    "title_line2": "LÃ©ÄÃ­me.",
+    "title_line3": "HledÃ¡me domov.",
+    "description": "Jsme malÃ© depozitum s velkÃ½m srdcem. KaÅ¾dÃ¡ koÄka si zaslouÅ¾Ã­ druhou Å¡anci. StarÃ¡me se o opuÅ¡tÄnÃ©, zranÄnÃ© a nezadanÃ© koÄky, dokud nenajdou svÅ¯j navÅ¾dy domov.",
+    "tagline": "KaÅ¾dÃ½ Å¾ivot mÃ¡ cenu."
   },
   "about": {
-    "subtitle": "Náš příběh",
-    "name": "U Tří Psů",
-    "location": "Kočičí depozitum / Praha",
-    "bio": "Začali jsme v malé garáži, kde jsme zachránili prvních pět koček z ulice. Dnes provozujeme plnohodnotné depozitum s veterinární péčí, karanténními boxy a sítí dočasných pečovatelů. Za poslední roky jsme našli domov více než 340 kočkám. Každou kočku pečlivě vyšetříme, očistíme, naočkujeme a socializujeme, než ji předáme do nových rukou. Věříme, že žádná kočka nemá být na ulici."
+    "subtitle": "NÃ¡Å¡ pÅÃ­bÄh",
+    "name": "U TÅÃ­ PsÅ¯",
+    "location": "KoÄiÄÃ­ depozitum / Praha",
+    "bio": "ZaÄali jsme v malÃ© garÃ¡Å¾i, kde jsme zachrÃ¡nili prvnÃ­ch pÄt koÄek z ulice. Dnes provozujeme plnohodnotnÃ© depozitum s veterinÃ¡rnÃ­ pÃ©ÄÃ­, karantÃ©nnÃ­mi boxy a sÃ­tÃ­ doÄasnÃ½ch peÄovatelÅ¯. Za poslednÃ­ roky jsme naÅ¡li domov vÃ­ce neÅ¾ 340 koÄkÃ¡m. KaÅ¾dou koÄku peÄlivÄ vyÅ¡etÅÃ­me, oÄistÃ­me, naoÄkujeme a socializujeme, neÅ¾ ji pÅedÃ¡me do novÃ½ch rukou. VÄÅÃ­me, Å¾e Å¾Ã¡dnÃ¡ koÄka nemÃ¡ bÃ½t na ulici."
   },
   "support": {
-    "subtitle": "Podpořte nás",
-    "title": "Pomozte našim kočkám",
+    "subtitle": "PodpoÅte nÃ¡s",
+    "title": "Pomozte naÅ¡im koÄkÃ¡m",
     "donate_amounts": [
-      {"amount": 100, "label": "Pamlsek"},
-      {"amount": 200, "label": "Krmivo"},
-      {"amount": 500, "label": "Veterina"}
+      {
+        "amount": 100,
+        "label": "Pamlsek"
+      },
+      {
+        "amount": 200,
+        "label": "Krmivo"
+      },
+      {
+        "amount": 500,
+        "label": "Veterina"
+      }
     ]
   },
   "adoption": {
-    "subtitle": "Najdi si kamaráda",
+    "subtitle": "Najdi si kamarÃ¡da",
     "title": "Adopce",
-    "description": "Právě teď máme v depozitu desítky koček, které čekají na svůj nový domov. Každá z nich má svůj jedinečný charakter a příběh. Možná právě ta vaše tu na vás čeká."
+    "description": "PrÃ¡vÄ teÄ mÃ¡me v depozitu desÃ­tky koÄek, kterÃ© ÄekajÃ­ na svÅ¯j novÃ½ domov. KaÅ¾dÃ¡ z nich mÃ¡ svÅ¯j jedineÄnÃ½ charakter a pÅÃ­bÄh. MoÅ¾nÃ¡ prÃ¡vÄ ta vaÅ¡e tu na vÃ¡s ÄekÃ¡."
   },
   "contact": {
-    "subtitle": "Kočičí depozitum U Tří Psů",
+    "subtitle": "KoÄiÄÃ­ depozitum U TÅÃ­ PsÅ¯",
     "title": "Kontakt",
-    "description": "Chcete nás navštívit, adoptovat kočku nebo se stát dočasným pečovatelem? Ozvěte se nám. Odpovídáme do 24 hodin.",
+    "description": "Chcete nÃ¡s navÅ¡tÃ­vit, adoptovat koÄku nebo se stÃ¡t doÄasnÃ½m peÄovatelem? OzvÄte se nÃ¡m. OdpovÃ­dÃ¡me do 24 hodin.",
     "email": "info@utripsu.cz",
     "phone": "+420 777 123 456",
-    "address": "Kočičí ulička 7, Praha 4",
-    "hours_weekday": "9:00 — 17:00",
-    "hours_saturday": "10:00 — 14:00",
-    "hours_sunday": "Zavřeno"
+    "address": "KoÄiÄÃ­ uliÄka 7, Praha 4",
+    "hours_weekday": "9:00 â 17:00",
+    "hours_saturday": "10:00 â 14:00",
+    "hours_sunday": "ZavÅeno"
   },
   "foster": {
-    "title": "Staňte se dočasným pečovatelem",
-    "description": "Dočasná péče je most mezi depozitem a stálým domovem. Vezmete si kočku k sobě domů, poskytnete jí klid a lásku, zatímco my hledáme její navždy rodinu. Veškeré náklady hradíme my.",
+    "title": "StaÅte se doÄasnÃ½m peÄovatelem",
+    "description": "DoÄasnÃ¡ pÃ©Äe je most mezi depozitem a stÃ¡lÃ½m domovem. Vezmete si koÄku k sobÄ domÅ¯, poskytnete jÃ­ klid a lÃ¡sku, zatÃ­mco my hledÃ¡me jejÃ­ navÅ¾dy rodinu. VeÅ¡kerÃ© nÃ¡klady hradÃ­me my.",
     "steps": [
-      {"num": "01", "title": "Vyplňte formulář", "text": "Řekněte nám o sobě, vašem bydlení a zkušenostech s kočkami."},
-      {"num": "02", "title": "Osobní setkání", "text": "Potkáme se v depozitu, probereme vše a vyberete si kočku."},
-      {"num": "03", "title": "Kočka u vás doma", "text": "Předáme vám kočku včetně krmiva, podložky a veterinárních instrukcí."},
-      {"num": "04", "title": "Happy end", "text": "Společně najdeme kočce stálý domov. Vy získáte novou kamarádku."}
+      {
+        "num": "01",
+        "title": "VyplÅte formulÃ¡Å",
+        "text": "ÅeknÄte nÃ¡m o sobÄ, vaÅ¡em bydlenÃ­ a zkuÅ¡enostech s koÄkami."
+      },
+      {
+        "num": "02",
+        "title": "OsobnÃ­ setkÃ¡nÃ­",
+        "text": "PotkÃ¡me se v depozitu, probereme vÅ¡e a vyberete si koÄku."
+      },
+      {
+        "num": "03",
+        "title": "KoÄka u vÃ¡s doma",
+        "text": "PÅedÃ¡me vÃ¡m koÄku vÄetnÄ krmiva, podloÅ¾ky a veterinÃ¡rnÃ­ch instrukcÃ­."
+      },
+      {
+        "num": "04",
+        "title": "Happy end",
+        "text": "SpoleÄnÄ najdeme koÄce stÃ¡lÃ½ domov. Vy zÃ­skÃ¡te novou kamarÃ¡dku."
+      }
     ]
   },
   "stories": {
-    "issue": "Úspěšné adopce",
-    "title_line1": "Naše",
-    "title_line2": "Příběhy",
-    "subtitle": "Každá kočka má svůj příběh. Tady jsou ty s happy endem."
+    "issue": "ÃspÄÅ¡nÃ© adopce",
+    "title_line1": "NaÅ¡e",
+    "title_line2": "PÅÃ­bÄhy",
+    "subtitle": "KaÅ¾dÃ¡ koÄka mÃ¡ svÅ¯j pÅÃ­bÄh. Tady jsou ty s happy endem."
   }
 }
