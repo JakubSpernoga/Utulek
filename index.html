@@ -4019,6 +4019,11 @@ body.showing-admin .global-back-btn {
   padding: 0;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+#view-admin.active {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .admin-header {
   display: flex;
@@ -4071,10 +4076,14 @@ body.showing-admin .global-back-btn {
   background: #fff;
   padding: 0 40px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
 }
 .admin-tab {
   padding: 18px 28px;
   font-size: 14px;
+  flex-shrink: 0;
   font-weight: 500;
   color: rgba(0,0,0,0.4);
   cursor: pointer;
@@ -4091,6 +4100,13 @@ body.showing-admin .global-back-btn {
 }
 .admin-content {
   padding: 30px 40px;
+}
+@media (max-width: 600px) {
+  .admin-header { padding: 15px 16px; }
+  .admin-tabs { padding: 0 16px; }
+  .admin-tab { padding: 14px 16px; font-size: 13px; }
+  .admin-content { padding: 20px 16px; }
+  .admin-section-header { flex-direction: column; gap: 10px; align-items: flex-start; }
 }
 .admin-tab-content {
   display: none;
@@ -5139,6 +5155,58 @@ body.showing-admin .global-back-btn {
   .donate-top-row {
     grid-template-columns: 1fr;
   }
+  .donate-page-new {
+    padding: 20px 16px;
+  }
+  .donate-card-new, .progress-card-new, .transparent-card-new {
+    padding: 24px 16px;
+  }
+  .donate-presets-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .donate-preset-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+  .donate-submit-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .progress-circles-row {
+    gap: 12px;
+  }
+  .progress-circle-wrap {
+    width: 70px;
+    height: 70px;
+  }
+  .transparent-header-new {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .transparent-stats-row {
+    flex-direction: row;
+    gap: 24px;
+  }
+  /* Kontakt page mobile */
+  #view-kontakt .depo-steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 16px;
+  }
+  #view-kontakt .depo-hero {
+    padding: 20px 16px;
+  }
+  #view-kontakt .depo-hero h2 {
+    font-size: 28px;
+  }
+  /* Adopce form mobile */
+  #view-adopce-form .form-center {
+    padding: 0 16px;
+  }
+  /* Sub-header mobile */
+  .sub-header .nav { display: none; }
+  .page-card { margin-left: 8px; margin-right: 8px; }
 }
 
 </style>
