@@ -1228,6 +1228,7 @@ body::before {
   position: absolute; top: 14px; left: 14px; padding: 5px 12px;
   background: #d4a574; color: #fff; font-size: 10px; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.5px; border-radius: 6px;
+  z-index: 2;
 }
 .cat-card-badge.urgent { background: #c44; }
 .cat-card-badge.new { background: #4a9; }
@@ -3051,6 +3052,19 @@ body.showing-admin .global-back-btn {
     margin: 0 8px 8px 0;
   }
   
+  /* Kocky page - na mobilu cela stranka scrolluje */
+  body.show-views .kocky-page {
+    position: static;
+    transform: none;
+    max-height: none;
+    overflow: visible;
+    left: auto;
+    right: auto;
+    padding: 70px 0 0;
+  }
+  body.show-views #view-kocky {
+    overflow-y: auto;
+  }
   /* Cats main area */
   body.show-views .cats-area {
     width: 100%;
@@ -3079,20 +3093,21 @@ body.showing-admin .global-back-btn {
   }
   body.show-views .cat-card-img {
     width: 100%;
-    height: 140px;
+    height: 55vw;
     flex-shrink: 0;
   }
   body.show-views .cat-card-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
+    object-fit: cover;
+    object-position: center top;
   }
   body.show-views .cat-card-badge {
     top: 8px;
     left: 8px;
     padding: 4px 8px;
     font-size: 8px;
+    z-index: 3;
   }
   body.show-views .cat-card-info {
     padding: 12px;
@@ -6427,6 +6442,12 @@ function goToSupport() {
     showView('view-support-help');
     return;
   }
+  // Fallback: pokud content.json jeste nenaloadoval, zkus primo
+  if (!window._supportMode) {
+    fetch('content.json?' + Date.now()).then(function(r){return r.json();}).then(function(c){
+      if(c.support_mode){window._supportMode=c.support_mode;if(c.support_mode==='help'){showView('view-support-help');}}
+    }).catch(function(){});
+  }
   if (window.innerWidth <= 768) {
     // Na mobilu - vrat se na mobilni landing a scrolluj na mobile-support sekci
     document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
@@ -7317,9 +7338,10 @@ function openStoryDetail(catId) {
 }
 
 function openPhotoGallery(catId) {
-  fetch(API_URL + '?action=getCats')
-    .then(function(r) { return r.json(); })
-    .then(function(cats) {
+  // Pouzij cache pokud existuje
+  var cachedCats = window._cachedCats || null;
+  var doOpen = function(cats) {
+      window._cachedCats = cats;
       var cat = cats.find(function(c) { return c.id === catId; });
       if (!cat) {
         alert('Kocka nenalezena');
@@ -7368,10 +7390,17 @@ function openPhotoGallery(catId) {
       window.galleryIndex = 0;
       
       document.body.style.overflow = 'hidden';
-    })
-    .catch(function(err) {
-      console.error('Chyba pri nacitani galerie:', err);
-    });
+  };
+  if (cachedCats) {
+    doOpen(cachedCats);
+  } else {
+    fetch(API_URL + '?action=getCats')
+      .then(function(r) { return r.json(); })
+      .then(doOpen)
+      .catch(function(err) {
+        console.error('Chyba pri nacitani galerie:', err);
+      });
+  }
 }
 
 function openGalleryAt(startIndex) {
@@ -7582,6 +7611,16 @@ function openAddCatModal() {
     '</div></div>';
   
   document.body.appendChild(modal);
+}
+
+window._editGalleryRemoved = [];
+function removeGalleryPhoto(index) {
+  window._editGalleryRemoved.push(index);
+  var container = document.getElementById('editExistingGallery');
+  if (container) {
+    var items = container.children;
+    if (items[index]) items[index].style.display = 'none';
+  }
 }
 
 function previewPhoto(input, previewId) {
@@ -7867,12 +7906,22 @@ function openEditCatModal(cat) {
     '<div class="form-field"><label>Pribeh</label><textarea id="editCatStory">' + (cat.story || '') + '</textarea></div>' +
     
     '<div class="form-section-title">Fotky</div>' +
-    (cat.photoUrl ? '<div class="current-photo"><label>Aktuální fotka:</label><img src="' + cat.photoUrl + '" alt=""></div>' : '') +
-    '<div class="form-field"><label>Nová hlavní fotka (nepovinně)</label>' +
+    (cat.photoUrl ? '<div class="current-photo"><label>Hlavni fotka:</label><img src="' + cat.photoUrl + '" alt=""></div>' : '') +
+    '<div class="form-field"><label>Nova hlavni fotka (nepovinn)</label>' +
     '<input type="file" id="editCatPhotoFile" accept="image/*" onchange="previewPhoto(this, \'editPhotoPreview\')">' +
     '<div id="editPhotoPreview" class="photo-preview"></div>' +
     '</div>' +
-    '<div class="form-field"><label>Další fotky</label>' +
+    (cat.gallery && cat.gallery.length > 0 ?
+      '<div class="form-field"><label>Aktualni galerie (' + cat.gallery.length + ' fotek)</label>' +
+      '<div class="photos-extra-preview" id="editExistingGallery">' +
+      cat.gallery.map(function(url, i) {
+        return '<div style="position:relative;display:inline-block;">' +
+          '<img src="' + url + '" alt="" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">' +
+          '<button onclick="removeGalleryPhoto(' + i + ')" style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#e74c3c;color:#fff;border:none;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">&times;</button>' +
+        '</div>';
+      }).join('') +
+      '</div></div>' : '') +
+    '<div class="form-field"><label>Pridat dalsi fotky</label>' +
     '<input type="file" id="editCatPhotosExtra" accept="image/*" multiple onchange="previewMultiplePhotos(this, \'editPhotosExtraPreview\')">' +
     '<div id="editPhotosExtraPreview" class="photos-extra-preview"></div>' +
     '</div>' +
@@ -8777,7 +8826,7 @@ function adminSaveContent() {
   // Try saving to GitHub via API
   var ghToken = localStorage.getItem('gh_token_admin');
   if (!ghToken) {
-    ghToken = prompt('Pro uložení zadejte GitHub Personal Access Token (s oprávněním repo):');
+    ghToken = prompt('Zadejte GitHub Personal Access Token (staci jednou na tomto zarizeni).\nVytvorite ho na: github.com/settings/tokens');
     if (!ghToken) {
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Ulozit zmeny';
       return;
