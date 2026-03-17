@@ -5867,22 +5867,22 @@ body.showing-admin .global-back-btn {
         </div>
         <div class="depo-steps" id="supportHelpCards">
           <div class="depo-step">
-            <div class="depo-step-num" style="font-size:28px;">🐱</div>
+            <div class="depo-step-num">1</div>
             <div class="depo-step-title" id="helpCard1Title">Navštivte nás</div>
             <div class="depo-step-text" id="helpCard1Text">Přijďte se podívat do depozita, pomazlit se s kočkami a udělat jim radost svou přítomností.</div>
           </div>
           <div class="depo-step">
-            <div class="depo-step-num" style="font-size:28px;">📢</div>
+            <div class="depo-step-num">2</div>
             <div class="depo-step-title" id="helpCard2Title">Sdílejte náš příběh</div>
             <div class="depo-step-text" id="helpCard2Text">Sdílejte nás na sociálních sítích. Čím víc lidí o nás ví, tím víc koček najde domov.</div>
           </div>
           <div class="depo-step">
-            <div class="depo-step-num" style="font-size:28px;">📦</div>
+            <div class="depo-step-num">3</div>
             <div class="depo-step-title" id="helpCard3Title">Přineste krmivo</div>
             <div class="depo-step-text" id="helpCard3Text">Uvítáme granule, konzervy, podestýlky i hračky. Můžete je přinést osobně nebo poslat.</div>
           </div>
           <div class="depo-step">
-            <div class="depo-step-num" style="font-size:28px;">🤝</div>
+            <div class="depo-step-num">4</div>
             <div class="depo-step-title" id="helpCard4Title">Staňte se dobrovolníkem</div>
             <div class="depo-step-text" id="helpCard4Text">Pomáhejte s úklidem, krmením nebo focením koček pro adopční inzeráty.</div>
           </div>
@@ -8926,6 +8926,26 @@ switchAdminTab = function(tabEl, tabName) {
       // Support mode
       if (c.support_mode) {
         window._supportMode = c.support_mode;
+        if (c.support_mode === 'help') {
+          // Skryt financni sekci na landing page a nahradit nefinancni
+          var sec3 = document.getElementById('podpora');
+          if (sec3) {
+            var leftSide = sec3.querySelector('.left-side');
+            if (leftSide && c.support_help) {
+              leftSide.innerHTML = '<div class="text-content"><div class="subtitle">Podpora</div><h2>' + (c.support_help.title || 'Pomozte jinak') + '</h2><p style="font-size:15px;color:rgba(0,0,0,0.5);margin-top:16px;line-height:1.6;">' + (c.support_help.description || '') + '</p></div><div class="donate-buttons"><button class="donate-btn-main" onclick="showView(\'view-support-help\')">Zjistit vice</button></div>';
+            }
+          }
+          // Mobilni support sekce
+          var mobileSupport = document.getElementById('mobileSupportSection');
+          if (mobileSupport && c.support_help) {
+            mobileSupport.innerHTML = '<div class="mobile-section-subtitle">Podpora</div><h2 class="mobile-section-title">' + (c.support_help.title || 'Pomozte jinak') + '</h2><p style="font-size:14px;color:rgba(0,0,0,0.5);text-align:center;padding:0 20px;line-height:1.6;margin-bottom:24px;">' + (c.support_help.description || '') + '</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px;">' +
+              '<div style="background:#fff;border-radius:16px;padding:20px 16px;text-align:center;"><div style="font-size:20px;font-weight:600;color:#d4a574;margin-bottom:4px;">1</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;">' + (c.support_help.card1_title || '') + '</div></div>' +
+              '<div style="background:#fff;border-radius:16px;padding:20px 16px;text-align:center;"><div style="font-size:20px;font-weight:600;color:#d4a574;margin-bottom:4px;">2</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;">' + (c.support_help.card2_title || '') + '</div></div>' +
+              '<div style="background:#fff;border-radius:16px;padding:20px 16px;text-align:center;"><div style="font-size:20px;font-weight:600;color:#d4a574;margin-bottom:4px;">3</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;">' + (c.support_help.card3_title || '') + '</div></div>' +
+              '<div style="background:#fff;border-radius:16px;padding:20px 16px;text-align:center;"><div style="font-size:20px;font-weight:600;color:#d4a574;margin-bottom:4px;">4</div><div style="font-size:13px;font-weight:600;color:#1a1a1a;">' + (c.support_help.card4_title || '') + '</div></div>' +
+              '</div><button class="mobile-donate-btn" style="margin-top:20px;" onclick="showView(\'view-support-help\')">Zjistit vice</button>';
+          }
+        }
       }
       // Support help page
       if (c.support_help) {
