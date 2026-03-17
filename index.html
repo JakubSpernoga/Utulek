@@ -3787,6 +3787,38 @@ body.showing-admin .global-back-btn {
     width: 50px;
     height: 50px;
   }
+  /* Support Help hero - mobile */
+  .sh-hero {
+    flex-direction: column !important;
+    min-height: auto !important;
+    padding: 0 !important;
+  }
+  .sh-hero-img {
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: 55vw !important;
+    pointer-events: none;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+  }
+  .sh-hero-img img {
+    width: 70% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: bottom center !important;
+  }
+  .sh-hero-text {
+    max-width: 100% !important;
+    padding: 28px 20px !important;
+    text-align: center;
+    order: 2;
+  }
+  .sh-hero-img {
+    order: 1;
+  }
 }
 
 .login-overlay {
@@ -5907,14 +5939,14 @@ body.showing-admin .global-back-btn {
         <span class="current">Podpora</span>
       </div>
       <div style="flex:1; overflow-y:auto; background:#faf7f4;">
-        <div style="position:relative; min-height:50vh; display:flex; align-items:center; padding:40px 24px; overflow:hidden;">
-          <div style="position:relative; z-index:2; max-width:55%;">
+        <div class="sh-hero" style="position:relative; min-height:50vh; display:flex; align-items:center; padding:40px 24px; overflow:hidden;">
+          <div class="sh-hero-text" style="position:relative; z-index:2; max-width:55%;">
             <div style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#d4a574; margin-bottom:12px;">PODPORA</div>
             <h2 id="supportHelpTitle" style="font-size:32px; font-weight:600; color:#1a1a1a; line-height:1.15; margin:0 0 16px;">Pomozte jinak než penězi</h2>
             <p id="supportHelpDesc" style="font-size:14px; color:rgba(0,0,0,0.5); line-height:1.7; margin:0 0 24px;">Není potřeba darovat finance. Můžete nám pomoci i jinak — navštívit nás, pomazlit se s kočkami, sdílet náš příběh nebo přinést krmivo.</p>
             <a onclick="document.getElementById('supportHelpCardsSection').scrollIntoView({behavior:'smooth'})" style="display:inline-block; padding:14px 32px; background:#1a1a1a; color:#fff; border-radius:30px; font-size:14px; font-weight:500; cursor:pointer; text-decoration:none;">Zjistit vice</a>
           </div>
-          <div style="position:absolute; right:-10%; bottom:0; width:55%; height:100%; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;">
+          <div class="sh-hero-img" style="position:absolute; right:-10%; bottom:0; width:55%; height:100%; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;">
             <img src="6.png" alt="" style="width:100%; height:100%; object-fit:contain; object-position:bottom center;">
           </div>
         </div>
