@@ -3053,6 +3053,11 @@ body.showing-admin .global-back-btn {
   }
   
   /* Kocky page - na mobilu cela stranka scrolluje */
+  body.show-views #view-kocky .sidebar-left,
+  body.show-views #view-kocky .sidebar-right,
+  body.show-views #view-kocky .arrows {
+    display: none !important;
+  }
   body.show-views .kocky-page {
     position: static;
     transform: none;
@@ -3060,10 +3065,11 @@ body.showing-admin .global-back-btn {
     overflow: visible;
     left: auto;
     right: auto;
-    padding: 70px 0 0;
+    padding: 80px 0 40px;
   }
   body.show-views #view-kocky {
-    overflow-y: auto;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
   /* Cats main area */
   body.show-views .cats-area {
