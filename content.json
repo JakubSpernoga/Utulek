@@ -46,19 +46,7 @@
   },
   "donate_page": {
     "label": "Podpořte nás",
-    "button": "Darovat",
-    "progress_label": "Kam putuji prispevky",
-    "progress_items": [
-      {"label": "Krmivo", "amount": "12 450 Kc", "target": "z 20 000 Kc"},
-      {"label": "Veterina", "amount": "8 200 Kc", "target": "z 15 000 Kc"},
-      {"label": "Cesty", "amount": "1 800 Kc", "target": "z 5 000 Kc"}
-    ],
-    "transparent_label": "Transparentni ucet",
-    "transparent_balance": "24 650 Kc",
-    "transparent_received": "+ 45 200 Kc",
-    "transparent_received_label": "Přijato",
-    "transparent_spent": "- 38 750 Kc",
-    "transparent_spent_label": "Vydáno"
+    "button": "Darovat"
   },
   "kontakt_page": {
     "title": "Kontaktujte nás",

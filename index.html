@@ -8356,15 +8356,8 @@ function renderContentEditor() {
     ]},
     { key: 'donate_page', title: 'Stranka Podpora (darovaní)', fields: [
       { k: 'label', l: 'Stitek', t: 'input' },
-      { k: 'button', l: 'Tlacitko darovat', t: 'input' },
-      { k: 'progress_label', l: 'Stitek prispevku', t: 'input' },
-      { k: 'transparent_label', l: 'Stitek transparentni ucet', t: 'input' },
-      { k: 'transparent_balance', l: 'Zustatek', t: 'input' },
-      { k: 'transparent_received', l: 'Prijato', t: 'input' },
-      { k: 'transparent_received_label', l: 'Popisek prijato', t: 'input' },
-      { k: 'transparent_spent', l: 'Vydano', t: 'input' },
-      { k: 'transparent_spent_label', l: 'Popisek vydano', t: 'input' }
-    ], custom: 'progress' },
+      { k: 'button', l: 'Tlacitko darovat', t: 'input' }
+    ]},
     { key: 'kontakt_page', title: 'Stranka Kontakt', fields: [
       { k: 'title', l: 'Nadpis', t: 'input' },
       { k: 'description', l: 'Popis', t: 'textarea' },
@@ -8399,16 +8392,6 @@ function renderContentEditor() {
       html += '<label style="font-size:12px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;">Castky daru</label>';
       ceContent.support.donate_amounts.forEach(function(d, i) {
         html += '<div class="ce-donate-row"><input type="number" data-ce="support.donate_amounts.' + i + '.amount" value="' + d.amount + '" placeholder="Kc"><input type="text" data-ce="support.donate_amounts.' + i + '.label" value="' + String(d.label).replace(/"/g,'&quot;') + '" placeholder="Popis"></div>';
-      });
-    }
-    if (s.custom === 'progress' && ceContent.donate_page.progress_items) {
-      html += '<label style="font-size:12px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;">Ukazatele prispevku</label>';
-      ceContent.donate_page.progress_items.forEach(function(p, i) {
-        html += '<div class="ce-step"><div class="ce-step-label">' + p.label + '</div>';
-        html += '<div class="ce-field"><label>Nazev</label><input type="text" data-ce="donate_page.progress_items.' + i + '.label" value="' + String(p.label).replace(/"/g,'&quot;') + '"></div>';
-        html += '<div class="ce-field"><label>Castka</label><input type="text" data-ce="donate_page.progress_items.' + i + '.amount" value="' + String(p.amount).replace(/"/g,'&quot;') + '"></div>';
-        html += '<div class="ce-field"><label>Cil</label><input type="text" data-ce="donate_page.progress_items.' + i + '.target" value="' + String(p.target).replace(/"/g,'&quot;') + '"></div>';
-        html += '</div>';
       });
     }
     html += '</div>';
@@ -8590,31 +8573,8 @@ switchAdminTab = function(tabEl, tabName) {
         if (dp) {
           const labels = dp.querySelectorAll('.section-label');
           if (labels[0]) labels[0].textContent = c.donate_page.label;
-          if (labels[1]) labels[1].textContent = c.donate_page.progress_label;
-          if (labels[2]) labels[2].textContent = c.donate_page.transparent_label;
           const submitBtn = dp.querySelector('.donate-submit-btn');
           if (submitBtn) submitBtn.textContent = c.donate_page.button;
-          const circleItems = dp.querySelectorAll('.progress-circle-item');
-          if (circleItems.length && c.donate_page.progress_items) {
-            c.donate_page.progress_items.forEach((p, i) => {
-              if (circleItems[i]) {
-                const lbl = circleItems[i].querySelector('.progress-circle-label');
-                if (lbl) lbl.textContent = p.label;
-                const amt = circleItems[i].querySelector('.progress-circle-amount');
-                if (amt) amt.textContent = p.amount;
-                const tgt = circleItems[i].querySelector('.progress-circle-target');
-                if (tgt) tgt.textContent = p.target;
-              }
-            });
-          }
-          const bal = dp.querySelector('.transparent-balance-new');
-          if (bal) bal.textContent = c.donate_page.transparent_balance;
-          const statVals = dp.querySelectorAll('.transparent-stat-val');
-          const statLbls = dp.querySelectorAll('.transparent-stat-lbl');
-          if (statVals[0]) statVals[0].textContent = c.donate_page.transparent_received;
-          if (statLbls[0]) statLbls[0].textContent = c.donate_page.transparent_received_label;
-          if (statVals[1]) statVals[1].textContent = c.donate_page.transparent_spent;
-          if (statLbls[1]) statLbls[1].textContent = c.donate_page.transparent_spent_label;
         }
       }
       // Kontakt page
