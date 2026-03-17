@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "subtitle": "Kočičí depozitum U Tří Psů",
+    "title_line1": "Zachraňujeme.",
+    "title_line2": "Léčíme.",
+    "title_line3": "Hledáme domov.",
+    "description": "Jsme malé depozitum s velkým srdcem. Každá kočka si zaslouží druhou šanci. Staráme se o opuštěné, zraněné a nezadané kočky, dokud nenajdou svůj navždy domov.",
+    "tagline": "Každý život má cenu."
+  },
+  "about": {
+    "subtitle": "Náš příběh",
+    "name": "U Tří Psů",
+    "location": "Kočičí depozitum / Praha",
+    "bio": "Začali jsme v malé garáži, kde jsme zachránili prvních pět koček z ulice. Dnes provozujeme plnohodnotné depozitum s veterinární péčí, karanténními boxy a sítí dočasných pečovatelů. Za poslední roky jsme našli domov více než 340 kočkám. Každou kočku pečlivě vyšetříme, očistíme, naočkujeme a socializujeme, než ji předáme do nových rukou. Věříme, že žádná kočka nemá být na ulici."
+  },
+  "support": {
+    "subtitle": "Podpořte nás",
+    "title": "Pomozte našim kočkám",
+    "donate_amounts": [
+      {"amount": 100, "label": "Pamlsek"},
+      {"amount": 200, "label": "Krmivo"},
+      {"amount": 500, "label": "Veterina"}
+    ]
+  },
+  "adoption": {
+    "subtitle": "Najdi si kamaráda",
+    "title": "Adopce",
+    "description": "Právě teď máme v depozitu desítky koček, které čekají na svůj nový domov. Každá z nich má svůj jedinečný charakter a příběh. Možná právě ta vaše tu na vás čeká."
+  },
+  "contact": {
+    "subtitle": "Kočičí depozitum U Tří Psů",
+    "title": "Kontakt",
+    "description": "Chcete nás navštívit, adoptovat kočku nebo se stát dočasným pečovatelem? Ozvěte se nám. Odpovídáme do 24 hodin.",
+    "email": "info@utripsu.cz",
+    "phone": "+420 777 123 456",
+    "address": "Kočičí ulička 7, Praha 4",
+    "hours_weekday": "9:00 — 17:00",
+    "hours_saturday": "10:00 — 14:00",
+    "hours_sunday": "Zavřeno"
+  },
+  "foster": {
+    "title": "Staňte se dočasným pečovatelem",
+    "description": "Dočasná péče je most mezi depozitem a stálým domovem. Vezmete si kočku k sobě domů, poskytnete jí klid a lásku, zatímco my hledáme její navždy rodinu. Veškeré náklady hradíme my.",
+    "steps": [
+      {"num": "01", "title": "Vyplňte formulář", "text": "Řekněte nám o sobě, vašem bydlení a zkušenostech s kočkami."},
+      {"num": "02", "title": "Osobní setkání", "text": "Potkáme se v depozitu, probereme vše a vyberete si kočku."},
+      {"num": "03", "title": "Kočka u vás doma", "text": "Předáme vám kočku včetně krmiva, podložky a veterinárních instrukcí."},
+      {"num": "04", "title": "Happy end", "text": "Společně najdeme kočce stálý domov. Vy získáte novou kamarádku."}
+    ]
+  },
+  "stories": {
+    "issue": "Úspěšné adopce",
+    "title_line1": "Naše",
+    "title_line2": "Příběhy",
+    "subtitle": "Každá kočka má svůj příběh. Tady jsou ty s happy endem."
+  }
+}

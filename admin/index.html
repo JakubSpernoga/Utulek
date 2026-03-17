@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Kočičí depozitum U Tří Psů</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
+
+/* Login screen */
+.login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+.login-box { background: white; border-radius: 20px; padding: 48px; max-width: 440px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.06); text-align: center; }
+.login-box h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+.login-box p { font-size: 14px; color: #888; margin-bottom: 32px; line-height: 1.6; }
+.login-box input { width: 100%; padding: 14px 18px; border: 2px solid #e8e8e8; border-radius: 12px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+.login-box input:focus { border-color: #d4a574; }
+.login-box button { width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 16px; transition: background 0.2s; }
+.login-box button:hover { background: #333; }
+.login-error { color: #e74c3c; font-size: 13px; margin-top: 12px; display: none; }
+.login-help { font-size: 12px; color: #aaa; margin-top: 20px; line-height: 1.6; }
+.login-help a { color: #d4a574; }
+
+/* Admin layout */
+.admin { display: none; }
+.admin-header { background: white; border-bottom: 1px solid #e8e8e8; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.admin-header h1 { font-size: 18px; font-weight: 600; }
+.admin-header .actions { display: flex; gap: 12px; align-items: center; }
+.btn-save { padding: 10px 28px; background: #d4a574; color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.btn-save:hover { background: #c4955f; }
+.btn-save:disabled { background: #ccc; cursor: default; }
+.btn-logout { padding: 10px 20px; background: none; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; color: #888; cursor: pointer; }
+.btn-logout:hover { border-color: #aaa; color: #555; }
+.save-status { font-size: 13px; color: #888; }
+
+/* Content area */
+.admin-content { max-width: 800px; margin: 0 auto; padding: 32px 20px 80px; }
+
+/* Section cards */
+.section-card { background: white; border-radius: 16px; padding: 32px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.section-card h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.section-card h2 .emoji { font-size: 20px; }
+.section-card .section-desc { font-size: 13px; color: #999; margin-bottom: 24px; }
+
+/* Form fields */
+.field { margin-bottom: 20px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; font-size: 13px; font-weight: 500; color: #555; margin-bottom: 6px; }
+.field input, .field textarea { width: 100%; padding: 12px 16px; border: 2px solid #f0f0f0; border-radius: 10px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; background: #fafafa; }
+.field input:focus, .field textarea:focus { border-color: #d4a574; background: white; }
+.field textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+
+/* Steps */
+.step-group { border: 2px solid #f0f0f0; border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+.step-group .step-header { font-size: 13px; font-weight: 600; color: #d4a574; margin-bottom: 12px; }
+
+/* Donate amounts */
+.donate-row { display: flex; gap: 12px; margin-bottom: 12px; }
+.donate-row input { flex: 1; }
+
+/* Toast */
+.toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1a1a1a; color: white; padding: 14px 28px; border-radius: 12px; font-size: 14px; font-weight: 500; transition: transform 0.4s ease; z-index: 1000; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.error { background: #e74c3c; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .admin-header { padding: 12px 16px; }
+  .section-card { padding: 20px; }
+  .donate-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>Administrace</h1>
+    <p>Kočičí depozitum U Tří Psů<br>Zadejte svůj GitHub Personal Access Token pro přihlášení.</p>
+    <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxx" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Přihlásit se</button>
+    <div class="login-error" id="loginError">Neplatný token. Zkontrolujte a zkuste znovu.</div>
+    <div class="login-help">
+      Jak získat token? Jděte na <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings → Tokens</a>,<br>
+      vytvořte "Classic" token s oprávněním <strong>repo</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- Admin -->
+<div class="admin" id="adminPanel">
+  <div class="admin-header">
+    <h1>Administrace webu</h1>
+    <div class="actions">
+      <span class="save-status" id="saveStatus"></span>
+      <button class="btn-save" id="saveBtn" onclick="saveContent()">Uložit a publikovat</button>
+      <button class="btn-logout" onclick="logout()">Odhlásit</button>
+    </div>
+  </div>
+
+  <div class="admin-content" id="adminContent">
+    <!-- Sections will be rendered by JS -->
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO_OWNER = 'JakubSpernoga';
+const REPO_NAME = 'Utulek';
+const CONTENT_PATH = 'content.json';
+
+let token = '';
+let content = null;
+let contentSha = '';
+
+// Toast
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+// Login
+async function login() {
+  token = document.getElementById('tokenInput').value.trim();
+  if (!token) return;
+  try {
+    const res = await fetch('https://api.github.com/user', { headers: { Authorization: 'token ' + token } });
+    if (!res.ok) throw new Error();
+    localStorage.setItem('gh_token', token);
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    await loadContent();
+  } catch(e) {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  localStorage.removeItem('gh_token');
+  location.reload();
+}
+
+// Auto-login
+(function() {
+  const saved = localStorage.getItem('gh_token');
+  if (saved) {
+    document.getElementById('tokenInput').value = saved;
+    login();
+  }
+})();
+
+// Load content from GitHub
+async function loadContent() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
+      headers: { Authorization: 'token ' + token }
+    });
+    const data = await res.json();
+    contentSha = data.sha;
+    content = JSON.parse(atob(data.content));
+    renderEditor();
+  } catch(e) {
+    showToast('Chyba při načítání obsahu', true);
+  }
+}
+
+// Save content to GitHub
+async function saveContent() {
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Ukládám...';
+  document.getElementById('saveStatus').textContent = '';
+
+  // Collect values from form
+  collectFormValues();
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: 'token ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Aktualizace obsahu z administrace',
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
+        sha: contentSha
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    contentSha = data.content.sha;
+    showToast('Uloženo a publikováno!');
+    document.getElementById('saveStatus').textContent = 'Uloženo právě teď';
+  } catch(e) {
+    showToast('Chyba: ' + e.message, true);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Uložit a publikovat';
+}
+
+// Collect values from form inputs
+function collectFormValues() {
+  document.querySelectorAll('[data-path]').forEach(el => {
+    const path = el.dataset.path.split('.');
+    let obj = content;
+    for (let i = 0; i < path.length - 1; i++) {
+      if (path[i].match(/^\d+$/)) obj = obj[parseInt(path[i])];
+      else obj = obj[path[i]];
+    }
+    const key = path[path.length - 1];
+    if (key.match(/^\d+$/)) return; // skip array indices
+    const val = el.tagName === 'TEXTAREA' ? el.value : el.value;
+    // Handle numbers
+    if (el.type === 'number') obj[key] = parseInt(val) || 0;
+    else obj[key] = val;
+  });
+}
+
+// Render editor
+function renderEditor() {
+  const sections = [
+    {
+      id: 'hero', emoji: '🏠', title: 'Úvodní stránka (Hero)',
+      desc: 'Hlavní nadpis a popis na úvodní stránce',
+      fields: [
+        { key: 'hero.subtitle', label: 'Podnadpis', type: 'input' },
+        { key: 'hero.title_line1', label: 'Nadpis — řádek 1', type: 'input' },
+        { key: 'hero.title_line2', label: 'Nadpis — řádek 2', type: 'input' },
+        { key: 'hero.title_line3', label: 'Nadpis — řádek 3 (zvýrazněný)', type: 'input' },
+        { key: 'hero.description', label: 'Popis', type: 'textarea' },
+        { key: 'hero.tagline', label: 'Slogan', type: 'input' }
+      ]
+    },
+    {
+      id: 'about', emoji: '📖', title: 'O nás',
+      desc: 'Informace o depozitu',
+      fields: [
+        { key: 'about.subtitle', label: 'Podnadpis', type: 'input' },
+        { key: 'about.name', label: 'Název', type: 'input' },
+        { key: 'about.location', label: 'Místo', type: 'input' },
+        { key: 'about.bio', label: 'Popis (bio)', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'support', emoji: '💛', title: 'Podpořte nás',
+      desc: 'Sekce s dary a částkami',
+      fields: [
+        { key: 'support.subtitle', label: 'Podnadpis', type: 'input' },
+        { key: 'support.title', label: 'Nadpis', type: 'input' }
+      ],
+      custom: 'donate'
+    },
+    {
+      id: 'adoption', emoji: '🐱', title: 'Adopce',
+      desc: 'Sekce s nabídkou koček k adopci',
+      fields: [
+        { key: 'adoption.subtitle', label: 'Podnadpis', type: 'input' },
+        { key: 'adoption.title', label: 'Nadpis', type: 'input' },
+        { key: 'adoption.description', label: 'Popis', type: 'textarea' }
+      ]
+    },
+    {
+      id: 'contact', emoji: '📞', title: 'Kontakt',
+      desc: 'Kontaktní údaje a otevírací doba',
+      fields: [
+        { key: 'contact.subtitle', label: 'Podnadpis', type: 'input' },
+        { key: 'contact.title', label: 'Nadpis', type: 'input' },
+        { key: 'contact.description', label: 'Popis', type: 'textarea' },
+        { key: 'contact.email', label: 'E-mail', type: 'input' },
+        { key: 'contact.phone', label: 'Telefon', type: 'input' },
+        { key: 'contact.address', label: 'Adresa', type: 'input' },
+        { key: 'contact.hours_weekday', label: 'Po — Pá', type: 'input' },
+        { key: 'contact.hours_saturday', label: 'Sobota', type: 'input' },
+        { key: 'contact.hours_sunday', label: 'Neděle', type: 'input' }
+      ]
+    },
+    {
+      id: 'foster', emoji: '🏡', title: 'Dočasná péče',
+      desc: 'Informace o dočasné péči a kroky',
+      fields: [
+        { key: 'foster.title', label: 'Nadpis', type: 'input' },
+        { key: 'foster.description', label: 'Popis', type: 'textarea' }
+      ],
+      custom: 'steps'
+    },
+    {
+      id: 'stories', emoji: '📸', title: 'Příběhy',
+      desc: 'Sekce úspěšných adopcí',
+      fields: [
+        { key: 'stories.issue', label: 'Štítek', type: 'input' },
+        { key: 'stories.title_line1', label: 'Nadpis — řádek 1', type: 'input' },
+        { key: 'stories.title_line2', label: 'Nadpis — řádek 2', type: 'input' },
+        { key: 'stories.subtitle', label: 'Popis', type: 'input' }
+      ]
+    }
+  ];
+
+  let html = '';
+  sections.forEach(s => {
+    html += `<div class="section-card">
+      <h2><span class="emoji">${s.emoji}</span> ${s.title}</h2>
+      <div class="section-desc">${s.desc}</div>`;
+
+    s.fields.forEach(f => {
+      const val = getNestedValue(content, f.key);
+      if (f.type === 'textarea') {
+        html += `<div class="field"><label>${f.label}</label><textarea data-path="${f.key}">${escHtml(val)}</textarea></div>`;
+      } else {
+        html += `<div class="field"><label>${f.label}</label><input type="text" data-path="${f.key}" value="${escAttr(val)}"></div>`;
+      }
+    });
+
+    // Custom: donate amounts
+    if (s.custom === 'donate' && content.support.donate_amounts) {
+      html += '<div style="margin-top:16px"><label style="font-size:13px;font-weight:500;color:#555;margin-bottom:8px;display:block;">Částky darů</label>';
+      content.support.donate_amounts.forEach((d, i) => {
+        html += `<div class="donate-row">
+          <input type="number" data-path="support.donate_amounts.${i}.amount" value="${d.amount}" placeholder="Částka">
+          <input type="text" data-path="support.donate_amounts.${i}.label" value="${escAttr(d.label)}" placeholder="Popis">
+        </div>`;
+      });
+      html += '</div>';
+    }
+
+    // Custom: steps
+    if (s.custom === 'steps' && content.foster.steps) {
+      content.foster.steps.forEach((step, i) => {
+        html += `<div class="step-group">
+          <div class="step-header">Krok ${step.num}</div>
+          <div class="field"><label>Název</label><input type="text" data-path="foster.steps.${i}.title" value="${escAttr(step.title)}"></div>
+          <div class="field"><label>Popis</label><input type="text" data-path="foster.steps.${i}.text" value="${escAttr(step.text)}"></div>
+        </div>`;
+      });
+    }
+
+    html += '</div>';
+  });
+
+  document.getElementById('adminContent').innerHTML = html;
+}
+
+function getNestedValue(obj, path) {
+  return path.split('.').reduce((o, k) => {
+    if (k.match(/^\d+$/)) return o[parseInt(k)];
+    return o[k];
+  }, obj);
+}
+
+function escHtml(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+</script>
+</body>
+</html>

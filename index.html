@@ -8333,5 +8333,116 @@ if (mobileLayout) {
   updateMobileHeader(); // init
 }
 </script>
+
+<!-- CMS: Load content from content.json -->
+<script>
+(function() {
+  fetch('content.json?' + Date.now())
+    .then(r => r.json())
+    .then(c => {
+      // Hero
+      const s1 = document.getElementById('hlavni');
+      if (s1) {
+        const sub = s1.querySelector('.subtitle');
+        if (sub) sub.textContent = c.hero.subtitle;
+        const h1 = s1.querySelector('h1');
+        if (h1) h1.innerHTML = c.hero.title_line1 + '<br>' + c.hero.title_line2 + '<br><span>' + c.hero.title_line3 + '</span>';
+        const p = s1.querySelector('.content > p');
+        if (p) p.textContent = c.hero.description;
+        const tag = s1.querySelector('.tagline');
+        if (tag) tag.textContent = c.hero.tagline;
+      }
+      // About
+      const s2 = document.getElementById('onas');
+      if (s2) {
+        const sub = s2.querySelector('.subtitle');
+        if (sub) sub.textContent = c.about.subtitle;
+        const name = s2.querySelector('.name');
+        if (name) name.textContent = c.about.name;
+        const loc = s2.querySelector('.name-second');
+        if (loc) loc.textContent = c.about.location;
+        const bio = s2.querySelector('.bio');
+        if (bio) bio.textContent = c.about.bio;
+      }
+      // Support
+      const s3 = document.getElementById('podpora');
+      if (s3) {
+        const sub = s3.querySelector('.subtitle');
+        if (sub) sub.textContent = c.support.subtitle;
+        const h2 = s3.querySelector('h2');
+        if (h2) h2.innerHTML = c.support.title.replace(/kočkám/, '<span>kočkám</span>');
+        const cards = s3.querySelectorAll('.donate-card:not(.donate-card-custom)');
+        if (cards.length && c.support.donate_amounts) {
+          c.support.donate_amounts.forEach((d, i) => {
+            if (cards[i]) {
+              const amt = cards[i].querySelector('.card-amount');
+              if (amt) amt.textContent = d.amount + ' Kc';
+              const lbl = cards[i].querySelector('.card-label');
+              if (lbl) lbl.textContent = d.label;
+            }
+          });
+        }
+      }
+      // Adoption
+      const s4 = document.getElementById('adopce');
+      if (s4) {
+        const sub = s4.querySelector('.subtitle');
+        if (sub) sub.textContent = c.adoption.subtitle;
+        const h2 = s4.querySelector('h2');
+        if (h2) h2.textContent = c.adoption.title;
+        const p = s4.querySelector('p');
+        if (p) p.textContent = c.adoption.description;
+      }
+      // Contact
+      const s5 = document.getElementById('kontakt');
+      if (s5) {
+        const sub = s5.querySelector('.subtitle');
+        if (sub) sub.textContent = c.contact.subtitle;
+        const h2 = s5.querySelector('h2');
+        if (h2) h2.textContent = c.contact.title;
+        const p = s5.querySelector('.content > p');
+        if (p) p.textContent = c.contact.description;
+        const vals = s5.querySelectorAll('.contact-value');
+        if (vals[0]) vals[0].innerHTML = '<a href="mailto:' + c.contact.email + '">' + c.contact.email + '</a>';
+        if (vals[1]) vals[1].innerHTML = '<a href="tel:' + c.contact.phone.replace(/\s/g,'') + '">' + c.contact.phone + '</a>';
+        if (vals[2]) vals[2].textContent = c.contact.address;
+        const times = s5.querySelectorAll('.hours-time');
+        if (times[0]) times[0].textContent = c.contact.hours_weekday;
+        if (times[1]) times[1].textContent = c.contact.hours_saturday;
+        if (times[2]) times[2].textContent = c.contact.hours_sunday;
+      }
+      // Foster (Depozitum)
+      const depo = document.querySelector('.depo-hero');
+      if (depo) {
+        const h2 = depo.querySelector('h2');
+        if (h2) h2.textContent = c.foster.title;
+        const p = depo.querySelector('p');
+        if (p) p.textContent = c.foster.description;
+      }
+      const steps = document.querySelectorAll('.depo-step');
+      if (steps.length && c.foster.steps) {
+        c.foster.steps.forEach((s, i) => {
+          if (steps[i]) {
+            const t = steps[i].querySelector('.depo-step-title');
+            if (t) t.textContent = s.title;
+            const tx = steps[i].querySelector('.depo-step-text');
+            if (tx) tx.textContent = s.text;
+          }
+        });
+      }
+      // Stories
+      const mag = document.getElementById('pribehyMagazine');
+      if (mag) {
+        const issue = mag.querySelector('.issue');
+        if (issue) issue.textContent = c.stories.issue;
+        const title = mag.querySelector('.title');
+        if (title) title.innerHTML = c.stories.title_line1 + '<br><span>' + c.stories.title_line2 + '</span>';
+        const sub = mag.querySelector('.subtitle');
+        if (sub) sub.textContent = c.stories.subtitle;
+      }
+    })
+    .catch(() => {}); // Fallback: use hardcoded HTML
+})();
+</script>
 </body>
 </html>
