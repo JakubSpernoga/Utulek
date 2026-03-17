@@ -3823,6 +3823,23 @@ body.showing-admin .global-back-btn {
   }
 }
 
+/* Support Help - hero skryt i na desktopu, karty pres celou plochu */
+.sh-hero {
+  display: none !important;
+}
+#view-support-help #supportHelpCardsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 160px);
+  padding: 40px 60px;
+}
+#view-support-help #supportHelpCards {
+  max-width: 700px;
+  width: 100%;
+}
+
 .login-overlay {
   position: fixed;
   inset: 0;
