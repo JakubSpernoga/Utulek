@@ -912,12 +912,29 @@ body::before {
 #view-kocky {
   background: #1a1410;
 }
-#view-kocky .header.dark {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 500;
+@media (min-width: 769px) {
+  #view-kocky .header.dark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 500;
+  }
+}
+@media (max-width: 768px) {
+  #view-kocky .header.dark {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    background: #1a1410;
+    z-index: 1;
+  }
+  #view-kocky .header.dark .logo,
+  #view-kocky .header.dark .nav { display: none; }
+  #view-kocky .header.dark .logo-icon { margin-right: auto; }
+  #view-kocky .header.dark .header-right { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+  #view-kocky .header.dark .header-right svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 1.5; }
 }
 #view-kocky .sidebar-left {
   position: fixed;
@@ -3073,37 +3090,6 @@ body.showing-admin .global-back-btn {
   body.show-views #view-kocky {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-  }
-  #view-kocky .header.dark {
-    position: relative !important;
-    display: flex !important;
-    align-items: center;
-    padding: 14px 16px !important;
-    background: #1a1410;
-    z-index: 1 !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-  }
-  #view-kocky .header.dark .logo,
-  #view-kocky .header.dark .nav {
-    display: none !important;
-  }
-  #view-kocky .header.dark .logo-icon {
-    margin-right: auto;
-  }
-  #view-kocky .header.dark .header-right {
-    display: flex !important;
-    align-items: center;
-    gap: 18px;
-    margin-left: auto;
-  }
-  #view-kocky .header.dark .header-right svg {
-    width: 22px;
-    height: 22px;
-    stroke: #fff;
-    fill: none;
-    stroke-width: 1.5;
   }
   .kocky-filter-bar {
     padding: 16px !important;
