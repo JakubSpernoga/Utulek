@@ -30,7 +30,7 @@
   "contact": {
     "subtitle": "Kočičí depozitum U Tří Psů",
     "title": "Kontakt",
-    "description": "Chcete nás navštívit, adoptovat kočku nebo se stát dočasným pečovatelem? Ozvěte se nám. Odpovídáme do 24 hodin.",
+    "description": "Chcete nás navštívit nebo adoptovat kočku? Ozvěte se nám. Odpovídáme do 24 hodin.",
     "email": "info@utripsu.cz",
     "phone": "+420 777 123 456",
     "address": "Kočičí ulička 7, Praha 4",
@@ -38,20 +38,42 @@
     "hours_saturday": "10:00 — 14:00",
     "hours_sunday": "Zavřeno"
   },
-  "foster": {
-    "title": "Staňte se dočasným pečovatelem",
-    "description": "Dočasná péče je most mezi depozitem a stálým domovem. Vezmete si kočku k sobě domů, poskytnete jí klid a lásku, zatímco my hledáme její navždy rodinu. Veškeré náklady hradíme my.",
-    "steps": [
-      {"num": "01", "title": "Vyplňte formulář", "text": "Řekněte nám o sobě, vašem bydlení a zkušenostech s kočkami."},
-      {"num": "02", "title": "Osobní setkání", "text": "Potkáme se v depozitu, probereme vše a vyberete si kočku."},
-      {"num": "03", "title": "Kočka u vás doma", "text": "Předáme vám kočku včetně krmiva, podložky a veterinárních instrukcí."},
-      {"num": "04", "title": "Happy end", "text": "Společně najdeme kočce stálý domov. Vy získáte novou kamarádku."}
-    ]
-  },
   "stories": {
     "issue": "Úspěšné adopce",
     "title_line1": "Naše",
     "title_line2": "Příběhy",
     "subtitle": "Každá kočka má svůj příběh. Tady jsou ty s happy endem."
+  },
+  "donate_page": {
+    "label": "Podpořte nás",
+    "button": "Darovat",
+    "progress_label": "Kam putuji prispevky",
+    "progress_items": [
+      {"label": "Krmivo", "amount": "12 450 Kc", "target": "z 20 000 Kc"},
+      {"label": "Veterina", "amount": "8 200 Kc", "target": "z 15 000 Kc"},
+      {"label": "Cesty", "amount": "1 800 Kc", "target": "z 5 000 Kc"}
+    ],
+    "transparent_label": "Transparentni ucet",
+    "transparent_balance": "24 650 Kc",
+    "transparent_received": "+ 45 200 Kc",
+    "transparent_received_label": "Přijato",
+    "transparent_spent": "- 38 750 Kc",
+    "transparent_spent_label": "Vydáno"
+  },
+  "kontakt_page": {
+    "title": "Kontaktujte nás",
+    "description": "Chcete nás navštívit nebo adoptovat kočku? Ozvěte se nám, rádi vám poradíme. Odpovídáme do 24 hodin.",
+    "email": "info@utripsu.cz",
+    "phone": "+420 777 123 456",
+    "address": "Kočičí ulička 7, Praha 4",
+    "hours_weekday": "9:00 — 17:00",
+    "hours_saturday": "10:00 — 14:00",
+    "hours_sunday": "Zavřeno",
+    "button": "Napište nám"
+  },
+  "adopce_form": {
+    "title": "Žádost o adopci",
+    "description": "Vyplňte formulář a my se vám ozveme.",
+    "button": "Odeslat žádost o adopci"
   }
 }

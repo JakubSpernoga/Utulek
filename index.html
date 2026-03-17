@@ -5157,7 +5157,7 @@ body.showing-admin .global-back-btn {
       <a href="#" onclick="closeMobileMenu(); showView('view-landing'); scrollToSection(0);">Depozitum</a>
       <a href="#" onclick="closeMobileMenu(); showView('view-kocky');">Naše kočky</a>
       <a href="#" onclick="closeMobileMenu(); goToSupport();">Podpořte nás</a>
-      <a href="#" onclick="closeMobileMenu(); showView('view-depozitum');">Dočasná péče</a>
+
       <a href="#" onclick="closeMobileMenu(); showView('view-pribehy');">Příběhy</a>
       <a href="#" onclick="closeMobileMenu(); showView('view-kontakt');">Kontakt</a>
     </div>
@@ -5322,7 +5322,7 @@ body.showing-admin .global-back-btn {
         <div class="content">
           <div class="subtitle">Kočičí depozitum U Tří Psů</div>
           <h2>Kontakt</h2>
-          <p>Chcete nás navštívit, adoptovat kočku nebo se stát dočasným pečovatelem? Ozvěte se nám. Odpovídáme do 24 hodin.</p>
+          <p>Chcete nás navštívit, nebo adoptovat kočku? Ozvěte se nám. Odpovídáme do 24 hodin.</p>
           <div class="hours-grid">
             <div class="hours-item"><div class="hours-day">Po — Pá</div><div class="hours-time">9:00 — 17:00</div></div>
             <div class="hours-item"><div class="hours-day">Sobota</div><div class="hours-time">10:00 — 14:00</div></div>
@@ -5465,77 +5465,6 @@ body.showing-admin .global-back-btn {
     </div>
   </div>
 
-  <!-- ================================================================
-       VIEW: DEPOZITUM
-       ================================================================ -->
-  <div class="view glass-bg" id="view-depozitum">
-    <div class="page-card">
-      <header class="sub-header">
-        <a onclick="goHome()" class="logo-icon">
-          <img src="logo.png" alt="Logo" class="logo-img">
-        </a>
-        <div class="logo">U Tří Psů</div>
-        <nav class="nav">
-          <a onclick="showView('view-kocky')">Naše kočky</a>
-          <a onclick="goToSupport()">Podpořte nás</a>
-          <a onclick="showView('view-pribehy')">Příběhy</a>
-          <a onclick="showView('view-landing'); setTimeout(function(){scrollToSection(4)},100)">Kontakt</a>
-        </nav>
-        <div class="header-right">
-          <svg viewBox="0 0 24 24" onclick="goToSupport()"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor"/></svg>
-          <svg viewBox="0 0 24 24" onclick="openLoginModal()" class="user-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor"/><circle cx="12" cy="7" r="4" stroke="currentColor"/></svg>
-          <svg class="sub-hamburger" viewBox="0 0 24 24" onclick="openMobileMenu()"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </div>
-      </header>
-      <div class="breadcrumb-bar">
-        <div class="back-btn" onclick="showView('view-landing')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
-        <span onclick="showView('view-landing')">Hlavní stránka</span>
-        <span class="sep">/</span>
-        <span class="current">Depozitum</span>
-      </div>
-      <div class="depo-page">
-        <div class="depo-hero">
-          <h2>Staňte se dočasným pečovatelem</h2>
-          <p>Dočasná péče je most mezi depozitem a stálým domovem. Vezmete si kočku k sobě domů, poskytnete jí klid a lásku, zatímco my hledáme její navždy rodinu. Veškeré náklady hradíme my.</p>
-        </div>
-        <div class="depo-steps">
-          <div class="depo-step">
-            <div class="depo-step-num">01</div>
-            <div class="depo-step-title">Vyplňte formulář</div>
-            <div class="depo-step-text">Řekněte nám o sobě, vašem bydlení a zkušenostech s kočkami.</div>
-          </div>
-          <div class="depo-step">
-            <div class="depo-step-num">02</div>
-            <div class="depo-step-title">Osobní setkání</div>
-            <div class="depo-step-text">Potkáme se v depozitu, probereme vše a vyberete si kočku.</div>
-          </div>
-          <div class="depo-step">
-            <div class="depo-step-num">03</div>
-            <div class="depo-step-title">Kočka u vás doma</div>
-            <div class="depo-step-text">Předáme vám kočku včetně krmiva, podložky a veterinárních instrukcí.</div>
-          </div>
-          <div class="depo-step">
-            <div class="depo-step-num">04</div>
-            <div class="depo-step-title">Happy end</div>
-            <div class="depo-step-text">Společně najdeme kočce stálý domov. Vy získáte novou kamarádku.</div>
-          </div>
-        </div>
-        <div class="depo-cta">
-          <div class="form-center">
-            <div style="font-size:28px; font-weight:600; color:#1a1a1a; text-align:center; margin-bottom:8px;">Chci pomáhat</div>
-            <div style="font-size:14px; color:rgba(0,0,0,0.4); text-align:center; margin-bottom:32px;">Vyplňte základní údaje a ozveme se vám.</div>
-            <div class="form-field"><label>Jméno a příjmení</label><input type="text" placeholder="Vaše jméno"></div>
-            <div class="form-field"><label>E-mail</label><input type="email" placeholder="vas@email.cz"></div>
-            <div class="form-field"><label>Telefon</label><input type="tel" placeholder="+420"></div>
-            <div class="form-field"><label>Typ bydlení</label><select><option>Byt</option><option>Dům se zahradou</option><option>Dům bez zahrady</option></select></div>
-            <div class="form-field"><label>Máte jiná zvířata?</label><input type="text" placeholder="např. pes, jiná kočka ..."></div>
-            <div class="form-field"><label>Poznámka</label><textarea placeholder="Cokoli dalšího o vás a vašich zkušenostech ..."></textarea></div>
-            <button class="form-submit" onclick="alert('Děkujeme za váš zájem! Ozveme se vám do 48 hodin.')">Odeslat žádost</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- ================================================================
        VIEW: PRIBEHY (uspesne adopce)
@@ -5842,7 +5771,7 @@ body.showing-admin .global-back-btn {
         <div class="logo">U Tří Psů</div>
         <nav class="nav">
           <a onclick="showView('view-kocky')">Naše kočky</a>
-          <a onclick="showView('view-depozitum')">Depozitum</a>
+          <a onclick="goToSupport()">Podpořte nás</a>
           <a onclick="showView('view-pribehy')">Příběhy</a>
           <a onclick="showView('view-landing'); setTimeout(function(){scrollToSection(4)},100)">Kontakt</a>
         </nav>
@@ -5882,7 +5811,7 @@ body.showing-admin .global-back-btn {
         <div class="logo">U Tří Psů</div>
         <nav class="nav">
           <a onclick="showView('view-kocky')">Naše kočky</a>
-          <a onclick="showView('view-depozitum')">Depozitum</a>
+          <a onclick="goToSupport()">Podpořte nás</a>
           <a onclick="showView('view-pribehy')">Příběhy</a>
           <a onclick="showView('view-kontakt')" class="active">Kontakt</a>
         </nav>
@@ -5896,7 +5825,7 @@ body.showing-admin .global-back-btn {
       <div class="depo-page">
         <div class="depo-hero">
           <h2>Kontaktujte nás</h2>
-          <p>Chcete nás navštívit, adoptovat kočku nebo se stát dočasným pečovatelem? Ozvěte se nám, rádi vám poradíme. Odpovídáme do 24 hodin.</p>
+          <p>Chcete nás navštívit, nebo adoptovat kočku? Ozvěte se nám, rádi vám poradíme. Odpovídáme do 24 hodin.</p>
         </div>
         <div class="depo-steps" style="max-width:800px;">
           <div class="depo-step">
@@ -8419,15 +8348,38 @@ function renderContentEditor() {
       { k: 'hours_saturday', l: 'Sobota', t: 'input' },
       { k: 'hours_sunday', l: 'Nedele', t: 'input' }
     ]},
-    { key: 'foster', title: 'Docasna pece', fields: [
-      { k: 'title', l: 'Nadpis', t: 'input' },
-      { k: 'description', l: 'Popis', t: 'textarea' }
-    ], custom: 'steps' },
     { key: 'stories', title: 'Pribehy', fields: [
       { k: 'issue', l: 'Stitek', t: 'input' },
       { k: 'title_line1', l: 'Nadpis — radek 1', t: 'input' },
       { k: 'title_line2', l: 'Nadpis — radek 2', t: 'input' },
       { k: 'subtitle', l: 'Popis', t: 'input' }
+    ]},
+    { key: 'donate_page', title: 'Stranka Podpora (darovaní)', fields: [
+      { k: 'label', l: 'Stitek', t: 'input' },
+      { k: 'button', l: 'Tlacitko darovat', t: 'input' },
+      { k: 'progress_label', l: 'Stitek prispevku', t: 'input' },
+      { k: 'transparent_label', l: 'Stitek transparentni ucet', t: 'input' },
+      { k: 'transparent_balance', l: 'Zustatek', t: 'input' },
+      { k: 'transparent_received', l: 'Prijato', t: 'input' },
+      { k: 'transparent_received_label', l: 'Popisek prijato', t: 'input' },
+      { k: 'transparent_spent', l: 'Vydano', t: 'input' },
+      { k: 'transparent_spent_label', l: 'Popisek vydano', t: 'input' }
+    ], custom: 'progress' },
+    { key: 'kontakt_page', title: 'Stranka Kontakt', fields: [
+      { k: 'title', l: 'Nadpis', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'textarea' },
+      { k: 'email', l: 'E-mail', t: 'input' },
+      { k: 'phone', l: 'Telefon', t: 'input' },
+      { k: 'address', l: 'Adresa', t: 'input' },
+      { k: 'hours_weekday', l: 'Po — Pa', t: 'input' },
+      { k: 'hours_saturday', l: 'Sobota', t: 'input' },
+      { k: 'hours_sunday', l: 'Nedele', t: 'input' },
+      { k: 'button', l: 'Tlacitko', t: 'input' }
+    ]},
+    { key: 'adopce_form', title: 'Adopcni formular', fields: [
+      { k: 'title', l: 'Nadpis', t: 'input' },
+      { k: 'description', l: 'Popis', t: 'input' },
+      { k: 'button', l: 'Tlacitko', t: 'input' }
     ]}
   ];
 
@@ -8449,11 +8401,13 @@ function renderContentEditor() {
         html += '<div class="ce-donate-row"><input type="number" data-ce="support.donate_amounts.' + i + '.amount" value="' + d.amount + '" placeholder="Kc"><input type="text" data-ce="support.donate_amounts.' + i + '.label" value="' + String(d.label).replace(/"/g,'&quot;') + '" placeholder="Popis"></div>';
       });
     }
-    if (s.custom === 'steps' && ceContent.foster.steps) {
-      ceContent.foster.steps.forEach(function(step, i) {
-        html += '<div class="ce-step"><div class="ce-step-label">Krok ' + step.num + '</div>';
-        html += '<div class="ce-field"><label>Nazev</label><input type="text" data-ce="foster.steps.' + i + '.title" value="' + String(step.title).replace(/"/g,'&quot;') + '"></div>';
-        html += '<div class="ce-field"><label>Popis</label><input type="text" data-ce="foster.steps.' + i + '.text" value="' + String(step.text).replace(/"/g,'&quot;') + '"></div>';
+    if (s.custom === 'progress' && ceContent.donate_page.progress_items) {
+      html += '<label style="font-size:12px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;">Ukazatele prispevku</label>';
+      ceContent.donate_page.progress_items.forEach(function(p, i) {
+        html += '<div class="ce-step"><div class="ce-step-label">' + p.label + '</div>';
+        html += '<div class="ce-field"><label>Nazev</label><input type="text" data-ce="donate_page.progress_items.' + i + '.label" value="' + String(p.label).replace(/"/g,'&quot;') + '"></div>';
+        html += '<div class="ce-field"><label>Castka</label><input type="text" data-ce="donate_page.progress_items.' + i + '.amount" value="' + String(p.amount).replace(/"/g,'&quot;') + '"></div>';
+        html += '<div class="ce-field"><label>Cil</label><input type="text" data-ce="donate_page.progress_items.' + i + '.target" value="' + String(p.target).replace(/"/g,'&quot;') + '"></div>';
         html += '</div>';
       });
     }
@@ -8620,25 +8574,6 @@ switchAdminTab = function(tabEl, tabName) {
         if (times[1]) times[1].textContent = c.contact.hours_saturday;
         if (times[2]) times[2].textContent = c.contact.hours_sunday;
       }
-      // Foster (Depozitum)
-      const depo = document.querySelector('.depo-hero');
-      if (depo) {
-        const h2 = depo.querySelector('h2');
-        if (h2) h2.textContent = c.foster.title;
-        const p = depo.querySelector('p');
-        if (p) p.textContent = c.foster.description;
-      }
-      const steps = document.querySelectorAll('.depo-step');
-      if (steps.length && c.foster.steps) {
-        c.foster.steps.forEach((s, i) => {
-          if (steps[i]) {
-            const t = steps[i].querySelector('.depo-step-title');
-            if (t) t.textContent = s.title;
-            const tx = steps[i].querySelector('.depo-step-text');
-            if (tx) tx.textContent = s.text;
-          }
-        });
-      }
       // Stories
       const mag = document.getElementById('pribehyMagazine');
       if (mag) {
@@ -8648,6 +8583,69 @@ switchAdminTab = function(tabEl, tabName) {
         if (title) title.innerHTML = c.stories.title_line1 + '<br><span>' + c.stories.title_line2 + '</span>';
         const sub = mag.querySelector('.subtitle');
         if (sub) sub.textContent = c.stories.subtitle;
+      }
+      // Donate page
+      if (c.donate_page) {
+        const dp = document.getElementById('view-donate');
+        if (dp) {
+          const labels = dp.querySelectorAll('.section-label');
+          if (labels[0]) labels[0].textContent = c.donate_page.label;
+          if (labels[1]) labels[1].textContent = c.donate_page.progress_label;
+          if (labels[2]) labels[2].textContent = c.donate_page.transparent_label;
+          const submitBtn = dp.querySelector('.donate-submit-btn');
+          if (submitBtn) submitBtn.textContent = c.donate_page.button;
+          const circleItems = dp.querySelectorAll('.progress-circle-item');
+          if (circleItems.length && c.donate_page.progress_items) {
+            c.donate_page.progress_items.forEach((p, i) => {
+              if (circleItems[i]) {
+                const lbl = circleItems[i].querySelector('.progress-circle-label');
+                if (lbl) lbl.textContent = p.label;
+                const amt = circleItems[i].querySelector('.progress-circle-amount');
+                if (amt) amt.textContent = p.amount;
+                const tgt = circleItems[i].querySelector('.progress-circle-target');
+                if (tgt) tgt.textContent = p.target;
+              }
+            });
+          }
+          const bal = dp.querySelector('.transparent-balance-new');
+          if (bal) bal.textContent = c.donate_page.transparent_balance;
+          const statVals = dp.querySelectorAll('.transparent-stat-val');
+          const statLbls = dp.querySelectorAll('.transparent-stat-lbl');
+          if (statVals[0]) statVals[0].textContent = c.donate_page.transparent_received;
+          if (statLbls[0]) statLbls[0].textContent = c.donate_page.transparent_received_label;
+          if (statVals[1]) statVals[1].textContent = c.donate_page.transparent_spent;
+          if (statLbls[1]) statLbls[1].textContent = c.donate_page.transparent_spent_label;
+        }
+      }
+      // Kontakt page
+      if (c.kontakt_page) {
+        const kp = document.getElementById('view-kontakt');
+        if (kp) {
+          const h2 = kp.querySelector('.depo-hero h2');
+          if (h2) h2.textContent = c.kontakt_page.title;
+          const p = kp.querySelector('.depo-hero p');
+          if (p) p.textContent = c.kontakt_page.description;
+          const steps = kp.querySelectorAll('.depo-step');
+          if (steps[0]) { const t = steps[0].querySelector('.depo-step-text'); if (t) t.innerHTML = '<a href="mailto:' + c.kontakt_page.email + '" style="color:#d4a574; text-decoration:none;">' + c.kontakt_page.email + '</a>'; }
+          if (steps[1]) { const t = steps[1].querySelector('.depo-step-text'); if (t) t.innerHTML = '<a href="tel:' + c.kontakt_page.phone.replace(/\\s/g,'') + '" style="color:#d4a574; text-decoration:none;">' + c.kontakt_page.phone + '</a>'; }
+          if (steps[2]) { const t = steps[2].querySelector('.depo-step-text'); if (t) t.textContent = c.kontakt_page.address; }
+          const hourSteps = kp.querySelectorAll('.depo-steps:last-of-type .depo-step');
+          if (hourSteps[0]) { const t = hourSteps[0].querySelector('.depo-step-text'); if (t) t.textContent = c.kontakt_page.hours_weekday; }
+          if (hourSteps[1]) { const t = hourSteps[1].querySelector('.depo-step-text'); if (t) t.textContent = c.kontakt_page.hours_saturday; }
+          if (hourSteps[2]) { const t = hourSteps[2].querySelector('.depo-step-text'); if (t) t.textContent = c.kontakt_page.hours_sunday; }
+        }
+      }
+      // Adopce form
+      if (c.adopce_form) {
+        const af = document.getElementById('view-adopce-form');
+        if (af) {
+          const title = af.querySelector('.form-center > div:first-child');
+          if (title) title.textContent = c.adopce_form.title;
+          const desc = af.querySelector('#adopceFormCatName');
+          if (desc) desc.textContent = c.adopce_form.description;
+          const btn = af.querySelector('.form-submit');
+          if (btn) btn.textContent = c.adopce_form.button;
+        }
       }
     })
     .catch(() => {}); // Fallback: use hardcoded HTML
