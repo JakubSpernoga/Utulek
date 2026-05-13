@@ -5730,14 +5730,29 @@ body.show-views #view-cat-detail .cat-detail-hero-content {
   padding-top: 0 !important;
 }
 
-/* Tlačítka vedle sebe (horizontálně) */
+/* Popis vlevo + tlačítka VEDLE TEXTU (horizontálně) vpravo */
+#view-cat-detail .cat-detail-desc-row,
+body.show-views #view-cat-detail .cat-detail-desc-row {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 14px !important;
+  align-items: center !important;
+  margin: 16px 0 12px !important;
+}
+#view-cat-detail .cat-detail-desc-row .cat-detail-desc {
+  margin: 0 !important;
+  flex: none;
+}
+
+/* Skupina tlačítek vedle textu — horizontálně */
 #view-cat-detail .cat-detail-buttons,
 body.show-views #view-cat-detail .cat-detail-buttons {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 10px !important;
-  margin: 16px 0 !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  flex-shrink: 0;
 }
 #view-cat-detail .adopt-btn {
   padding: 13px 22px !important;
@@ -5766,14 +5781,12 @@ body.show-views #view-cat-detail .cat-detail-buttons {
 /* Skrýt SVG ikony u tlačítek (jen text vejde se lépe) */
 #view-cat-detail .cat-detail-buttons .adopt-btn svg,
 #view-cat-detail .cat-detail-buttons .sponsor-btn svg { display: none !important; }
-/* Mobil — kompaktní tlačítka, ať se text "Chci adoptovat" vejde */
+/* Mobil — opravdu kompaktní tlačítka v řadě vedle textu */
 body.show-views #view-cat-detail .cat-detail-buttons .adopt-btn,
 body.show-views #view-cat-detail .cat-detail-buttons .sponsor-btn {
-  padding: 13px 8px !important;
-  font-size: 12px !important;
+  padding: 11px 14px !important;
+  font-size: 11px !important;
   letter-spacing: -0.2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 #view-cat-detail .sponsor-btn:hover { background: #f5f1ec !important; }
 /* Skryjeme samostatný Podporit button — Podporit je teď jako sponsor-btn */
@@ -8090,10 +8103,17 @@ function showCatDetail(catId, fromLanding) {
           '</div>' +
           '<div class="cat-detail-meta-row">' + detailPinSvg + '<span>Praha</span></div>' +
           (ageTextD ? '<div class="cat-detail-meta-row">' + detailCalSvg + '<span>' + ageTextD + (sexLine ? ' • ' + sexLine : '') + '</span></div>' : '') +
-          (cat.desc ? '<p class="cat-detail-desc">' + cat.desc + '</p>' : '') +
+          // Popis + tlačítka v jednom řádku vedle sebe
+          (cat.desc ?
+            '<div class="cat-detail-desc-row">' +
+              '<p class="cat-detail-desc">' + cat.desc + '</p>' +
+              buttonsHtml +
+            '</div>'
+            :
+            buttonsHtml
+          ) +
           handicapHtml +
           noticeHtml +
-          buttonsHtml +
         '</div>' +
       '</div>' +
       // Pod hero (od kraje ke kraji) — info, vlastnosti, galerie, příběh
