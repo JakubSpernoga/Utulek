@@ -5526,6 +5526,351 @@ body.showing-admin .global-back-btn {
 /* Skryjeme starý mini-cat-meta single-line (nahrazujeme řádky s ikonami) */
 #view-kocky .mini-cat-card .mini-cat-meta:not(.mini-cat-meta-row) { display: none !important; }
 
+/* ======================================================
+   DETAIL KOČKY — redesign
+   ====================================================== */
+#view-cat-detail .cat-detail-hero {
+  min-height: auto !important;
+  background: #f5f1ec !important;
+  padding: 24px 6% 56px !important;
+  display: grid !important;
+  grid-template-columns: 1.05fr 1fr !important;
+  gap: 56px;
+  align-items: center;
+  position: relative;
+}
+#view-cat-detail .cat-detail-hero::before { display: none !important; }
+#view-cat-detail .cat-detail-hero-content {
+  position: static !important;
+  transform: none !important;
+  max-width: 100% !important;
+  z-index: 2;
+}
+#view-cat-detail .cat-detail-subtitle {
+  font-size: 11px !important;
+  color: #d4a574 !important;
+  margin-bottom: 12px !important;
+  letter-spacing: 3px !important;
+}
+#view-cat-detail .cat-detail-name {
+  font-size: 56px !important;
+  font-weight: 700 !important;
+  margin-bottom: 14px !important;
+  letter-spacing: -1px;
+}
+#view-cat-detail .cat-detail-meta {
+  font-size: 15px !important;
+  color: #6b6b6b !important;
+  margin-bottom: 18px !important;
+}
+#view-cat-detail .cat-detail-desc {
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: #6b6b6b !important;
+  margin-bottom: 28px !important;
+  max-width: 480px;
+}
+#view-cat-detail .cat-detail-buttons {
+  margin-bottom: 24px !important;
+  gap: 12px !important;
+}
+#view-cat-detail .adopt-btn {
+  padding: 16px 30px !important;
+  background: #d4a574 !important;
+  border-color: #d4a574 !important;
+  border-radius: 999px !important;
+  box-shadow: 0 6px 16px rgba(212,165,116,0.28);
+}
+#view-cat-detail .sponsor-btn {
+  padding: 16px 26px !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+}
+#view-cat-detail .cat-detail-support-btn {
+  border-radius: 999px !important;
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  padding: 12px 22px !important;
+}
+
+/* Foto karta — velká zaoblená */
+#view-cat-detail .cat-detail-photo {
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 28px !important;
+  overflow: hidden;
+  background: #efe9e0;
+  pointer-events: auto !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+#view-cat-detail .cat-detail-photo img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+#view-cat-detail .cat-detail-photo::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  background: rgba(255,255,255,0.92) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%231a1a1a" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>') center / 18px no-repeat;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#view-cat-detail .cat-detail-scroll {
+  display: none !important;
+}
+
+/* Sekce pod hero */
+#view-cat-detail .cat-detail-section {
+  padding: 40px 6% !important;
+  background: #faf7f4 !important;
+}
+#view-cat-detail .cat-detail-section.alt {
+  background: #f0ece6 !important;
+}
+#view-cat-detail .cat-detail-section-title {
+  font-size: 11px !important;
+  letter-spacing: 3px !important;
+  color: #1a1a1a !important;
+  font-weight: 600;
+  margin-bottom: 18px !important;
+}
+
+/* Info grid */
+#view-cat-detail .cat-detail-info-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 12px !important;
+}
+#view-cat-detail .cat-detail-info-card {
+  background: #fff !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  border: none !important;
+}
+
+/* Galerie */
+#view-cat-detail .cat-detail-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+  gap: 10px !important;
+}
+#view-cat-detail .cat-detail-gallery-item {
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  background: #efe9e0;
+}
+#view-cat-detail .cat-detail-gallery-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Vlastnosti */
+#view-cat-detail .cat-detail-trait {
+  background: #fff !important;
+  border-radius: 999px !important;
+  padding: 8px 14px !important;
+  font-size: 12px !important;
+  border: none !important;
+}
+
+/* Zpět tlačítko */
+#view-cat-detail .cat-detail-back {
+  position: absolute;
+  top: 80px;
+  left: 6%;
+  background: #fff;
+  border-radius: 999px;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+#view-cat-detail .cat-detail-back svg {
+  width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;
+}
+
+@media (max-width: 900px) {
+  #view-cat-detail .cat-detail-hero {
+    grid-template-columns: 1fr !important;
+    padding: 90px 16px 32px !important;
+    gap: 24px;
+  }
+  #view-cat-detail .cat-detail-photo {
+    order: -1;
+    aspect-ratio: 1 / 1 !important;
+  }
+  #view-cat-detail .cat-detail-name { font-size: 32px !important; }
+  #view-cat-detail .cat-detail-back { top: 16px; left: 16px; }
+  #view-cat-detail .cat-detail-section { padding: 28px 16px !important; }
+  #view-cat-detail .cat-detail-info-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ======================================================
+   LANDING NÁHLED (section-4) + MOBILE ADOPCE — redesign karet
+   ====================================================== */
+.section-4 .section-4-cats {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 14px !important;
+  width: 58% !important;
+}
+@media (max-width: 1280px) {
+  .section-4 .section-4-cats { grid-template-columns: repeat(3, 1fr) !important; }
+}
+.section-4 .section-4-cats .mini-cat-card {
+  background: #fff !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+.section-4 .section-4-cats .mini-cat-card .card-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f0ece6;
+}
+.section-4 .section-4-cats .mini-cat-card .card-photo img {
+  position: static !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.section-4 .section-4-cats .mini-cat-card .mini-cat-info {
+  padding: 10px 12px 12px !important;
+  flex: 0 0 auto !important;
+  align-self: stretch !important;
+}
+.section-4 .section-4-cats .mini-cat-card .mini-cat-name {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin-bottom: 3px !important;
+}
+.section-4 .section-4-cats .mini-cat-card .mini-cat-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #8a8480;
+  margin-top: 2px;
+}
+.section-4 .section-4-cats .mini-cat-card .mini-cat-meta-row svg {
+  width: 10px; height: 10px; stroke: #b0a89f; fill: none; stroke-width: 1.8;
+}
+.section-4 .section-4-cats .mini-cat-card .mini-cat-badge {
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  background: rgba(255,255,255,0.94) !important;
+  color: #1a1a1a !important;
+  font-size: 8px !important;
+  padding: 4px 8px !important;
+  border-radius: 999px !important;
+  z-index: 4;
+  letter-spacing: 0.4px;
+}
+.section-4 .section-4-cats .mini-cat-card .mini-cat-badge.reserved { background: #f4c87a !important; color: #6b3e00 !important; }
+.section-4 .section-4-cats .mini-cat-card .mini-cat-badge.adopted { background: #d8d8d8 !important; color: #555 !important; }
+.section-4 .section-4-cats .mini-cat-card .mini-cat-badge.special { background: #fde2e2 !important; color: #a83232 !important; }
+.section-4 .section-4-cats .mini-cat-card .card-heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  background: rgba(255,255,255,0.94);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+.section-4 .section-4-cats .mini-cat-card .card-heart svg { width: 12px; height: 12px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; }
+
+@media (max-width: 768px) {
+  /* Mobil náhled adopce - světlé karty */
+  .mobile-adoption .mobile-cat-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .mobile-adoption .mobile-cat-card {
+    background: #fff !important;
+    border-radius: 14px !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    overflow: hidden;
+    position: relative;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-img {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    aspect-ratio: 4 / 3 !important;
+    background: #f0ece6;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-img img {
+    position: static !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-info {
+    padding: 10px 12px 12px !important;
+    flex: 0 0 auto !important;
+    align-self: stretch !important;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-name { font-size: 13px !important; margin-bottom: 3px !important; }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-meta {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px !important; color: #8a8480 !important;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-meta svg {
+    width: 10px; height: 10px; stroke: #b0a89f; fill: none; stroke-width: 1.8;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-badge {
+    background: rgba(255,255,255,0.94) !important;
+    color: #1a1a1a !important;
+    border-radius: 999px !important;
+    padding: 4px 8px !important;
+    font-size: 8px !important;
+    letter-spacing: 0.4px;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-badge.reserved { background: #f4c87a !important; color: #6b3e00 !important; }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-badge.adopted { background: #d8d8d8 !important; color: #555 !important; }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-badge.special { background: #fde2e2 !important; color: #a83232 !important; }
+}
+
 </style>
 </head>
 <body>
@@ -7640,25 +7985,43 @@ function loadLandingCats() {
         return;
       }
       
+      var heartSvg = '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+      var pinSvg = '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+      var calSvg = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+
       grid.innerHTML = toShow.map(function(cat) {
-        var badgeHtml = '';
-        if (cat.status === 'adoptovana') {
-          badgeHtml = '<div class="mini-cat-badge" style="background:#6b7280;">Adoptována</div>';
-        } else if (cat.status === 'zamluvena') {
-          badgeHtml = '<div class="mini-cat-badge" style="background:#e8941a;">Zamluvená</div>';
-        } else if (cat.badge) {
-          badgeHtml = '<div class="mini-cat-badge">' + cat.badge + '</div>';
+        var badgeClass = '';
+        var badgeText = '';
+        if (cat.status === 'adoptovana') { badgeClass = 'adopted'; badgeText = 'Adoptována'; }
+        else if (cat.status === 'zamluvena') { badgeClass = 'reserved'; badgeText = 'Rezervace'; }
+        else if (cat.badge) { badgeText = cat.badge; badgeClass = cat.badgeClass || ''; }
+        var badgeHtml = badgeText ? '<div class="mini-cat-badge ' + badgeClass + '">' + badgeText + '</div>' : '';
+
+        var ageRaw = String(cat.age || '').trim();
+        var ageText = ageRaw;
+        if (/^\d+$/.test(ageRaw)) {
+          var n = parseInt(ageRaw, 10);
+          if (n === 1) ageText = '1 rok';
+          else if (n >= 2 && n <= 4) ageText = n + ' roky';
+          else ageText = n + ' let';
         }
-        
+        var sexText = cat.sex || '';
+        var ageLine = [ageText, sexText].filter(Boolean).join(' • ');
+
         var cardStyle = cat.status === 'adoptovana' ? ' style="opacity:0.7;"' : '';
-        
+
         return '<div class="mini-cat-card"' + cardStyle + ' onclick="showCatDetail(\'' + cat.id + '\', true)">' +
-          '<div class="mini-cat-info">' + badgeHtml +
-          '<div class="mini-cat-name">' + cat.name + '</div>' +
-          '<div class="mini-cat-meta">' + (cat.age || '') + ' / ' + (cat.sex || '') + '</div>' +
+          '<div class="card-photo">' +
+            '<img src="' + (cat.photoUrl || 'placeholder.png') + '" alt="' + cat.name + '">' +
+            badgeHtml +
+            '<div class="card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvg + '</div>' +
           '</div>' +
-          '<img src="' + (cat.photoUrl || 'placeholder.png') + '" alt="' + cat.name + '">' +
-          '</div>';
+          '<div class="mini-cat-info">' +
+            '<div class="mini-cat-name">' + cat.name + '</div>' +
+            '<div class="mini-cat-meta-row">' + pinSvg + '<span>Praha</span></div>' +
+            (ageLine ? '<div class="mini-cat-meta-row">' + calSvg + '<span>' + ageLine + '</span></div>' : '') +
+          '</div>' +
+        '</div>';
       }).join('');
     })
     .catch(function(err) {
@@ -8875,15 +9238,26 @@ function renderMobileCats() {
       }
       
       var imgSrc = cat.photoUrl || (cat.img ? cat.img.match(/src="([^"]+)"/)?.[1] : '1.png') || '1.png';
-      
+
+      var ageRaw = String(cat.age || '').trim();
+      var ageText = ageRaw;
+      if (/^\d+$/.test(ageRaw)) {
+        var n = parseInt(ageRaw, 10);
+        if (n === 1) ageText = '1 rok';
+        else if (n >= 2 && n <= 4) ageText = n + ' roky';
+        else ageText = n + ' let';
+      }
+      var calSvg = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+      var metaLine = [cat.sex, ageText].filter(Boolean).join(' • ');
+
       return '<div class="mobile-cat-card" onclick="showCatDetail(\'' + cat.id + '\', true)">' +
-        '<div class="mobile-cat-card-badge ' + badgeClass + '">' + badgeText + '</div>' +
-        '<div class="mobile-cat-card-info">' +
-          '<div class="mobile-cat-card-name">' + cat.name + '</div>' +
-          '<div class="mobile-cat-card-meta">' + cat.sex + ', ' + cat.age + '</div>' +
-        '</div>' +
         '<div class="mobile-cat-card-img">' +
           '<img src="' + imgSrc + '" alt="' + cat.name + '">' +
+          '<div class="mobile-cat-card-badge ' + badgeClass + '">' + badgeText + '</div>' +
+        '</div>' +
+        '<div class="mobile-cat-card-info">' +
+          '<div class="mobile-cat-card-name">' + cat.name + '</div>' +
+          '<div class="mobile-cat-card-meta">' + calSvg + '<span>' + metaLine + '</span></div>' +
         '</div>' +
       '</div>';
     }).join('');
