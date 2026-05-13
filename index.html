@@ -6157,6 +6157,25 @@ body.showing-admin .global-back-btn {
   }
 }
 
+/* ======================================================
+   Skrýt boční menu panel + zrcadlit sekci O nás
+   ====================================================== */
+.sidebar-left { display: none !important; }
+
+/* Sekce 2 (O nás) — foto vlevo, text vpravo */
+.section-2 .content {
+  left: auto !important;
+  right: 16% !important;
+  max-width: 36%;
+}
+.section-2 .photo {
+  right: auto !important;
+  left: 0 !important;
+}
+.section-2 .photo img {
+  object-position: bottom left !important;
+}
+
 </style>
 </head>
 <body>
