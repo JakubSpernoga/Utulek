@@ -5614,7 +5614,7 @@ body.showing-admin .global-back-btn {
   background: #f5f1ec !important;
   max-width: 1100px !important;
   margin: 0 auto !important;
-  padding: 110px 24px 120px !important;
+  padding: 160px 24px 120px !important;
   display: block !important;
   overflow: visible !important;
   height: auto !important;
@@ -5624,14 +5624,21 @@ body.showing-admin .global-back-btn {
   background: transparent !important;
   padding: 0 !important;
   display: grid !important;
-  grid-template-columns: 1.05fr 1fr !important;
+  grid-template-columns: 1fr 1fr !important;
   gap: 48px;
-  align-items: center;
+  align-items: start;
   position: relative;
 }
 #view-cat-detail .cat-detail-hero::before { display: none !important; }
 
-/* FOTKA — vlevo na desktopu, plně vidět */
+/* Levý sloupec — foto + galerie pod ním */
+#view-cat-detail .cat-detail-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* FOTKA — menší než předtím */
 #view-cat-detail .cat-detail-photo {
   position: relative !important;
   right: auto !important;
@@ -5639,8 +5646,8 @@ body.showing-admin .global-back-btn {
   width: 100% !important;
   height: auto !important;
   aspect-ratio: 4 / 5 !important;
-  max-height: 560px !important;
-  border-radius: 24px !important;
+  max-height: 440px !important;
+  border-radius: 20px !important;
   overflow: hidden;
   background: #efe9e0;
   pointer-events: auto !important;
@@ -5809,7 +5816,7 @@ body.showing-admin .global-back-btn {
 
 #view-cat-detail .cat-detail-scroll { display: none !important; }
 
-/* Sekce — INFORMACE a VLASTNOSTI uvnitř hero (vedle fotky) */
+/* Sekce uvnitř hero (info/vlastnosti vpravo) */
 #view-cat-detail .cat-detail-hero-content .cat-detail-section {
   padding: 18px 0 0 !important;
   background: transparent !important;
@@ -5819,8 +5826,24 @@ body.showing-admin .global-back-btn {
 #view-cat-detail .cat-detail-hero-content .cat-detail-section.alt {
   background: transparent !important;
 }
-/* Sekce pod hero (galerie, příběh) */
-#view-cat-detail > .cat-detail-page > .cat-detail-section,
+/* Galerie uvnitř levého sloupce — kompaktní strip pod fotkou */
+#view-cat-detail .cat-detail-left .cat-detail-section {
+  padding: 0 !important;
+  background: transparent !important;
+  margin: 0 !important;
+  border-top: none !important;
+}
+#view-cat-detail .cat-detail-left .cat-detail-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 8px !important;
+}
+#view-cat-detail .cat-detail-left .cat-detail-gallery-item {
+  width: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 12px !important;
+}
+/* Sekce pod hero (jen příběh) */
 #view-cat-detail .cat-detail-page > .cat-detail-section {
   padding: 24px 0 !important;
   background: transparent !important;
@@ -8058,9 +8081,12 @@ function showCatDetail(catId, fromLanding) {
         '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>' +
         '<span>' + backBtnText + '</span>' +
       '</div>' +
-      // Hero sekce — foto vlevo, info + vlastnosti vpravo
+      // Hero — vlevo foto + galerie, vpravo info + vlastnosti
       '<div class="cat-detail-hero">' +
-        '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
+        '<div class="cat-detail-left">' +
+          '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
+          galleryHtml +
+        '</div>' +
         '<div class="cat-detail-hero-content">' +
           '<div class="cat-detail-subtitle">' + subtitleText + '</div>' +
           '<div class="cat-detail-name-row">' +
@@ -8072,13 +8098,11 @@ function showCatDetail(catId, fromLanding) {
           handicapHtml +
           noticeHtml +
           buttonsHtml +
-          // INFORMACE a VLASTNOSTI hned vedle fotky
           infoHtml +
           traitsHtml +
         '</div>' +
       '</div>' +
-      // Pod hero — galerie a příběh
-      galleryHtml +
+      // Pod hero — pouze příběh
       storyHtml +
       stickyCtaHtml;
 
