@@ -5343,71 +5343,101 @@ body.showing-admin .global-back-btn {
 }
 
 /* Welcome heading */
+#view-kocky .kocky-welcome-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 20px;
+}
 #view-kocky .kocky-welcome {
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 600;
   color: #1a1a1a;
-  margin: 0 0 24px;
-}
-#view-kocky .kocky-welcome small {
-  display: block;
-  font-size: 14px;
-  font-weight: 400;
-  color: #8a8480;
-  margin-top: 4px;
+  margin: 0;
 }
 
-/* Filter bar — pilulky */
-#view-kocky .kocky-filter-bar {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  gap: 18px;
-  margin-bottom: 28px !important;
-  padding: 0 !important;
-}
-#view-kocky .kocky-back-btn {
-  align-self: flex-start;
-  color: #1a1a1a !important;
-  border: 1px solid rgba(0,0,0,0.12) !important;
-  background: #fff !important;
-}
-#view-kocky .kocky-filter-toggle { display: none !important; }
-#view-kocky .kocky-filter-panel {
-  max-height: none !important;
-  margin-top: 0 !important;
-  overflow: visible !important;
-}
-#view-kocky .kocky-filter-group {
-  display: flex !important;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-#view-kocky .kocky-filter-tag {
-  background: #fff !important;
-  border: 1px solid transparent !important;
-  color: #6b6b6b !important;
-  padding: 11px 20px !important;
-  font-size: 13px !important;
-  font-weight: 500;
-  border-radius: 999px !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-  display: inline-flex;
+/* Floating back button */
+#view-kocky .kocky-back-btn-floating {
+  position: fixed;
+  top: 90px;
+  left: 20px;
+  background: #fff;
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-#view-kocky .kocky-filter-tag:hover {
-  background: #faf7f4 !important;
-  color: #1a1a1a !important;
-  border-color: transparent !important;
+#view-kocky .kocky-back-btn-floating svg {
+  width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 2;
 }
-#view-kocky .kocky-filter-tag.active {
-  background: #1a1a1a !important;
-  color: #fff !important;
-  border-color: #1a1a1a !important;
+
+/* Filter CHIPY s ikonami (jako ve vzoru) */
+#view-kocky .kocky-filter-chips {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
-#view-kocky .kocky-filter-divider { display: none !important; }
+.filter-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  flex: 1;
+  min-width: 60px;
+  max-width: 90px;
+  transition: transform 0.15s;
+}
+.filter-chip:hover { transform: translateY(-2px); }
+.filter-chip-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+.filter-chip-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #6b6b6b;
+  fill: none;
+  stroke-width: 1.8;
+  transition: stroke 0.2s;
+}
+.filter-chip.active .filter-chip-icon {
+  border-color: #1a1a1a;
+}
+.filter-chip.active .filter-chip-icon svg {
+  stroke: #1a1a1a;
+}
+.filter-chip-label {
+  font-size: 12px;
+  color: #6b6b6b;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+}
+.filter-chip.active .filter-chip-label {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+/* Old filter elements — skryt */
+#view-kocky .kocky-filter-bar,
+#view-kocky .kocky-filter-toggle,
+#view-kocky .kocky-filter-panel,
+#view-kocky .kocky-back-btn { display: none !important; }
 
 /* Grid */
 #view-kocky .kocky-cats-grid {
@@ -6214,25 +6244,33 @@ body.showing-admin .global-back-btn {
       <div class="arrow" onclick="goHome(); setTimeout(function(){scrollToSection(4)},100)"><svg viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></div>
     </div>
 
-    <!-- Obsah - filtr nahoře, grid koček -->
+    <!-- Obsah - welcome + filtr s ikonami + grid -->
     <div class="kocky-page">
-      <h1 class="kocky-welcome">
-        Naše kočky
-        <small>Najdi si svého kamaráda</small>
-      </h1>
-      <!-- Filtr nahoře -->
-      <div class="kocky-filter-bar">
-        <div class="kocky-back-btn" onclick="goToLandingAdopce()">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-          Zpět
+      <div class="kocky-back-btn-floating" onclick="goToLandingAdopce()" title="Zpět">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+
+      <div class="kocky-welcome-row">
+        <h1 class="kocky-welcome">Vítejte</h1>
+      </div>
+
+      <!-- Filter chipy s ikonami -->
+      <div class="kocky-filter-chips">
+        <div class="filter-chip active" onclick="setKockyFilter('status', 'all', this)">
+          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="2.5"/><circle cx="6" cy="14" r="2"/><circle cx="18" cy="14" r="2"/><circle cx="8.5" cy="6" r="1.8"/><circle cx="15.5" cy="6" r="1.8"/></svg></div>
+          <div class="filter-chip-label">Všechny</div>
         </div>
-        <div class="kocky-filter-panel open" id="kockyFilterPanel">
-          <div class="kocky-filter-group">
-            <span class="kocky-filter-tag active" onclick="setKockyFilter('status', 'all', this)">Všechny</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('status', 'dostupna', this)">K adopci</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('status', 'zamluvena', this)">Rezervace</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('status', 'special', this)">Speciální péče</span>
-          </div>
+        <div class="filter-chip" onclick="setKockyFilter('status', 'dostupna', this)">
+          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v11h14V10"/></svg></div>
+          <div class="filter-chip-label">K adopci</div>
+        </div>
+        <div class="filter-chip" onclick="setKockyFilter('status', 'zamluvena', this)">
+          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="filter-chip-label">Rezervace</div>
+        </div>
+        <div class="filter-chip" onclick="setKockyFilter('status', 'special', this)">
+          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="filter-chip-label">Speciální</div>
         </div>
       </div>
 
@@ -7433,9 +7471,9 @@ function toggleKockyFilter() {
 var currentKockyFilter = { status: 'all' };
 
 function setKockyFilter(type, value, el) {
-  var group = el.closest('.kocky-filter-group') || el.parentElement;
+  var group = el.closest('.kocky-filter-chips') || el.closest('.kocky-filter-group') || el.parentElement;
   if (group) {
-    group.querySelectorAll('.kocky-filter-tag').forEach(function(t) {
+    group.querySelectorAll('.filter-chip, .kocky-filter-tag').forEach(function(t) {
       t.classList.remove('active');
     });
   }
