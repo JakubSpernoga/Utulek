@@ -7683,9 +7683,9 @@ if (sectionsEl) {
     nearest = Math.max(0, Math.min(sectionEls.length - 1, nearest));
     var target = nearest * height;
     var distance = Math.abs(scrollTop - target);
-    // Snap jen když jsi blízko (do 25 % výšky viewportu) — jinak nech být
-    if (distance > 1 && distance < height * 0.25) {
-      softSnapTo(target, 700); // 700 ms jemná animace
+    // Snap jen když jsi opravdu blízko (do 10 % výšky viewportu)
+    if (distance > 1 && distance < height * 0.10) {
+      softSnapTo(target, 800);
     }
   }
 
@@ -7695,7 +7695,8 @@ if (sectionsEl) {
       ticking = true;
     }
     clearTimeout(snapTimeout);
-    snapTimeout = setTimeout(maybeSnap, 160);
+    // Počkáme déle (300 ms), ať tě snap nepřitáhne během scrollování
+    snapTimeout = setTimeout(maybeSnap, 300);
   }, { passive: true });
 
   updateTheme(0);
