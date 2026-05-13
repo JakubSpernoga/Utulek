@@ -5761,11 +5761,14 @@ body.show-views #view-cat-detail .cat-detail-buttons {
 /* Skrýt SVG ikony u tlačítek (jen text vejde se lépe) */
 #view-cat-detail .cat-detail-buttons .adopt-btn svg,
 #view-cat-detail .cat-detail-buttons .sponsor-btn svg { display: none !important; }
-/* Přebít starý mobilní override flex-direction:column */
+/* Mobil — kompaktní tlačítka, ať se text "Chci adoptovat" vejde */
 body.show-views #view-cat-detail .cat-detail-buttons .adopt-btn,
 body.show-views #view-cat-detail .cat-detail-buttons .sponsor-btn {
-  padding: 14px 12px !important;
-  font-size: 13px !important;
+  padding: 13px 8px !important;
+  font-size: 12px !important;
+  letter-spacing: -0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #view-cat-detail .sponsor-btn:hover { background: #f5f1ec !important; }
 /* Skryjeme samostatný Podporit button — Podporit je teď jako sponsor-btn */
