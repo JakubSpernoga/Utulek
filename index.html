@@ -5311,6 +5311,217 @@ body.showing-admin .global-back-btn {
   .page-card { margin-left: 8px; margin-right: 8px; }
 }
 
+/* ======================================================
+   ADOPCE REDESIGN — světlý vzhled, vertikální karty
+   ====================================================== */
+#view-kocky { background: #f5f1ec !important; }
+
+/* Skryt tmavé sidebary a šipky na tomto view */
+#view-kocky .sidebar-left,
+#view-kocky .sidebar-right,
+#view-kocky .arrows { display: none !important; }
+
+/* Light header pro view-kocky */
+#view-kocky .header.dark { background: #f5f1ec !important; }
+#view-kocky .header.dark .logo,
+#view-kocky .header.dark .nav a { color: #1a1a1a !important; }
+#view-kocky .header.dark .nav a.active { color: #d4a574 !important; }
+#view-kocky .header.dark .header-right svg,
+#view-kocky .header.dark .phone-icon svg { stroke: #1a1a1a !important; }
+
+/* Layout stránky */
+#view-kocky .kocky-page {
+  position: static !important;
+  transform: none !important;
+  max-height: none !important;
+  overflow: visible !important;
+  left: auto !important;
+  right: auto !important;
+  max-width: 1280px;
+  margin: 0 auto !important;
+  padding: 32px 32px 80px !important;
+}
+
+/* Welcome heading */
+#view-kocky .kocky-welcome {
+  font-size: 32px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 24px;
+}
+#view-kocky .kocky-welcome small {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: #8a8480;
+  margin-top: 4px;
+}
+
+/* Filter bar — pilulky */
+#view-kocky .kocky-filter-bar {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 18px;
+  margin-bottom: 28px !important;
+  padding: 0 !important;
+}
+#view-kocky .kocky-back-btn {
+  align-self: flex-start;
+  color: #1a1a1a !important;
+  border: 1px solid rgba(0,0,0,0.12) !important;
+  background: #fff !important;
+}
+#view-kocky .kocky-filter-toggle { display: none !important; }
+#view-kocky .kocky-filter-panel {
+  max-height: none !important;
+  margin-top: 0 !important;
+  overflow: visible !important;
+}
+#view-kocky .kocky-filter-group {
+  display: flex !important;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+#view-kocky .kocky-filter-tag {
+  background: #fff !important;
+  border: 1px solid transparent !important;
+  color: #6b6b6b !important;
+  padding: 11px 20px !important;
+  font-size: 13px !important;
+  font-weight: 500;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+#view-kocky .kocky-filter-tag:hover {
+  background: #faf7f4 !important;
+  color: #1a1a1a !important;
+  border-color: transparent !important;
+}
+#view-kocky .kocky-filter-tag.active {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  border-color: #1a1a1a !important;
+}
+#view-kocky .kocky-filter-divider { display: none !important; }
+
+/* Grid */
+#view-kocky .kocky-cats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px !important;
+}
+@media (max-width: 1100px) {
+  #view-kocky .kocky-cats-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 768px) {
+  #view-kocky .kocky-cats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 14px !important; }
+  #view-kocky .kocky-page { padding: 20px 16px 80px !important; }
+  #view-kocky .kocky-welcome { font-size: 26px; margin-bottom: 18px; }
+}
+
+/* === KARTA KOČKY (nový vzhled) === */
+#view-kocky .mini-cat-card {
+  background: #fff !important;
+  border-radius: 18px !important;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.22s, box-shadow 0.22s;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  height: auto !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  position: relative;
+}
+#view-kocky .mini-cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+#view-kocky .mini-cat-card .card-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f0ece6;
+}
+#view-kocky .mini-cat-card .card-photo img {
+  position: static !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block;
+}
+#view-kocky .mini-cat-card .card-heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.94);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  transition: background 0.2s;
+}
+#view-kocky .mini-cat-card .card-heart svg { width: 15px; height: 15px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; transition: all 0.2s; }
+#view-kocky .mini-cat-card .card-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
+
+#view-kocky .mini-cat-card .mini-cat-info {
+  padding: 14px 14px 16px !important;
+  flex: 0 0 auto !important;
+  align-self: stretch !important;
+}
+#view-kocky .mini-cat-card .mini-cat-badge {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  background: rgba(255,255,255,0.94) !important;
+  color: #1a1a1a !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  padding: 5px 10px !important;
+  border-radius: 999px !important;
+  z-index: 4;
+  letter-spacing: 0.5px;
+}
+#view-kocky .mini-cat-card .mini-cat-badge.reserved { background: #f4c87a !important; color: #6b3e00 !important; }
+#view-kocky .mini-cat-card .mini-cat-badge.adopted { background: #d8d8d8 !important; color: #555 !important; }
+#view-kocky .mini-cat-card .mini-cat-badge.special { background: #fde2e2 !important; color: #a83232 !important; }
+#view-kocky .mini-cat-card .mini-cat-badge.new { background: #d9f0e0 !important; color: #1f6e3a !important; }
+#view-kocky .mini-cat-card .mini-cat-badge.urgent { background: #fce0d2 !important; color: #b14c00 !important; }
+#view-kocky .mini-cat-card .mini-cat-name {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  margin: 0 0 6px !important;
+}
+#view-kocky .mini-cat-card .mini-cat-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #8a8480;
+  margin-top: 3px;
+}
+#view-kocky .mini-cat-card .mini-cat-meta-row svg {
+  width: 12px;
+  height: 12px;
+  stroke: #b0a89f;
+  fill: none;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+/* Skryjeme starý mini-cat-meta single-line (nahrazujeme řádky s ikonami) */
+#view-kocky .mini-cat-card .mini-cat-meta:not(.mini-cat-meta-row) { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -5577,30 +5788,26 @@ body.showing-admin .global-back-btn {
 
     <!-- Obsah - filtr nahoře, grid koček -->
     <div class="kocky-page">
+      <h1 class="kocky-welcome">
+        Naše kočky
+        <small>Najdi si svého kamaráda</small>
+      </h1>
       <!-- Filtr nahoře -->
       <div class="kocky-filter-bar">
         <div class="kocky-back-btn" onclick="goToLandingAdopce()">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
           Zpět
         </div>
-        <div class="kocky-filter-toggle" onclick="toggleKockyFilter()" id="kockyFilterBtn">
-          Filtrovat
-          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div class="kocky-filter-panel" id="kockyFilterPanel">
+        <div class="kocky-filter-panel open" id="kockyFilterPanel">
           <div class="kocky-filter-group">
-            <span class="kocky-filter-tag active" onclick="setKockyFilter('age', null, this)">Vše</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('age', 'kotata', this)">Koťata</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('age', 'dospele', this)">Dospělé</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('age', 'seniori', this)">Senioři</span>
-            <span class="kocky-filter-divider"></span>
-            <span class="kocky-filter-tag active" onclick="setKockyFilter('sex', null, this)">Vše</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('sex', 'Kočka', this)">Kočky</span>
-            <span class="kocky-filter-tag" onclick="setKockyFilter('sex', 'Kocour', this)">Kocouři</span>
+            <span class="kocky-filter-tag active" onclick="setKockyFilter('status', 'all', this)">Všechny</span>
+            <span class="kocky-filter-tag" onclick="setKockyFilter('status', 'dostupna', this)">K adopci</span>
+            <span class="kocky-filter-tag" onclick="setKockyFilter('status', 'zamluvena', this)">Rezervace</span>
+            <span class="kocky-filter-tag" onclick="setKockyFilter('status', 'special', this)">Speciální péče</span>
           </div>
         </div>
       </div>
-      
+
       <!-- Grid koček -->
       <div class="kocky-cats-grid" id="catsGrid">
         <!-- Cats populated by JS -->
@@ -6712,95 +6919,100 @@ if (catsData.length === 0) {
 function renderCats(filter) {
   var grid = document.getElementById('catsGrid');
   if (!grid) return;
-  
-  grid.innerHTML = '<div class="mini-cat-card" style="display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.4);font-size:14px;">Načítám...</div>';
-  
-  var MIN_CATS = 6;
-  
+
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:rgba(0,0,0,0.4);font-size:14px;">Načítám...</div>';
+
   loadCatsFromAPI().then(function() {
     grid.innerHTML = '';
-    
-    var available = catsData.filter(function(c) { return c.status === 'dostupna' || c.status === 'zamluvena'; });
-    var adopted = catsData.filter(function(c) { return c.status === 'adoptovana'; });
-    
-    var filtered = available;
-    if (filter && filter.sex) {
-      filtered = filtered.filter(function(c) { return c.sex === filter.sex; });
+
+    var status = (filter && filter.status) || 'all';
+    var pool = catsData.filter(function(c) { return c.status !== 'adoptovana'; });
+
+    var filtered;
+    if (status === 'all') {
+      filtered = pool;
+    } else if (status === 'dostupna') {
+      filtered = pool.filter(function(c) { return c.status === 'dostupna'; });
+    } else if (status === 'zamluvena') {
+      filtered = pool.filter(function(c) { return c.status === 'zamluvena'; });
+    } else if (status === 'special') {
+      filtered = pool.filter(function(c) { return c.badgeClass === 'special' || (c.handicap && c.handicap.length); });
+    } else {
+      filtered = pool;
     }
-    if (filter && filter.age) {
-      filtered = filtered.filter(function(c) {
-        var ageNum = parseInt(c.age) || 0;
-        var ageLower = (c.age || '').toLowerCase();
-        if (filter.age === 'kotata') return ageNum < 1 || ageLower.indexOf('mes') > -1 || ageLower.indexOf('měs') > -1;
-        if (filter.age === 'dospele') return ageNum >= 1 && ageNum < 8;
-        if (filter.age === 'seniori') return ageNum >= 8;
-        return true;
-      });
-    }
-    
-    var toDisplay = filtered.slice();
-    if (toDisplay.length < MIN_CATS && adopted.length > 0) {
-      var needed = MIN_CATS - toDisplay.length;
-      toDisplay = toDisplay.concat(adopted.slice(0, needed));
-    }
-    
-    if (toDisplay.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:rgba(255,255,255,0.4);">Žádné kočky neodpovídají filtru</div>';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:rgba(0,0,0,0.4);">Žádné kočky neodpovídají filtru</div>';
       return;
     }
-    
-    toDisplay.forEach(function(cat) {
+
+    var heartSvg = '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+    var pinSvg = '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+    var calSvg = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+
+    var html = filtered.map(function(cat) {
       var badgeClass = '';
       var badgeText = '';
-      if (cat.status === 'adoptovana') {
-        badgeClass = 'adopted';
-        badgeText = 'Adoptována';
-      } else if (cat.status === 'zamluvena') {
-        badgeClass = 'reserved';
-        badgeText = 'Zamluvena';
+      if (cat.status === 'zamluvena') {
+        badgeClass = 'reserved'; badgeText = 'Rezervace';
       } else if (cat.badge) {
         badgeText = cat.badge;
         if (cat.badgeClass) badgeClass = cat.badgeClass;
       }
       var badgeHtml = badgeText ? '<div class="mini-cat-badge ' + badgeClass + '">' + badgeText + '</div>' : '';
-      
-      var imgHtml = cat.img || '';
-      if (cat.photoUrl) {
-        imgHtml = '<img src="' + cat.photoUrl + '" alt="' + cat.name + '">';
+
+      var imgSrc = cat.photoUrl || 'placeholder.png';
+      var origin = 'Praha';
+      // Pokud je cat.age jenom číslo, přidáme správný tvar (rok/roky/let)
+      var ageRaw = String(cat.age || '').trim();
+      var ageText = ageRaw;
+      if (/^\d+$/.test(ageRaw)) {
+        var n = parseInt(ageRaw, 10);
+        if (n === 1) ageText = '1 rok';
+        else if (n >= 2 && n <= 4) ageText = n + ' roky';
+        else ageText = n + ' let';
       }
-      
-      var html = '<div class="mini-cat-card" onclick="showCatDetail(\'' + cat.id + '\', false)">' +
-        '<div class="mini-cat-info">' +
-        badgeHtml +
-        '<div class="mini-cat-name">' + cat.name + '</div>' +
-        '<div class="mini-cat-meta">' + (cat.age || '') + ' / ' + (cat.sex || '') + '</div>' +
+      var sexText = cat.sex || '';
+      var ageLine = [ageText, sexText].filter(Boolean).join(' • ');
+
+      return '<div class="mini-cat-card" onclick="showCatDetail(\'' + cat.id + '\', false)">' +
+        '<div class="card-photo">' +
+          '<img src="' + imgSrc + '" alt="' + cat.name + '">' +
+          badgeHtml +
+          '<div class="card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvg + '</div>' +
         '</div>' +
-        imgHtml +
+        '<div class="mini-cat-info">' +
+          '<div class="mini-cat-name">' + cat.name + '</div>' +
+          '<div class="mini-cat-meta-row">' + pinSvg + '<span>' + origin + '</span></div>' +
+          (ageLine ? '<div class="mini-cat-meta-row">' + calSvg + '<span>' + ageLine + '</span></div>' : '') +
+        '</div>' +
         '</div>';
-      grid.innerHTML += html;
-    });
+    }).join('');
+
+    grid.innerHTML = html;
   });
 }
 
-/* Toggle filtr v kocky page */
+/* Toggle filtr v kocky page (zachováno pro zpětnou kompatibilitu) */
 function toggleKockyFilter() {
   var panel = document.getElementById('kockyFilterPanel');
-  var btn = document.getElementById('kockyFilterBtn');
+  if (!panel) return;
   panel.classList.toggle('open');
-  btn.classList.toggle('active');
 }
 
-var currentKockyFilter = { age: null, sex: null };
+var currentKockyFilter = { status: 'all' };
 
 function setKockyFilter(type, value, el) {
-  var group = el.closest('.kocky-filter-tags');
-  group.querySelectorAll('.kocky-filter-tag').forEach(function(t) {
-    t.classList.remove('active');
-  });
+  var group = el.closest('.kocky-filter-group') || el.parentElement;
+  if (group) {
+    group.querySelectorAll('.kocky-filter-tag').forEach(function(t) {
+      t.classList.remove('active');
+    });
+  }
   el.classList.add('active');
-  
+
   currentKockyFilter[type] = value;
-  renderCats(currentKockyFilter.age || currentKockyFilter.sex ? currentKockyFilter : null);
+  renderCats(currentKockyFilter);
 }
 
 // Ulozeni zdroje odkud prisel uzivatel na detail kocky
