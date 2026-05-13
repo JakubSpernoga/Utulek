@@ -5679,10 +5679,43 @@ body.showing-admin .global-back-btn {
   max-width: 100% !important;
 }
 
-/* Tlačítka v hero — skryjeme, primární akce je v sticky CTA dole */
+/* Tlačítka v hero: Chci adoptovat (černé) + Podpořit (světlé) vedle sebe */
 #view-cat-detail .cat-detail-buttons {
-  display: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  gap: 10px !important;
+  margin: 18px 0 8px !important;
 }
+#view-cat-detail .adopt-btn {
+  padding: 14px 28px !important;
+  background: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 170px;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+#view-cat-detail .adopt-btn:hover { background: #333 !important; }
+#view-cat-detail .sponsor-btn {
+  padding: 14px 24px !important;
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  color: #1a1a1a !important;
+  border-radius: 999px !important;
+  flex: 1 1 auto;
+  min-width: 150px;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+#view-cat-detail .sponsor-btn:hover { background: #f5f1ec !important; }
+/* Skryjeme samostatný Podporit button — Podporit je teď jako sponsor-btn */
+#view-cat-detail .cat-detail-support-btn { display: none !important; }
+/* Skrýt celou sticky lištu */
+#view-cat-detail .cat-detail-sticky-cta { display: none !important; }
 #view-cat-detail .cat-detail-support-btn {
   border-radius: 999px !important;
   background: transparent !important;
@@ -7678,20 +7711,22 @@ function showCatDetail(catId, fromLanding) {
       handicapHtml = '<div class="cat-handicap"><strong>Hendikep:</strong> ' + cat.handicap + '</div>';
     }
     
-    // Buttons
+    // Buttons - Chci adoptovat + Podpořit vedle sebe
+    var supportBtn = '<button class="sponsor-btn" onclick="sponsorCat(\'' + cat.name + '\')">Podpořit</button>';
     var buttonsHtml = '<div class="cat-detail-buttons">';
     if (cat.status === 'zamluvena') {
-      // Zamluvena - jen Vice informaci
-      buttonsHtml += '<button class="sponsor-btn" onclick="scrollToCatDetailSection()">Vice informaci</button>';
+      buttonsHtml += '<button class="sponsor-btn" onclick="scrollToCatDetailSection()">Více informací</button>';
+      buttonsHtml += supportBtn;
     } else if (cat.status !== 'adoptovana') {
-      // K adopci - Chci adoptovat + Vice informaci
       var formType = cat.formType || 'adopce';
       if (formType === 'docasna') {
-        buttonsHtml += '<button class="adopt-btn" onclick="openDocasnaForm(\'' + cat.name + '\', \'' + cat.id + '\')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Chci pečovat</button>';
+        buttonsHtml += '<button class="adopt-btn" onclick="openDocasnaForm(\'' + cat.name + '\', \'' + cat.id + '\')">Chci pečovat</button>';
       } else {
-        buttonsHtml += '<button class="adopt-btn" onclick="openAdoptForm(\'' + cat.name + '\', \'' + cat.id + '\')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Chci adoptovat</button>';
+        buttonsHtml += '<button class="adopt-btn" onclick="openAdoptForm(\'' + cat.name + '\', \'' + cat.id + '\')">Chci adoptovat</button>';
       }
-      buttonsHtml += '<button class="sponsor-btn" onclick="scrollToCatDetailSection()">Vice informaci</button>';
+      buttonsHtml += supportBtn;
+    } else {
+      buttonsHtml += '<button class="sponsor-btn" onclick="sponsorCat(\'' + cat.name + '\')">Podpořit ostatní kočky</button>';
     }
     buttonsHtml += '</div>';
 
