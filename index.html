@@ -6158,9 +6158,33 @@ body.showing-admin .global-back-btn {
 }
 
 /* ======================================================
-   Skrýt boční menu panel
+   Skrýt boční menu panel + posunout obsah blíž ke kraji
    ====================================================== */
 .sidebar-left { display: none !important; }
+
+/* Obsah sekcí blíž k levému okraji (sidebar je pryč) */
+.section-1 .content,
+.section-2 .content,
+.section-3 .left-side,
+.section-4 .content,
+.section-5 .content {
+  left: 6% !important;
+}
+
+/* Pravé obrázky pryč od kraje */
+.section-3 .right-side {
+  right: 3% !important;
+}
+
+@media (max-width: 900px) {
+  .section-1 .content,
+  .section-2 .content,
+  .section-3 .left-side,
+  .section-4 .content,
+  .section-5 .content {
+    left: 5% !important;
+  }
+}
 
 </style>
 </head>
