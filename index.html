@@ -5723,37 +5723,49 @@ body.showing-admin .global-back-btn {
   max-width: 100% !important;
 }
 
-/* Tlačítka v hero: Chci adoptovat (černé) + Podpořit (světlé) vedle sebe */
-#view-cat-detail .cat-detail-buttons {
+/* Tlačítka v hero: Chci adoptovat + Podpořit vedle sebe (i na mobilu) */
+#view-cat-detail .cat-detail-buttons,
+body.show-views #view-cat-detail .cat-detail-buttons {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: wrap;
+  flex-wrap: nowrap !important;
   gap: 10px !important;
   margin: 18px 0 8px !important;
 }
 #view-cat-detail .adopt-btn {
-  padding: 14px 28px !important;
+  padding: 14px 16px !important;
   background: #1a1a1a !important;
   border: 1px solid #1a1a1a !important;
   color: #fff !important;
   border-radius: 999px !important;
   justify-content: center;
-  flex: 1 1 auto;
-  min-width: 170px;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
   font-size: 14px !important;
   font-weight: 500;
+  white-space: nowrap;
 }
 #view-cat-detail .adopt-btn:hover { background: #333 !important; }
 #view-cat-detail .sponsor-btn {
-  padding: 14px 24px !important;
+  padding: 14px 16px !important;
   background: #fff !important;
   border: 1px solid rgba(0,0,0,0.1) !important;
   color: #1a1a1a !important;
   border-radius: 999px !important;
-  flex: 1 1 auto;
-  min-width: 150px;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
   font-size: 14px !important;
   font-weight: 500;
+  white-space: nowrap;
+}
+/* Skrýt SVG ikony u tlačítek (jen text vejde se lépe) */
+#view-cat-detail .cat-detail-buttons .adopt-btn svg,
+#view-cat-detail .cat-detail-buttons .sponsor-btn svg { display: none !important; }
+/* Přebít starý mobilní override flex-direction:column */
+body.show-views #view-cat-detail .cat-detail-buttons .adopt-btn,
+body.show-views #view-cat-detail .cat-detail-buttons .sponsor-btn {
+  padding: 14px 12px !important;
+  font-size: 13px !important;
 }
 #view-cat-detail .sponsor-btn:hover { background: #f5f1ec !important; }
 /* Skryjeme samostatný Podporit button — Podporit je teď jako sponsor-btn */
