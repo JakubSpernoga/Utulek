@@ -5428,10 +5428,10 @@ body.showing-admin .global-back-btn {
   #view-kocky .kocky-welcome small { font-size: 12px; }
 }
 
-/* === KARTA KOČKY (nový vzhled) === */
+/* === KARTA KOČKY (vzor: foto uvnitř karty, srdíčko vedle jména) === */
 #view-kocky .mini-cat-card {
   background: #fff !important;
-  border-radius: 14px !important;
+  border-radius: 18px !important;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.22s, box-shadow 0.22s;
@@ -5439,19 +5439,22 @@ body.showing-admin .global-back-btn {
   flex-direction: column !important;
   align-items: stretch !important;
   height: auto !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
   position: relative;
+  padding: 8px 8px 12px !important;
 }
 #view-kocky .mini-cat-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
 }
 #view-kocky .mini-cat-card .card-photo {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #f0ece6;
+  border-radius: 14px;
+  margin-bottom: 10px;
 }
 #view-kocky .mini-cat-card .card-photo img {
   position: static !important;
@@ -5461,32 +5464,31 @@ body.showing-admin .global-back-btn {
   object-position: center center !important;
   display: block;
 }
+/* Srdíčko TEĎ vedle jména */
 #view-kocky .mini-cat-card .card-heart {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 26px;
-  height: 26px;
-  background: rgba(255,255,255,0.94);
+  width: 22px;
+  height: 22px;
+  background: transparent;
   border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  z-index: 4;
-  transition: background 0.2s;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+  cursor: pointer;
 }
-#view-kocky .mini-cat-card .card-heart svg { width: 13px; height: 13px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; transition: all 0.2s; }
+#view-kocky .mini-cat-card .card-heart svg { width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; transition: all 0.2s; }
 #view-kocky .mini-cat-card .card-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
 
 #view-kocky .mini-cat-card .mini-cat-info {
-  padding: 10px 12px 12px !important;
+  padding: 0 6px !important;
   flex: 0 0 auto !important;
   align-self: stretch !important;
 }
 #view-kocky .mini-cat-card .mini-cat-badge {
   position: absolute !important;
-  top: 8px !important;
-  left: 8px !important;
+  top: 16px !important;
+  left: 16px !important;
   background: rgba(255,255,255,0.94) !important;
   color: #1a1a1a !important;
   font-size: 8px !important;
@@ -5501,11 +5503,24 @@ body.showing-admin .global-back-btn {
 #view-kocky .mini-cat-card .mini-cat-badge.special { background: #fde2e2 !important; color: #a83232 !important; }
 #view-kocky .mini-cat-card .mini-cat-badge.new { background: #d9f0e0 !important; color: #1f6e3a !important; }
 #view-kocky .mini-cat-card .mini-cat-badge.urgent { background: #fce0d2 !important; color: #b14c00 !important; }
+
+/* Hlava karty: jméno + srdíčko v jednom řádku */
+#view-kocky .mini-cat-card .mini-cat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
 #view-kocky .mini-cat-card .mini-cat-name {
   font-size: 14px !important;
   font-weight: 600 !important;
   color: #1a1a1a !important;
-  margin: 0 0 4px !important;
+  margin: 0 !important;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #view-kocky .mini-cat-card .mini-cat-meta-row {
   display: flex;
@@ -5513,7 +5528,7 @@ body.showing-admin .global-back-btn {
   gap: 5px;
   font-size: 11px;
   color: #8a8480;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 #view-kocky .mini-cat-card .mini-cat-meta-row svg {
   width: 11px;
@@ -5527,86 +5542,38 @@ body.showing-admin .global-back-btn {
 #view-kocky .mini-cat-card .mini-cat-meta:not(.mini-cat-meta-row) { display: none !important; }
 
 /* ======================================================
-   DETAIL KOČKY — redesign
+   DETAIL KOČKY — mobile-style karta, foto nahoře, button dole
    ====================================================== */
+#view-cat-detail { background: #f5f1ec !important; }
+#view-cat-detail .cat-detail-page {
+  background: #f5f1ec !important;
+  max-width: 680px !important;
+  margin: 0 auto !important;
+  padding: 80px 20px 120px !important;
+}
 #view-cat-detail .cat-detail-hero {
   min-height: auto !important;
-  background: #f5f1ec !important;
-  padding: 24px 6% 56px !important;
-  display: grid !important;
-  grid-template-columns: 1.05fr 1fr !important;
-  gap: 56px;
-  align-items: center;
+  background: transparent !important;
+  padding: 0 !important;
+  display: block !important;
   position: relative;
 }
 #view-cat-detail .cat-detail-hero::before { display: none !important; }
-#view-cat-detail .cat-detail-hero-content {
-  position: static !important;
-  transform: none !important;
-  max-width: 100% !important;
-  z-index: 2;
-}
-#view-cat-detail .cat-detail-subtitle {
-  font-size: 11px !important;
-  color: #d4a574 !important;
-  margin-bottom: 12px !important;
-  letter-spacing: 3px !important;
-}
-#view-cat-detail .cat-detail-name {
-  font-size: 56px !important;
-  font-weight: 700 !important;
-  margin-bottom: 14px !important;
-  letter-spacing: -1px;
-}
-#view-cat-detail .cat-detail-meta {
-  font-size: 15px !important;
-  color: #6b6b6b !important;
-  margin-bottom: 18px !important;
-}
-#view-cat-detail .cat-detail-desc {
-  font-size: 14px !important;
-  line-height: 1.7 !important;
-  color: #6b6b6b !important;
-  margin-bottom: 28px !important;
-  max-width: 480px;
-}
-#view-cat-detail .cat-detail-buttons {
-  margin-bottom: 24px !important;
-  gap: 12px !important;
-}
-#view-cat-detail .adopt-btn {
-  padding: 16px 30px !important;
-  background: #d4a574 !important;
-  border-color: #d4a574 !important;
-  border-radius: 999px !important;
-  box-shadow: 0 6px 16px rgba(212,165,116,0.28);
-}
-#view-cat-detail .sponsor-btn {
-  padding: 16px 26px !important;
-  border-radius: 999px !important;
-  background: #fff !important;
-  border: 1px solid rgba(0,0,0,0.1) !important;
-}
-#view-cat-detail .cat-detail-support-btn {
-  border-radius: 999px !important;
-  background: #fff !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  padding: 12px 22px !important;
-}
 
-/* Foto karta — velká zaoblená */
+/* FOTKA NAHOŘE — velká zaoblená */
 #view-cat-detail .cat-detail-photo {
   position: relative !important;
   right: auto !important;
   bottom: auto !important;
   width: 100% !important;
   height: auto !important;
-  aspect-ratio: 4 / 5 !important;
-  border-radius: 28px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 24px !important;
   overflow: hidden;
   background: #efe9e0;
   pointer-events: auto !important;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+  margin: 0 0 20px !important;
 }
 #view-cat-detail .cat-detail-photo img {
   position: absolute !important;
@@ -5616,113 +5583,174 @@ body.showing-admin .global-back-btn {
   object-fit: cover !important;
   object-position: center !important;
 }
-#view-cat-detail .cat-detail-photo::after {
-  content: '';
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 38px;
-  height: 38px;
-  background: rgba(255,255,255,0.92) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%231a1a1a" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>') center / 18px no-repeat;
-  border-radius: 50%;
-  pointer-events: none;
-}
 
-#view-cat-detail .cat-detail-scroll {
+/* INFO POD FOTKOU */
+#view-cat-detail .cat-detail-hero-content {
+  position: static !important;
+  transform: none !important;
+  max-width: 100% !important;
+  z-index: 2;
+  padding: 0 4px;
+}
+#view-cat-detail .cat-detail-subtitle {
   display: none !important;
 }
+/* Hlava: jméno + srdíčko */
+#view-cat-detail .cat-detail-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+#view-cat-detail .cat-detail-name {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin: 0 !important;
+  letter-spacing: -0.5px;
+}
+#view-cat-detail .detail-heart {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+#view-cat-detail .detail-heart svg { width: 20px; height: 20px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; }
+#view-cat-detail .detail-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
 
-/* Sekce pod hero */
+/* Meta řádky s ikonami */
+#view-cat-detail .cat-detail-meta {
+  display: none !important;
+}
+#view-cat-detail .cat-detail-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+#view-cat-detail .cat-detail-meta-row svg {
+  width: 16px; height: 16px; stroke: #6b6b6b; fill: none; stroke-width: 1.8;
+}
+
+#view-cat-detail .cat-detail-desc {
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  color: #6b6b6b !important;
+  margin: 16px 0 20px !important;
+  max-width: 100% !important;
+}
+
+/* Tlačítka — Chci adoptovat jako primární velké, sponsor menší */
+#view-cat-detail .cat-detail-buttons {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-bottom: 16px !important;
+}
+#view-cat-detail .adopt-btn {
+  padding: 16px 28px !important;
+  background: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  justify-content: center;
+  width: 100%;
+  font-size: 14px !important;
+}
+#view-cat-detail .adopt-btn:hover { background: #333 !important; }
+#view-cat-detail .sponsor-btn {
+  padding: 14px 22px !important;
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: #1a1a1a !important;
+  border-radius: 999px !important;
+  width: 100%;
+  font-size: 13px !important;
+}
+#view-cat-detail .cat-detail-support-btn {
+  border-radius: 999px !important;
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  padding: 12px 22px !important;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0 !important;
+}
+
+#view-cat-detail .cat-detail-scroll { display: none !important; }
+
+/* Galerie pod info — vodorovný strip */
 #view-cat-detail .cat-detail-section {
-  padding: 40px 6% !important;
-  background: #faf7f4 !important;
+  padding: 24px 0 !important;
+  background: transparent !important;
 }
-#view-cat-detail .cat-detail-section.alt {
-  background: #f0ece6 !important;
-}
+#view-cat-detail .cat-detail-section.alt { background: transparent !important; }
 #view-cat-detail .cat-detail-section-title {
   font-size: 11px !important;
   letter-spacing: 3px !important;
   color: #1a1a1a !important;
   font-weight: 600;
-  margin-bottom: 18px !important;
+  margin-bottom: 14px !important;
 }
-
-/* Info grid */
 #view-cat-detail .cat-detail-info-grid {
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 12px !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
 }
 #view-cat-detail .cat-detail-info-card {
   background: #fff !important;
-  border-radius: 16px !important;
-  padding: 16px !important;
+  border-radius: 14px !important;
+  padding: 14px !important;
   border: none !important;
 }
-
-/* Galerie */
 #view-cat-detail .cat-detail-gallery {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
-  gap: 10px !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 8px !important;
 }
 #view-cat-detail .cat-detail-gallery-item {
   aspect-ratio: 1 / 1 !important;
-  border-radius: 16px !important;
+  border-radius: 12px !important;
   overflow: hidden;
   background: #efe9e0;
 }
 #view-cat-detail .cat-detail-gallery-item img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+  width: 100% !important; height: 100% !important; object-fit: cover !important;
 }
-
-/* Vlastnosti */
 #view-cat-detail .cat-detail-trait {
   background: #fff !important;
   border-radius: 999px !important;
   padding: 8px 14px !important;
   font-size: 12px !important;
   border: none !important;
+  color: #1a1a1a !important;
 }
 
-/* Zpět tlačítko */
+/* Zpět tlačítko — vlevo nahoře, kulaté */
 #view-cat-detail .cat-detail-back {
-  position: absolute;
-  top: 80px;
-  left: 6%;
+  position: fixed;
+  top: 90px;
+  left: 20px;
   background: #fff;
   border-radius: 999px;
-  padding: 10px 18px;
+  width: 38px; height: 38px;
+  padding: 0 !important;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #1a1a1a;
+  justify-content: center;
   cursor: pointer;
-  z-index: 20;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  z-index: 30;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
+#view-cat-detail .cat-detail-back span { display: none !important; }
 #view-cat-detail .cat-detail-back svg {
-  width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;
+  width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 2;
 }
 
-@media (max-width: 900px) {
-  #view-cat-detail .cat-detail-hero {
-    grid-template-columns: 1fr !important;
-    padding: 90px 16px 32px !important;
-    gap: 24px;
-  }
-  #view-cat-detail .cat-detail-photo {
-    order: -1;
-    aspect-ratio: 1 / 1 !important;
-  }
-  #view-cat-detail .cat-detail-name { font-size: 32px !important; }
+@media (max-width: 768px) {
+  #view-cat-detail .cat-detail-page { padding: 70px 16px 100px !important; }
   #view-cat-detail .cat-detail-back { top: 16px; left: 16px; }
-  #view-cat-detail .cat-detail-section { padding: 28px 16px !important; }
-  #view-cat-detail .cat-detail-info-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
 /* ======================================================
@@ -5752,13 +5780,16 @@ body.showing-admin .global-back-btn {
   position: relative;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   cursor: pointer;
+  padding: 6px 6px 10px !important;
 }
 .section-4 .section-4-cats .mini-cat-card .card-photo {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #f0ece6;
+  border-radius: 10px;
+  margin-bottom: 8px;
 }
 .section-4 .section-4-cats .mini-cat-card .card-photo img {
   position: static !important;
@@ -5768,34 +5799,40 @@ body.showing-admin .global-back-btn {
   object-position: center !important;
 }
 .section-4 .section-4-cats .mini-cat-card .mini-cat-info {
-  padding: 10px 12px 12px !important;
+  padding: 0 4px !important;
   flex: 0 0 auto !important;
   align-self: stretch !important;
 }
+.section-4 .section-4-cats .mini-cat-card .mini-cat-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 3px;
+}
 .section-4 .section-4-cats .mini-cat-card .mini-cat-name {
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
-  margin-bottom: 3px !important;
+  margin: 0 !important;
+  color: #1a1a1a;
+  flex: 1;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .section-4 .section-4-cats .mini-cat-card .mini-cat-meta-row {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 10px;
   color: #8a8480;
   margin-top: 2px;
 }
 .section-4 .section-4-cats .mini-cat-card .mini-cat-meta-row svg {
-  width: 10px; height: 10px; stroke: #b0a89f; fill: none; stroke-width: 1.8;
+  width: 9px; height: 9px; stroke: #b0a89f; fill: none; stroke-width: 1.8;
 }
 .section-4 .section-4-cats .mini-cat-card .mini-cat-badge {
   position: absolute !important;
-  top: 8px !important;
-  left: 8px !important;
+  top: 14px !important;
+  left: 14px !important;
   background: rgba(255,255,255,0.94) !important;
   color: #1a1a1a !important;
-  font-size: 8px !important;
-  padding: 4px 8px !important;
+  font-size: 7px !important;
+  padding: 3px 7px !important;
   border-radius: 999px !important;
   z-index: 4;
   letter-spacing: 0.4px;
@@ -5804,19 +5841,18 @@ body.showing-admin .global-back-btn {
 .section-4 .section-4-cats .mini-cat-card .mini-cat-badge.adopted { background: #d8d8d8 !important; color: #555 !important; }
 .section-4 .section-4-cats .mini-cat-card .mini-cat-badge.special { background: #fde2e2 !important; color: #a83232 !important; }
 .section-4 .section-4-cats .mini-cat-card .card-heart {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 26px;
-  height: 26px;
-  background: rgba(255,255,255,0.94);
+  width: 18px;
+  height: 18px;
+  background: transparent;
   border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  z-index: 4;
+  flex-shrink: 0;
+  cursor: pointer;
 }
-.section-4 .section-4-cats .mini-cat-card .card-heart svg { width: 12px; height: 12px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; }
+.section-4 .section-4-cats .mini-cat-card .card-heart svg { width: 13px; height: 13px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; }
+.section-4 .section-4-cats .mini-cat-card .card-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
 
 @media (max-width: 768px) {
   /* Mobil náhled adopce - světlé karty */
@@ -7333,10 +7369,12 @@ function renderCats(filter) {
         '<div class="card-photo">' +
           '<img src="' + imgSrc + '" alt="' + cat.name + '">' +
           badgeHtml +
-          '<div class="card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvg + '</div>' +
         '</div>' +
         '<div class="mini-cat-info">' +
-          '<div class="mini-cat-name">' + cat.name + '</div>' +
+          '<div class="mini-cat-head">' +
+            '<div class="mini-cat-name">' + cat.name + '</div>' +
+            '<div class="card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvg + '</div>' +
+          '</div>' +
           '<div class="mini-cat-meta-row">' + pinSvg + '<span>' + origin + '</span></div>' +
           (ageLine ? '<div class="mini-cat-meta-row">' + calSvg + '<span>' + ageLine + '</span></div>' : '') +
         '</div>' +
@@ -7490,35 +7528,52 @@ function showCatDetail(catId, fromLanding) {
     // Landing 1 style HTML
     var supportBtnText = cat.status === 'adoptovana' ? 'Podporit ostatni kocicky' : 'Podporit';
     var backBtnText = catDetailSource === 'landing' ? 'Zpet na adopce' : 'Zpet na kocky';
-    var html = 
+
+    // Ikony pro meta řádky
+    var detailPinSvg = '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+    var detailCalSvg = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+    var detailHeartSvg = '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+
+    // Hezký věk
+    var ageRawD = String(cat.age || '').trim();
+    var ageTextD = ageRawD;
+    if (/^\d+$/.test(ageRawD)) {
+      var nD = parseInt(ageRawD, 10);
+      if (nD === 1) ageTextD = '1 rok';
+      else if (nD >= 2 && nD <= 4) ageTextD = nD + ' roky';
+      else ageTextD = nD + ' let';
+    }
+    var sexLine = [cat.sex, colorLabel].filter(Boolean).join(' • ');
+
+    var html =
       // Zpet tlacitko
-      '<div class="cat-detail-back" onclick="goBackFromCatDetail()">' +
+      '<div class="cat-detail-back" onclick="goBackFromCatDetail()" title="' + backBtnText + '">' +
         '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>' +
         '<span>' + backBtnText + '</span>' +
       '</div>' +
-      // Hero sekce
+      // Hero sekce — foto NAHOŘE, info pod
       '<div class="cat-detail-hero">' +
+        '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
         '<div class="cat-detail-hero-content">' +
           '<div class="cat-detail-subtitle">' + subtitleText + '</div>' +
-          '<h1 class="cat-detail-name">' + cat.name + '</h1>' +
-          '<p class="cat-detail-meta">' + cat.sex + ' · ' + cat.age + ' · ' + colorLabel + '</p>' +
-          '<p class="cat-detail-desc">' + cat.desc + '</p>' +
+          '<div class="cat-detail-name-row">' +
+            '<h1 class="cat-detail-name">' + cat.name + '</h1>' +
+            '<div class="detail-heart" onclick="this.classList.toggle(\'active\');">' + detailHeartSvg + '</div>' +
+          '</div>' +
+          '<div class="cat-detail-meta-row">' + detailPinSvg + '<span>Praha</span></div>' +
+          (ageTextD ? '<div class="cat-detail-meta-row">' + detailCalSvg + '<span>' + ageTextD + (sexLine ? ' • ' + sexLine : '') + '</span></div>' : '') +
+          (cat.desc ? '<p class="cat-detail-desc">' + cat.desc + '</p>' : '') +
           handicapHtml +
           noticeHtml +
           buttonsHtml +
           '<button class="cat-detail-support-btn" onclick="sponsorCat(\'' + cat.name + '\')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' + supportBtnText + '</button>' +
         '</div>' +
-        '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
-        '<div class="cat-detail-scroll" onclick="scrollToCatDetailSection()">' +
-          '<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>' +
-          'Vice informaci' +
-        '</div>' +
       '</div>' +
       // Scrollovaci sekce
       traitsHtml +
+      galleryHtml +
       infoHtml +
-      storyHtml +
-      galleryHtml;
+      storyHtml;
 
     document.getElementById('catDetailContent').innerHTML = html;
     showView('view-cat-detail');
@@ -8019,10 +8074,12 @@ function loadLandingCats() {
           '<div class="card-photo">' +
             '<img src="' + (cat.photoUrl || 'placeholder.png') + '" alt="' + cat.name + '">' +
             badgeHtml +
-            '<div class="card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvg + '</div>' +
           '</div>' +
           '<div class="mini-cat-info">' +
-            '<div class="mini-cat-name">' + cat.name + '</div>' +
+            '<div class="mini-cat-head">' +
+              '<div class="mini-cat-name">' + cat.name + '</div>' +
+              '<div class="card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvg + '</div>' +
+            '</div>' +
             '<div class="mini-cat-meta-row">' + pinSvg + '<span>Praha</span></div>' +
             (ageLine ? '<div class="mini-cat-meta-row">' + calSvg + '<span>' + ageLine + '</span></div>' : '') +
           '</div>' +
