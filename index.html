@@ -7648,8 +7648,7 @@ function renderCats(filter) {
         else if (n >= 2 && n <= 4) ageText = n + ' roky';
         else ageText = n + ' let';
       }
-      var sexText = cat.sex || '';
-      var ageLine = [ageText, sexText].filter(Boolean).join(' • ');
+      var ageLine = ageText;
 
       return '<div class="mini-cat-card" onclick="showCatDetail(\'' + cat.id + '\', false)">' +
         '<div class="card-photo">' +
@@ -8426,8 +8425,7 @@ function loadLandingCats() {
           else if (n >= 2 && n <= 4) ageText = n + ' roky';
           else ageText = n + ' let';
         }
-        var sexText = cat.sex || '';
-        var ageLine = [ageText, sexText].filter(Boolean).join(' • ');
+        var ageLine = ageText;
 
         var cardStyle = cat.status === 'adoptovana' ? ' style="opacity:0.7;"' : '';
 
