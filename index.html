@@ -5412,22 +5412,26 @@ body.showing-admin .global-back-btn {
 /* Grid */
 #view-kocky .kocky-cats-grid {
   display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 20px !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 16px !important;
 }
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
+  #view-kocky .kocky-cats-grid { grid-template-columns: repeat(4, 1fr) !important; }
+}
+@media (max-width: 1024px) {
   #view-kocky .kocky-cats-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }
 @media (max-width: 768px) {
-  #view-kocky .kocky-cats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 14px !important; }
-  #view-kocky .kocky-page { padding: 20px 16px 80px !important; }
-  #view-kocky .kocky-welcome { font-size: 26px; margin-bottom: 18px; }
+  #view-kocky .kocky-cats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  #view-kocky .kocky-page { padding: 18px 14px 80px !important; }
+  #view-kocky .kocky-welcome { font-size: 22px; margin-bottom: 14px; }
+  #view-kocky .kocky-welcome small { font-size: 12px; }
 }
 
 /* === KARTA KOČKY (nový vzhled) === */
 #view-kocky .mini-cat-card {
   background: #fff !important;
-  border-radius: 18px !important;
+  border-radius: 14px !important;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.22s, box-shadow 0.22s;
@@ -5435,17 +5439,17 @@ body.showing-admin .global-back-btn {
   flex-direction: column !important;
   align-items: stretch !important;
   height: auto !important;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   position: relative;
 }
 #view-kocky .mini-cat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.07);
 }
 #view-kocky .mini-cat-card .card-photo {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #f0ece6;
 }
@@ -5459,10 +5463,10 @@ body.showing-admin .global-back-btn {
 }
 #view-kocky .mini-cat-card .card-heart {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
   background: rgba(255,255,255,0.94);
   border-radius: 50%;
   display: flex;
@@ -5471,26 +5475,26 @@ body.showing-admin .global-back-btn {
   z-index: 4;
   transition: background 0.2s;
 }
-#view-kocky .mini-cat-card .card-heart svg { width: 15px; height: 15px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; transition: all 0.2s; }
+#view-kocky .mini-cat-card .card-heart svg { width: 13px; height: 13px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; transition: all 0.2s; }
 #view-kocky .mini-cat-card .card-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
 
 #view-kocky .mini-cat-card .mini-cat-info {
-  padding: 14px 14px 16px !important;
+  padding: 10px 12px 12px !important;
   flex: 0 0 auto !important;
   align-self: stretch !important;
 }
 #view-kocky .mini-cat-card .mini-cat-badge {
   position: absolute !important;
-  top: 10px !important;
-  left: 10px !important;
+  top: 8px !important;
+  left: 8px !important;
   background: rgba(255,255,255,0.94) !important;
   color: #1a1a1a !important;
-  font-size: 9px !important;
+  font-size: 8px !important;
   font-weight: 600 !important;
-  padding: 5px 10px !important;
+  padding: 4px 8px !important;
   border-radius: 999px !important;
   z-index: 4;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 #view-kocky .mini-cat-card .mini-cat-badge.reserved { background: #f4c87a !important; color: #6b3e00 !important; }
 #view-kocky .mini-cat-card .mini-cat-badge.adopted { background: #d8d8d8 !important; color: #555 !important; }
@@ -5498,22 +5502,22 @@ body.showing-admin .global-back-btn {
 #view-kocky .mini-cat-card .mini-cat-badge.new { background: #d9f0e0 !important; color: #1f6e3a !important; }
 #view-kocky .mini-cat-card .mini-cat-badge.urgent { background: #fce0d2 !important; color: #b14c00 !important; }
 #view-kocky .mini-cat-card .mini-cat-name {
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
   color: #1a1a1a !important;
-  margin: 0 0 6px !important;
+  margin: 0 0 4px !important;
 }
 #view-kocky .mini-cat-card .mini-cat-meta-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 11px;
   color: #8a8480;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 #view-kocky .mini-cat-card .mini-cat-meta-row svg {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   stroke: #b0a89f;
   fill: none;
   stroke-width: 1.8;
