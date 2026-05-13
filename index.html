@@ -5744,15 +5744,16 @@ body.show-views #view-cat-detail .cat-detail-desc-row {
   flex: none;
 }
 
-/* Skupina tlačítek vedle textu — horizontálně */
+/* Skupina tlačítek vedle textu — VERTIKÁLNĚ pod sebou */
 #view-cat-detail .cat-detail-buttons,
 body.show-views #view-cat-detail .cat-detail-buttons {
   display: flex !important;
-  flex-direction: row !important;
+  flex-direction: column !important;
   flex-wrap: nowrap !important;
   gap: 8px !important;
   margin: 0 !important;
   flex-shrink: 0;
+  align-self: center;
 }
 #view-cat-detail .adopt-btn {
   padding: 13px 22px !important;
