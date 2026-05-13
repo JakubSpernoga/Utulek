@@ -5571,25 +5571,28 @@ body.showing-admin .global-back-btn {
 #view-kocky .mini-cat-card .mini-cat-meta:not(.mini-cat-meta-row) { display: none !important; }
 
 /* ======================================================
-   DETAIL KOČKY — mobile-style karta, foto nahoře, button dole
+   DETAIL KOČKY — foto nahoře + info viditelné, sticky CTA dole
    ====================================================== */
 #view-cat-detail { background: #f5f1ec !important; }
 #view-cat-detail .cat-detail-page {
   background: #f5f1ec !important;
-  max-width: 680px !important;
+  max-width: 1100px !important;
   margin: 0 auto !important;
-  padding: 80px 20px 120px !important;
+  padding: 70px 20px 110px !important;
 }
 #view-cat-detail .cat-detail-hero {
   min-height: auto !important;
   background: transparent !important;
   padding: 0 !important;
-  display: block !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 40px;
+  align-items: start;
   position: relative;
 }
 #view-cat-detail .cat-detail-hero::before { display: none !important; }
 
-/* FOTKA NAHOŘE — velká zaoblená */
+/* FOTKA — kompaktnější aspekt aby info bylo vidět */
 #view-cat-detail .cat-detail-photo {
   position: relative !important;
   right: auto !important;
@@ -5602,7 +5605,7 @@ body.showing-admin .global-back-btn {
   background: #efe9e0;
   pointer-events: auto !important;
   box-shadow: 0 10px 28px rgba(0,0,0,0.08);
-  margin: 0 0 20px !important;
+  margin: 0 !important;
 }
 #view-cat-detail .cat-detail-photo img {
   position: absolute !important;
@@ -5671,21 +5674,23 @@ body.showing-admin .global-back-btn {
   max-width: 100% !important;
 }
 
-/* Tlačítka — Chci adoptovat jako primární velké, sponsor menší */
+/* Tlačítka — primární Adopt v hero, sticky bottom bar */
 #view-cat-detail .cat-detail-buttons {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
   gap: 10px !important;
-  margin-bottom: 16px !important;
+  margin-bottom: 12px !important;
+  flex-wrap: wrap;
 }
 #view-cat-detail .adopt-btn {
-  padding: 16px 28px !important;
+  padding: 14px 26px !important;
   background: #1a1a1a !important;
   border: 1px solid #1a1a1a !important;
   color: #fff !important;
   border-radius: 999px !important;
   justify-content: center;
-  width: 100%;
+  flex: 1;
+  min-width: 160px;
   font-size: 14px !important;
 }
 #view-cat-detail .adopt-btn:hover { background: #333 !important; }
@@ -5695,52 +5700,119 @@ body.showing-admin .global-back-btn {
   border: 1px solid rgba(0,0,0,0.08) !important;
   color: #1a1a1a !important;
   border-radius: 999px !important;
-  width: 100%;
+  flex: 1;
+  min-width: 140px;
   font-size: 13px !important;
 }
 #view-cat-detail .cat-detail-support-btn {
   border-radius: 999px !important;
-  background: #fff !important;
-  border: 1px solid rgba(0,0,0,0.08) !important;
-  padding: 12px 22px !important;
-  width: 100%;
-  justify-content: center;
-  margin-top: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 0 !important;
+  justify-content: flex-start;
+  margin-top: 4px !important;
+  color: #8a8480 !important;
+  font-size: 12px !important;
 }
+#view-cat-detail .cat-detail-support-btn svg { width: 13px !important; height: 13px !important; }
+
+/* Sticky bottom CTA — vždy viditelné */
+#view-cat-detail .cat-detail-sticky-cta {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(245,241,236,0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: 100;
+  max-width: calc(100vw - 32px);
+}
+#view-cat-detail .cat-detail-sticky-cta .sticky-chat {
+  width: 38px; height: 38px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+#view-cat-detail .cat-detail-sticky-cta .sticky-chat svg { width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; }
+#view-cat-detail .cat-detail-sticky-cta .sticky-adopt {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+#view-cat-detail .cat-detail-sticky-cta .sticky-adopt svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2; }
 
 #view-cat-detail .cat-detail-scroll { display: none !important; }
 
-/* Galerie pod info — vodorovný strip */
+/* Sekce pod hero - kompaktní */
 #view-cat-detail .cat-detail-section {
-  padding: 24px 0 !important;
+  padding: 20px 0 !important;
   background: transparent !important;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  margin-top: 24px;
 }
+#view-cat-detail .cat-detail-section:first-of-type { border-top: none; margin-top: 16px; }
 #view-cat-detail .cat-detail-section.alt { background: transparent !important; }
 #view-cat-detail .cat-detail-section-title {
   font-size: 11px !important;
   letter-spacing: 3px !important;
-  color: #1a1a1a !important;
+  color: #8a8480 !important;
   font-weight: 600;
-  margin-bottom: 14px !important;
+  margin-bottom: 12px !important;
+  text-transform: uppercase;
 }
 #view-cat-detail .cat-detail-info-grid {
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: repeat(4, 1fr) !important;
   gap: 8px !important;
 }
 #view-cat-detail .cat-detail-info-card {
   background: #fff !important;
-  border-radius: 14px !important;
-  padding: 14px !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
   border: none !important;
 }
-#view-cat-detail .cat-detail-gallery {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 8px !important;
+#view-cat-detail .cat-detail-info-label {
+  font-size: 10px !important;
+  color: #8a8480 !important;
+  margin-bottom: 4px !important;
 }
+#view-cat-detail .cat-detail-info-value {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+}
+/* Galerie horizontální strip */
+#view-cat-detail .cat-detail-gallery {
+  display: flex !important;
+  gap: 8px !important;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+#view-cat-detail .cat-detail-gallery::-webkit-scrollbar { display: none; }
 #view-cat-detail .cat-detail-gallery-item {
   aspect-ratio: 1 / 1 !important;
-  border-radius: 12px !important;
+  width: 84px !important;
+  flex-shrink: 0;
+  border-radius: 14px !important;
   overflow: hidden;
   background: #efe9e0;
 }
@@ -5754,6 +5826,18 @@ body.showing-admin .global-back-btn {
   font-size: 12px !important;
   border: none !important;
   color: #1a1a1a !important;
+}
+/* Story sekce - kompaktnější */
+#view-cat-detail .cat-detail-story-content {
+  display: block !important;
+}
+#view-cat-detail .cat-detail-story-image {
+  display: none !important;
+}
+#view-cat-detail .cat-detail-story-text {
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  color: #6b6b6b !important;
 }
 
 /* Zpět tlačítko — vlevo nahoře, kulaté */
@@ -5777,9 +5861,23 @@ body.showing-admin .global-back-btn {
   width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 2;
 }
 
+@media (max-width: 900px) {
+  #view-cat-detail .cat-detail-hero {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  #view-cat-detail .cat-detail-photo {
+    aspect-ratio: 4 / 3 !important;
+  }
+}
 @media (max-width: 768px) {
-  #view-cat-detail .cat-detail-page { padding: 70px 16px 100px !important; }
+  #view-cat-detail .cat-detail-page { padding: 60px 16px 100px !important; }
   #view-cat-detail .cat-detail-back { top: 16px; left: 16px; }
+  #view-cat-detail .cat-detail-photo { aspect-ratio: 4 / 3 !important; }
+  #view-cat-detail .cat-detail-name { font-size: 24px !important; }
+  #view-cat-detail .cat-detail-info-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  #view-cat-detail .cat-detail-sticky-cta { padding: 8px; bottom: 12px; }
+  #view-cat-detail .cat-detail-sticky-cta .sticky-adopt { padding: 11px 24px; font-size: 13px; }
 }
 
 /* ======================================================
@@ -5787,16 +5885,16 @@ body.showing-admin .global-back-btn {
    ====================================================== */
 .section-4 .section-4-cats {
   grid-template-columns: repeat(2, 1fr) !important;
-  gap: 16px !important;
-  width: 46% !important;
+  gap: 12px !important;
+  width: min(34%, 420px) !important;
   right: 6% !important;
   max-height: 78vh !important;
 }
 @media (max-width: 1280px) {
-  .section-4 .section-4-cats { width: 50% !important; }
+  .section-4 .section-4-cats { width: min(38%, 380px) !important; }
 }
 @media (max-width: 1024px) {
-  .section-4 .section-4-cats { width: 54% !important; right: 4% !important; gap: 12px !important; }
+  .section-4 .section-4-cats { width: 42% !important; right: 4% !important; gap: 10px !important; }
 }
 .section-4 .section-4-cats .mini-cat-card {
   background: #fff !important;
@@ -7710,13 +7808,29 @@ function showCatDetail(catId, fromLanding) {
     }
     var sexLine = [cat.sex, colorLabel].filter(Boolean).join(' • ');
 
+    // Sticky CTA - viditelné vždy
+    var stickyCtaHtml = '';
+    if (cat.status !== 'adoptovana') {
+      var stickyBtnText = cat.status === 'zamluvena' ? 'Více informací' : ((cat.formType === 'docasna') ? 'Chci pečovat' : 'Chci adoptovat');
+      var stickyClick = cat.status === 'zamluvena'
+        ? "scrollToCatDetailSection()"
+        : (cat.formType === 'docasna' ? "openDocasnaForm('" + cat.name + "', '" + cat.id + "')" : "openAdoptForm('" + cat.name + "', '" + cat.id + "')");
+      stickyCtaHtml =
+        '<div class="cat-detail-sticky-cta">' +
+          '<div class="sticky-chat" onclick="showView(\'view-landing\'); setTimeout(function(){scrollToSection(4)},100);" title="Kontakt">' +
+            '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
+          '</div>' +
+          '<button class="sticky-adopt" onclick="' + stickyClick + '">' + detailHeartSvg + stickyBtnText + '</button>' +
+        '</div>';
+    }
+
     var html =
       // Zpet tlacitko
       '<div class="cat-detail-back" onclick="goBackFromCatDetail()" title="' + backBtnText + '">' +
         '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>' +
         '<span>' + backBtnText + '</span>' +
       '</div>' +
-      // Hero sekce — foto NAHOŘE, info pod
+      // Hero sekce — foto + info (na desktopu vedle sebe)
       '<div class="cat-detail-hero">' +
         '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
         '<div class="cat-detail-hero-content">' +
@@ -7735,10 +7849,11 @@ function showCatDetail(catId, fromLanding) {
         '</div>' +
       '</div>' +
       // Scrollovaci sekce
-      traitsHtml +
       galleryHtml +
       infoHtml +
-      storyHtml;
+      traitsHtml +
+      storyHtml +
+      stickyCtaHtml;
 
     document.getElementById('catDetailContent').innerHTML = html;
     showView('view-cat-detail');
