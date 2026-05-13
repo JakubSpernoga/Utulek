@@ -5609,6 +5609,8 @@ body.showing-admin .global-back-btn {
   background: #f5f1ec !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: auto !important;
 }
 #view-cat-detail .cat-detail-page {
   background: #f5f1ec !important;
@@ -5816,39 +5818,12 @@ body.showing-admin .global-back-btn {
 
 #view-cat-detail .cat-detail-scroll { display: none !important; }
 
-/* Sekce uvnitř hero (info/vlastnosti vpravo) */
-#view-cat-detail .cat-detail-hero-content .cat-detail-section {
-  padding: 18px 0 0 !important;
-  background: transparent !important;
-  border-top: 1px solid rgba(0,0,0,0.06);
-  margin-top: 20px;
-}
-#view-cat-detail .cat-detail-hero-content .cat-detail-section.alt {
-  background: transparent !important;
-}
-/* Galerie uvnitř levého sloupce — kompaktní strip pod fotkou */
-#view-cat-detail .cat-detail-left .cat-detail-section {
-  padding: 0 !important;
-  background: transparent !important;
-  margin: 0 !important;
-  border-top: none !important;
-}
-#view-cat-detail .cat-detail-left .cat-detail-gallery {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 8px !important;
-}
-#view-cat-detail .cat-detail-left .cat-detail-gallery-item {
-  width: auto !important;
-  aspect-ratio: 1 / 1 !important;
-  border-radius: 12px !important;
-}
-/* Sekce pod hero (jen příběh) */
+/* Sekce pod hero — od kraje ke kraji */
 #view-cat-detail .cat-detail-page > .cat-detail-section {
-  padding: 24px 0 !important;
+  padding: 22px 0 !important;
   background: transparent !important;
   border-top: 1px solid rgba(0,0,0,0.06);
-  margin-top: 28px;
+  margin-top: 24px;
 }
 #view-cat-detail .cat-detail-section-title {
   font-size: 11px !important;
@@ -5859,7 +5834,7 @@ body.showing-admin .global-back-btn {
   text-transform: uppercase;
 }
 #view-cat-detail .cat-detail-info-grid {
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: repeat(4, 1fr) !important;
   gap: 8px !important;
 }
 #view-cat-detail .cat-detail-info-card {
@@ -5955,7 +5930,11 @@ body.showing-admin .global-back-btn {
   #view-cat-detail .cat-detail-page { padding: 80px 16px 100px !important; }
   #view-cat-detail .cat-detail-back { top: 16px; left: 16px; }
   #view-cat-detail .cat-detail-name { font-size: 24px !important; }
-  #view-cat-detail .cat-detail-info-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Info na mobilu — pořád 4 v řadě, kompaktnější */
+  #view-cat-detail .cat-detail-info-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 6px !important; }
+  #view-cat-detail .cat-detail-info-card { padding: 10px 6px !important; text-align: center; }
+  #view-cat-detail .cat-detail-info-label { font-size: 9px !important; }
+  #view-cat-detail .cat-detail-info-value { font-size: 13px !important; }
 }
 
 /* ======================================================
@@ -8081,12 +8060,9 @@ function showCatDetail(catId, fromLanding) {
         '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>' +
         '<span>' + backBtnText + '</span>' +
       '</div>' +
-      // Hero — vlevo foto + galerie, vpravo info + vlastnosti
+      // Hero — vlevo foto, vpravo jméno + popis + tlačítka
       '<div class="cat-detail-hero">' +
-        '<div class="cat-detail-left">' +
-          '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
-          galleryHtml +
-        '</div>' +
+        '<div class="cat-detail-photo"><img src="' + mainPhotoUrl + '" alt="' + cat.name + '"></div>' +
         '<div class="cat-detail-hero-content">' +
           '<div class="cat-detail-subtitle">' + subtitleText + '</div>' +
           '<div class="cat-detail-name-row">' +
@@ -8098,11 +8074,12 @@ function showCatDetail(catId, fromLanding) {
           handicapHtml +
           noticeHtml +
           buttonsHtml +
-          infoHtml +
-          traitsHtml +
         '</div>' +
       '</div>' +
-      // Pod hero — pouze příběh
+      // Pod hero (od kraje ke kraji) — info, vlastnosti, galerie, příběh
+      infoHtml +
+      traitsHtml +
+      galleryHtml +
       storyHtml +
       stickyCtaHtml;
 
