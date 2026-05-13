@@ -6163,24 +6163,26 @@ body.showing-admin .global-back-btn {
 .sidebar-left { display: none !important; }
 
 /* ======================================================
-   Plynulý scroll mezi sekcemi (vypnout snap)
-   + plynulá změna barev při přechodu
+   Plynulý scroll mezi sekcemi s MĚKKÝM snapem (proximity)
+   - skroluješ volně, ale když dojedeš blízko hranice,
+     stránka se měkce zafixuje. Trochu víc poscrolluješ
+     a posune se dál.
    ====================================================== */
 .sections {
-  scroll-snap-type: none !important;
+  scroll-snap-type: y proximity !important;
   scroll-behavior: smooth;
 }
 .section {
-  scroll-snap-align: none !important;
+  scroll-snap-align: start !important;
   scroll-snap-stop: normal !important;
 }
 .magazine {
-  scroll-snap-type: none !important;
+  scroll-snap-type: y proximity !important;
   scroll-behavior: smooth;
 }
 .magazine .article,
 .magazine .cover {
-  scroll-snap-align: none !important;
+  scroll-snap-align: start !important;
   scroll-snap-stop: normal !important;
 }
 
