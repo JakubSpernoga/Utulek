@@ -5855,20 +5855,32 @@ body.showing-admin .global-back-btn {
 .section-4 .section-4-cats .mini-cat-card .card-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
 
 @media (max-width: 768px) {
-  /* Mobil náhled adopce - světlé karty */
+  /* Mobil náhled adopce - SVĚTLÉ téma jako vzor */
+  .mobile-adoption {
+    background: #f5f1ec !important;
+    padding: 40px 16px !important;
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+  .mobile-adoption .mobile-section-subtitle { color: #d4a574 !important; }
+  .mobile-adoption .mobile-section-title { color: #1a1a1a !important; }
+  .mobile-adoption .mobile-adoption-text { color: #6b6b6b !important; }
+
   .mobile-adoption .mobile-cat-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
   }
   .mobile-adoption .mobile-cat-card {
     background: #fff !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
     height: auto !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
     overflow: hidden;
     position: relative;
+    padding: 6px 6px 10px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-img {
     position: relative !important;
@@ -5876,8 +5888,11 @@ body.showing-admin .global-back-btn {
     right: auto !important;
     bottom: auto !important;
     width: 100% !important;
-    aspect-ratio: 4 / 3 !important;
+    aspect-ratio: 1 / 1 !important;
     background: #f0ece6;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    overflow: hidden;
   }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-img img {
     position: static !important;
@@ -5887,11 +5902,24 @@ body.showing-admin .global-back-btn {
     object-position: center !important;
   }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-info {
-    padding: 10px 12px 12px !important;
+    padding: 0 6px !important;
     flex: 0 0 auto !important;
     align-self: stretch !important;
   }
-  .mobile-adoption .mobile-cat-card .mobile-cat-card-name { font-size: 13px !important; margin-bottom: 3px !important; }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 3px;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-name {
+    font-size: 13px !important; margin: 0 !important; color: #1a1a1a !important;
+    flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-heart {
+    width: 18px; height: 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-heart svg { width: 13px; height: 13px; stroke: #1a1a1a; fill: none; stroke-width: 1.8; }
+  .mobile-adoption .mobile-cat-card .mobile-cat-card-heart.active svg { fill: #e74c3c; stroke: #e74c3c; }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-meta {
     display: flex; align-items: center; gap: 4px;
     font-size: 11px !important; color: #8a8480 !important;
@@ -5906,10 +5934,20 @@ body.showing-admin .global-back-btn {
     padding: 4px 8px !important;
     font-size: 8px !important;
     letter-spacing: 0.4px;
+    top: 12px !important;
+    left: 12px !important;
   }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-badge.reserved { background: #f4c87a !important; color: #6b3e00 !important; }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-badge.adopted { background: #d8d8d8 !important; color: #555 !important; }
   .mobile-adoption .mobile-cat-card .mobile-cat-card-badge.special { background: #fde2e2 !important; color: #a83232 !important; }
+
+  /* Tlačítko Zobrazit vsechny kocky */
+  .mobile-adoption .mobile-btn-browse {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border-radius: 999px !important;
+    margin-top: 20px !important;
+  }
 }
 
 </style>
@@ -9310,6 +9348,7 @@ function renderMobileCats() {
         else ageText = n + ' let';
       }
       var calSvg = '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+      var heartSvgM = '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
       var metaLine = [cat.sex, ageText].filter(Boolean).join(' • ');
 
       return '<div class="mobile-cat-card" onclick="showCatDetail(\'' + cat.id + '\', true)">' +
@@ -9318,7 +9357,10 @@ function renderMobileCats() {
           '<div class="mobile-cat-card-badge ' + badgeClass + '">' + badgeText + '</div>' +
         '</div>' +
         '<div class="mobile-cat-card-info">' +
-          '<div class="mobile-cat-card-name">' + cat.name + '</div>' +
+          '<div class="mobile-cat-card-head">' +
+            '<div class="mobile-cat-card-name">' + cat.name + '</div>' +
+            '<div class="mobile-cat-card-heart" onclick="event.stopPropagation(); this.classList.toggle(\'active\');">' + heartSvgM + '</div>' +
+          '</div>' +
           '<div class="mobile-cat-card-meta">' + calSvg + '<span>' + metaLine + '</span></div>' +
         '</div>' +
       '</div>';
