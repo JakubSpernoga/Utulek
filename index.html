@@ -5888,13 +5888,53 @@ body.showing-admin .global-back-btn {
   /* Mobil náhled adopce - SVĚTLÉ téma jako vzor */
   .mobile-adoption {
     background: #f5f1ec !important;
-    padding: 40px 16px !important;
+    padding: 24px 16px 40px !important;
     height: auto !important;
     min-height: 100vh !important;
+    overflow-y: visible !important;
   }
-  .mobile-adoption .mobile-section-subtitle { color: #d4a574 !important; }
-  .mobile-adoption .mobile-section-title { color: #1a1a1a !important; }
-  .mobile-adoption .mobile-adoption-text { color: #6b6b6b !important; }
+  .mobile-adoption .mobile-section-subtitle,
+  .mobile-adoption .mobile-section-title,
+  .mobile-adoption .mobile-adoption-text,
+  .mobile-adoption .mobile-btn-browse { display: none !important; }
+
+  /* Header s Vítejte + ikona */
+  .mobile-adoption .mobile-adoption-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .mobile-adoption .mobile-adoption-welcome {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  .mobile-adoption .mobile-adoption-bag {
+    width: 42px; height: 42px;
+    background: #fff;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .mobile-adoption .mobile-adoption-bag svg {
+    width: 18px; height: 18px; stroke: #1a1a1a; fill: none; stroke-width: 1.8;
+  }
+
+  /* Filter chips na mobilu */
+  .mobile-adoption .mobile-adoption-chips {
+    margin-bottom: 20px;
+  }
+  .mobile-adoption .mobile-adoption-chips .filter-chip-icon {
+    width: 46px; height: 46px;
+  }
+  .mobile-adoption .mobile-adoption-chips .filter-chip-icon svg {
+    width: 18px; height: 18px;
+  }
+  .mobile-adoption .mobile-adoption-chips .filter-chip-label {
+    font-size: 11px;
+  }
 
   .mobile-adoption .mobile-cat-grid {
     grid-template-columns: 1fr 1fr;
@@ -9246,35 +9286,36 @@ function closeLandingAccount(e) {
 
   <!-- MOBILE ADOPTION -->
   <section class="mobile-adoption">
-    <div class="mobile-section-subtitle">Najdi si kamarada</div>
-    <h2 class="mobile-section-title">Adopce</h2>
-    <p class="mobile-adoption-text">Prave ted mame v depozitu desitky kocek, ktere cekaji na svuj novy domov.</p>
-    
-    <div class="mobile-cat-grid" id="mobileCatGrid">
-      <!-- Staticke kocky jako fallback -->
-      <div class="mobile-cat-card" onclick="showView('view-kocky')">
-        <div class="mobile-cat-card-badge">K adopci</div>
-        <div class="mobile-cat-card-info">
-          <div class="mobile-cat-card-name">Micka</div>
-          <div class="mobile-cat-card-meta">Kocka, 2 roky</div>
-        </div>
-        <div class="mobile-cat-card-img">
-          <img src="1.png" alt="Micka">
-        </div>
-      </div>
-      <div class="mobile-cat-card" onclick="showView('view-kocky')">
-        <div class="mobile-cat-card-badge reserved">Rezervace</div>
-        <div class="mobile-cat-card-info">
-          <div class="mobile-cat-card-name">Mourek</div>
-          <div class="mobile-cat-card-meta">Kocour, 3 roky</div>
-        </div>
-        <div class="mobile-cat-card-img">
-          <img src="1.png" alt="Mourek">
-        </div>
+    <div class="mobile-adoption-header">
+      <div class="mobile-adoption-welcome">Vítejte</div>
+      <div class="mobile-adoption-bag" onclick="showView('view-kocky')">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
     </div>
-    
-    <button class="mobile-btn-browse" onclick="showView('view-kocky')">Zobrazit vsechny kocky</button>
+
+    <!-- Filter chipy s ikonami -->
+    <div class="kocky-filter-chips mobile-adoption-chips">
+      <div class="filter-chip active" onclick="filterMobileCats('all', this)">
+        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="2.5"/><circle cx="6" cy="14" r="2"/><circle cx="18" cy="14" r="2"/><circle cx="8.5" cy="6" r="1.8"/><circle cx="15.5" cy="6" r="1.8"/></svg></div>
+        <div class="filter-chip-label">Vše</div>
+      </div>
+      <div class="filter-chip" onclick="filterMobileCats('dostupna', this)">
+        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v11h14V10"/></svg></div>
+        <div class="filter-chip-label">K adopci</div>
+      </div>
+      <div class="filter-chip" onclick="filterMobileCats('zamluvena', this)">
+        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="filter-chip-label">Rezervace</div>
+      </div>
+      <div class="filter-chip" onclick="filterMobileCats('special', this)">
+        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="filter-chip-label">Speciální</div>
+      </div>
+    </div>
+
+    <div class="mobile-cat-grid" id="mobileCatGrid">
+      <!-- Načtou se z API (4 kočky) -->
+    </div>
   </section>
 
   <!-- MOBILE CONTACT -->
@@ -9328,30 +9369,36 @@ function closeLandingAccount(e) {
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Mobile - render kocky z catsData
+var currentMobileFilter = 'all';
+
+function filterMobileCats(status, el) {
+  currentMobileFilter = status;
+  if (el && el.parentElement) {
+    el.parentElement.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
+    el.classList.add('active');
+  }
+  renderMobileCats();
+}
+
 function renderMobileCats() {
   var grid = document.getElementById('mobileCatGrid');
   if (!grid) return;
-  
+
   loadCatsFromAPI().then(function() {
-    // Nejdřív dostupné a zamluvené
-    var availableCats = catsData.filter(function(c) { 
-      return c.status === 'dostupna' || c.status === 'zamluvena'; 
-    });
-    
-    // Pak adoptované pro doplnění
-    var adoptedCats = catsData.filter(function(c) { 
-      return c.status === 'adoptovana'; 
-    });
-    
-    // Spojit - nejdřív dostupné, pak adoptované, celkem 2 pro mobil
-    var cats = availableCats.slice(0, 2);
-    if (cats.length < 2) {
-      cats = cats.concat(adoptedCats.slice(0, 2 - cats.length));
-    }
-    
-    // Pokud stále není dost, vzít cokoliv
-    if (cats.length < 2) {
-      cats = catsData.slice(0, 2);
+    var pool = catsData.filter(function(c) { return c.status !== 'adoptovana'; });
+    var cats;
+    if (currentMobileFilter === 'all') cats = pool;
+    else if (currentMobileFilter === 'dostupna') cats = pool.filter(function(c) { return c.status === 'dostupna'; });
+    else if (currentMobileFilter === 'zamluvena') cats = pool.filter(function(c) { return c.status === 'zamluvena'; });
+    else if (currentMobileFilter === 'special') cats = pool.filter(function(c) { return c.badgeClass === 'special' || (c.handicap && c.handicap.length); });
+    else cats = pool;
+
+    // Maximálně 4 kočky na náhledu
+    cats = cats.slice(0, 4);
+
+    // Pokud nic neodpovídá filtru, vzít první 4 dostupné
+    if (cats.length === 0) {
+      cats = pool.slice(0, 4);
     }
     
     if (cats.length === 0) {
