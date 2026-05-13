@@ -6162,6 +6162,67 @@ body.showing-admin .global-back-btn {
    ====================================================== */
 .sidebar-left { display: none !important; }
 
+/* ======================================================
+   Příběhy — reálná fotka v rámečku vedle textu (jako karta)
+   ====================================================== */
+.magazine .article {
+  height: auto !important;
+  min-height: 100vh !important;
+  max-height: none !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 80px 6% !important;
+  background: #faf7f4 !important;
+}
+.magazine .article .text-side {
+  position: static !important;
+  width: 50% !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  padding-right: 40px;
+}
+.magazine .article .image-side {
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 50% !important;
+  height: auto !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  pointer-events: auto !important;
+}
+.magazine .article .img {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 24px !important;
+  overflow: hidden;
+  background: #efe9e0;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+}
+.magazine .article .img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+@media (max-width: 900px) {
+  .magazine .article {
+    flex-direction: column !important;
+    padding: 60px 16px !important;
+    gap: 24px;
+    min-height: auto !important;
+  }
+  .magazine .article .text-side,
+  .magazine .article .image-side {
+    width: 100% !important;
+    padding-right: 0 !important;
+  }
+  .magazine .article .img { aspect-ratio: 4 / 3 !important; }
+}
+
 /* Obsah sekcí blíž k levému okraji (sidebar je pryč) */
 .section-1 .content,
 .section-2 .content,
