@@ -6163,26 +6163,22 @@ body.showing-admin .global-back-btn {
 .sidebar-left { display: none !important; }
 
 /* ======================================================
-   Volný scroll, ale zastaví na hraně sekce
-   (proximity + scroll-snap-stop: always)
-   - žádné automatické přitahování
-   - když scroll dojede na hranu, zastaví se tam
-   - musíš znovu scrollovat aby se pustilo dál
+   Úplně volný scroll, žádný snap
    ====================================================== */
 .sections {
-  scroll-snap-type: y proximity !important;
+  scroll-snap-type: none !important;
 }
 .section {
-  scroll-snap-align: start !important;
-  scroll-snap-stop: always !important;
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
 }
 .magazine {
-  scroll-snap-type: y proximity !important;
+  scroll-snap-type: none !important;
 }
 .magazine .article,
 .magazine .cover {
-  scroll-snap-align: start !important;
-  scroll-snap-stop: always !important;
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
 }
 
 /* Plynulé přechody barev tématu */
