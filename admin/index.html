@@ -78,14 +78,10 @@ body { font-family: 'Inter', sans-serif; background: #f5f5f0; color: #1a1a1a; mi
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <h1>Administrace</h1>
-    <p>Kočičí depozitum U Tří Psů<br>Zadejte svůj GitHub Personal Access Token pro přihlášení.</p>
-    <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxx" onkeydown="if(event.key==='Enter')login()">
+    <p>Kočičí depozitum U Tří Psů<br>Zadejte heslo pro přihlášení.</p>
+    <input type="password" id="tokenInput" placeholder="Heslo" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">Přihlásit se</button>
-    <div class="login-error" id="loginError">Neplatný token. Zkontrolujte a zkuste znovu.</div>
-    <div class="login-help">
-      Jak získat token? Jděte na <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings → Tokens</a>,<br>
-      vytvořte "Classic" token s oprávněním <strong>repo</strong>.
-    </div>
+    <div class="login-error" id="loginError">Špatné heslo.</div>
   </div>
 </div>
 
@@ -108,13 +104,10 @@ body { font-family: 'Inter', sans-serif; background: #f5f5f0; color: #1a1a1a; mi
 <div class="toast" id="toast"></div>
 
 <script>
-const REPO_OWNER = 'JakubSpernoga';
-const REPO_NAME = 'Utulek';
-const CONTENT_PATH = 'content.json';
+const API_URL = '/api/content';
 
-let token = '';
+let password = '';
 let content = null;
-let contentSha = '';
 
 // Toast
 function showToast(msg, isError) {
@@ -124,52 +117,44 @@ function showToast(msg, isError) {
   setTimeout(() => t.className = 'toast', 3000);
 }
 
-// Login
+// Login — bez ověřování proti serveru, ověříme až při ukládání
 async function login() {
-  token = document.getElementById('tokenInput').value.trim();
-  if (!token) return;
-  try {
-    const res = await fetch('https://api.github.com/user', { headers: { Authorization: 'token ' + token } });
-    if (!res.ok) throw new Error();
-    localStorage.setItem('gh_token', token);
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    await loadContent();
-  } catch(e) {
-    document.getElementById('loginError').style.display = 'block';
-  }
+  password = document.getElementById('tokenInput').value.trim();
+  if (!password) return;
+  localStorage.setItem('admin_password', password);
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  document.getElementById('loginError').style.display = 'none';
+  await loadContent();
 }
 
 function logout() {
-  localStorage.removeItem('gh_token');
+  localStorage.removeItem('admin_password');
   location.reload();
 }
 
 // Auto-login
 (function() {
-  const saved = localStorage.getItem('gh_token');
+  const saved = localStorage.getItem('admin_password');
   if (saved) {
     document.getElementById('tokenInput').value = saved;
     login();
   }
 })();
 
-// Load content from GitHub
+// Load content (veřejné — bez hesla)
 async function loadContent() {
   try {
-    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
-      headers: { Authorization: 'token ' + token }
-    });
-    const data = await res.json();
-    contentSha = data.sha;
-    content = JSON.parse(atob(data.content));
+    const res = await fetch(API_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    content = await res.json();
     renderEditor();
   } catch(e) {
-    showToast('Chyba při načítání obsahu', true);
+    showToast('Chyba při načítání obsahu: ' + e.message, true);
   }
 }
 
-// Save content to GitHub
+// Save content přes Vercel funkci
 async function saveContent() {
   const btn = document.getElementById('saveBtn');
   btn.disabled = true;
@@ -180,21 +165,20 @@ async function saveContent() {
   collectFormValues();
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: 'token ' + token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: 'Aktualizace obsahu z administrace',
-        content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
-        sha: contentSha
-      })
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, content })
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-    contentSha = data.content.sha;
+    if (res.status === 401) {
+      // Špatné heslo — odhlásíme a vrátíme se na login
+      localStorage.removeItem('admin_password');
+      showToast('Špatné heslo, přihlas se znovu.', true);
+      setTimeout(() => location.reload(), 1500);
+      return;
+    }
+    if (!res.ok) throw new Error(data.error || 'Chyba ' + res.status);
     showToast('Uloženo a publikováno!');
     document.getElementById('saveStatus').textContent = 'Uloženo právě teď';
   } catch(e) {
@@ -281,15 +265,6 @@ function renderEditor() {
       ]
     },
     {
-      id: 'foster', emoji: '🏡', title: 'Dočasná péče',
-      desc: 'Informace o dočasné péči a kroky',
-      fields: [
-        { key: 'foster.title', label: 'Nadpis', type: 'input' },
-        { key: 'foster.description', label: 'Popis', type: 'textarea' }
-      ],
-      custom: 'steps'
-    },
-    {
       id: 'stories', emoji: '📸', title: 'Příběhy',
       desc: 'Sekce úspěšných adopcí',
       fields: [
@@ -317,7 +292,7 @@ function renderEditor() {
     });
 
     // Custom: donate amounts
-    if (s.custom === 'donate' && content.support.donate_amounts) {
+    if (s.custom === 'donate' && content.support && content.support.donate_amounts) {
       html += '<div style="margin-top:16px"><label style="font-size:13px;font-weight:500;color:#555;margin-bottom:8px;display:block;">Částky darů</label>';
       content.support.donate_amounts.forEach((d, i) => {
         html += `<div class="donate-row">
@@ -328,17 +303,6 @@ function renderEditor() {
       html += '</div>';
     }
 
-    // Custom: steps
-    if (s.custom === 'steps' && content.foster.steps) {
-      content.foster.steps.forEach((step, i) => {
-        html += `<div class="step-group">
-          <div class="step-header">Krok ${step.num}</div>
-          <div class="field"><label>Název</label><input type="text" data-path="foster.steps.${i}.title" value="${escAttr(step.title)}"></div>
-          <div class="field"><label>Popis</label><input type="text" data-path="foster.steps.${i}.text" value="${escAttr(step.text)}"></div>
-        </div>`;
-      });
-    }
-
     html += '</div>';
   });
 
@@ -347,6 +311,7 @@ function renderEditor() {
 
 function getNestedValue(obj, path) {
   return path.split('.').reduce((o, k) => {
+    if (o == null) return undefined;
     if (k.match(/^\d+$/)) return o[parseInt(k)];
     return o[k];
   }, obj);
