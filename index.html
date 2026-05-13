@@ -5573,12 +5573,19 @@ body.showing-admin .global-back-btn {
 /* ======================================================
    DETAIL KOČKY — jednoduchý centrovaný layout, sticky CTA dole
    ====================================================== */
-#view-cat-detail { background: #f5f1ec !important; }
+#view-cat-detail {
+  background: #f5f1ec !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
 #view-cat-detail .cat-detail-page {
   background: #f5f1ec !important;
   max-width: 720px !important;
   margin: 0 auto !important;
   padding: 110px 20px 120px !important;
+  display: block !important;
+  overflow: visible !important;
+  height: auto !important;
 }
 #view-cat-detail .cat-detail-hero {
   min-height: auto !important;
@@ -7826,9 +7833,19 @@ function showCatDetail(catId, fromLanding) {
 
     document.getElementById('catDetailContent').innerHTML = html;
     showView('view-cat-detail');
-    
-    // Scroll nahoru
-    document.getElementById('catDetailContent').scrollTop = 0;
+
+    // Scroll na úplný začátek — víc pokusů kvůli časování layoutu
+    var resetScroll = function() {
+      var view = document.getElementById('view-cat-detail');
+      var page = document.getElementById('catDetailContent');
+      if (view) view.scrollTop = 0;
+      if (page) page.scrollTop = 0;
+      window.scrollTo(0, 0);
+    };
+    resetScroll();
+    requestAnimationFrame(resetScroll);
+    setTimeout(resetScroll, 50);
+    setTimeout(resetScroll, 200);
   });
 }
 
