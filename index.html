@@ -5375,76 +5375,68 @@ body.showing-admin .global-back-btn {
   width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 2;
 }
 
-/* Filter CHIPY s ikonami (jako ve vzoru) */
-#view-kocky .kocky-filter-chips {
-  display: flex !important;
-  gap: 12px;
+/* Filtr — 3 řádky pilulek (Pohlaví, Věk, Barva) */
+.kocky-filter-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 24px;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  width: 100%;
 }
-.kocky-filter-chips {
-  display: flex !important;
-  gap: 12px;
-  flex-wrap: nowrap !important;
-  width: 100%;
-}
-.filter-chip {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center;
-  cursor: pointer;
-  gap: 6px;
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  transition: transform 0.15s;
-}
-.filter-chip:hover { transform: translateY(-2px); }
-.filter-chip-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: #fff;
+.filter-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  border: 2px solid transparent;
-  transition: all 0.2s;
+  gap: 10px;
 }
-.filter-chip-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: #6b6b6b;
-  fill: none;
-  stroke-width: 1.8;
-  transition: stroke 0.2s;
-}
-.filter-chip.active .filter-chip-icon {
-  border-color: #1a1a1a;
-}
-.filter-chip.active .filter-chip-icon svg {
-  stroke: #1a1a1a;
-}
-.filter-chip-label {
+.filter-row-label {
   font-size: 12px;
-  color: #6b6b6b;
-  font-weight: 500;
-  text-align: center;
-  white-space: nowrap;
-}
-.filter-chip.active .filter-chip-label {
-  color: #1a1a1a;
   font-weight: 600;
+  color: #1a1a1a;
+  flex-shrink: 0;
+  min-width: 70px;
+  letter-spacing: 0.3px;
+}
+.filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.filter-pills::-webkit-scrollbar { display: none; }
+.filter-pill {
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b6b6b;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.filter-pill:hover {
+  color: #1a1a1a;
+}
+.filter-pill.active {
+  background: #1a1a1a;
+  color: #fff;
 }
 
 /* Old filter elements — skryt */
 #view-kocky .kocky-filter-bar,
 #view-kocky .kocky-filter-toggle,
 #view-kocky .kocky-filter-panel,
-#view-kocky .kocky-back-btn { display: none !important; }
+#view-kocky .kocky-back-btn,
+#view-kocky .kocky-filter-chips { display: none !important; }
+
+@media (max-width: 768px) {
+  .filter-row { gap: 8px; }
+  .filter-row-label { min-width: 60px; font-size: 11px; }
+  .filter-pill { font-size: 11px; padding: 7px 12px; }
+}
 
 /* Grid */
 #view-kocky .kocky-cats-grid {
@@ -6306,23 +6298,32 @@ body.showing-admin .global-back-btn {
         <h1 class="kocky-welcome">Vítejte</h1>
       </div>
 
-      <!-- Filter chipy s ikonami -->
-      <div class="kocky-filter-chips">
-        <div class="filter-chip active" onclick="setKockyFilter('status', 'all', this)">
-          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="2.5"/><circle cx="6" cy="14" r="2"/><circle cx="18" cy="14" r="2"/><circle cx="8.5" cy="6" r="1.8"/><circle cx="15.5" cy="6" r="1.8"/></svg></div>
-          <div class="filter-chip-label">Všechny</div>
+      <!-- Filtr: Pohlaví, Věk, Barva -->
+      <div class="kocky-filter-rows">
+        <div class="filter-row">
+          <span class="filter-row-label">Pohlaví</span>
+          <div class="filter-pills" id="filterSexRow">
+            <span class="filter-pill active" onclick="setKockyFilter('sex', null, this)">Vše</span>
+            <span class="filter-pill" onclick="setKockyFilter('sex', 'Kočka', this)">Kočka</span>
+            <span class="filter-pill" onclick="setKockyFilter('sex', 'Kocour', this)">Kocour</span>
+          </div>
         </div>
-        <div class="filter-chip" onclick="setKockyFilter('status', 'dostupna', this)">
-          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v11h14V10"/></svg></div>
-          <div class="filter-chip-label">K adopci</div>
+        <div class="filter-row">
+          <span class="filter-row-label">Věk</span>
+          <div class="filter-pills" id="filterAgeRow">
+            <span class="filter-pill active" onclick="setKockyFilter('age', null, this)">Vše</span>
+            <span class="filter-pill" onclick="setKockyFilter('age', 'kotata', this)">Koťata</span>
+            <span class="filter-pill" onclick="setKockyFilter('age', 'mlade', this)">Mladé</span>
+            <span class="filter-pill" onclick="setKockyFilter('age', 'dospele', this)">Dospělé</span>
+            <span class="filter-pill" onclick="setKockyFilter('age', 'seniori', this)">Senioři</span>
+          </div>
         </div>
-        <div class="filter-chip" onclick="setKockyFilter('status', 'zamluvena', this)">
-          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
-          <div class="filter-chip-label">Rezervace</div>
-        </div>
-        <div class="filter-chip" onclick="setKockyFilter('status', 'special', this)">
-          <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-          <div class="filter-chip-label">Speciální</div>
+        <div class="filter-row">
+          <span class="filter-row-label">Barva</span>
+          <div class="filter-pills" id="filterColorRow">
+            <span class="filter-pill active" onclick="setKockyFilter('color', null, this)">Vše</span>
+            <!-- Barvy se doplní dynamicky podle dat -->
+          </div>
         </div>
       </div>
 
@@ -7442,21 +7443,33 @@ function renderCats(filter) {
 
   loadCatsFromAPI().then(function() {
     grid.innerHTML = '';
+    populateColorFilter();
 
-    var status = (filter && filter.status) || 'all';
     var pool = catsData.filter(function(c) { return c.status !== 'adoptovana'; });
+    var filtered = pool;
 
-    var filtered;
-    if (status === 'all') {
-      filtered = pool;
-    } else if (status === 'dostupna') {
-      filtered = pool.filter(function(c) { return c.status === 'dostupna'; });
-    } else if (status === 'zamluvena') {
-      filtered = pool.filter(function(c) { return c.status === 'zamluvena'; });
-    } else if (status === 'special') {
-      filtered = pool.filter(function(c) { return c.badgeClass === 'special' || (c.handicap && c.handicap.length); });
-    } else {
-      filtered = pool;
+    // Pohlaví
+    if (filter && filter.sex) {
+      filtered = filtered.filter(function(c) { return c.sex === filter.sex; });
+    }
+    // Věk (parsuje číselnou hodnotu)
+    if (filter && filter.age) {
+      filtered = filtered.filter(function(c) {
+        var ageRaw = String(c.age || '').toLowerCase();
+        var n = parseInt(ageRaw, 10);
+        if (filter.age === 'kotata') return n < 1 || ageRaw.indexOf('mes') > -1 || ageRaw.indexOf('měs') > -1;
+        if (filter.age === 'mlade') return n >= 1 && n < 3;
+        if (filter.age === 'dospele') return n >= 3 && n < 8;
+        if (filter.age === 'seniori') return n >= 8;
+        return true;
+      });
+    }
+    // Barva
+    if (filter && filter.color) {
+      filtered = filtered.filter(function(c) {
+        var label = (window.colorMap && colorMap[c.color]) || c.color;
+        return label === filter.color;
+      });
     }
 
     if (filtered.length === 0) {
@@ -7520,12 +7533,13 @@ function toggleKockyFilter() {
   panel.classList.toggle('open');
 }
 
-var currentKockyFilter = { status: 'all' };
+var currentKockyFilter = { sex: null, age: null, color: null };
 
 function setKockyFilter(type, value, el) {
-  var group = el.closest('.kocky-filter-chips') || el.closest('.kocky-filter-group') || el.parentElement;
-  if (group) {
-    group.querySelectorAll('.filter-chip, .kocky-filter-tag').forEach(function(t) {
+  // Deaktivovat všechny pilulky ve stejném řádku
+  var row = el.closest('.filter-pills') || el.parentElement;
+  if (row) {
+    row.querySelectorAll('.filter-pill, .filter-chip, .kocky-filter-tag').forEach(function(t) {
       t.classList.remove('active');
     });
   }
@@ -7533,6 +7547,29 @@ function setKockyFilter(type, value, el) {
 
   currentKockyFilter[type] = value;
   renderCats(currentKockyFilter);
+}
+
+// Naplnění barev podle dat (volá se po načtení koček)
+function populateColorFilter() {
+  var row = document.getElementById('filterColorRow');
+  if (!row || !window.catsData) return;
+  if (row.dataset.populated === '1') return;
+
+  var colors = {};
+  catsData.forEach(function(c) {
+    if (c.status === 'adoptovana') return;
+    var label = (window.colorMap && colorMap[c.color]) || c.color;
+    if (label && !colors[label]) colors[label] = true;
+  });
+  var labels = Object.keys(colors).sort();
+  labels.forEach(function(label) {
+    var pill = document.createElement('span');
+    pill.className = 'filter-pill';
+    pill.textContent = label;
+    pill.onclick = function() { setKockyFilter('color', label, this); };
+    row.appendChild(pill);
+  });
+  row.dataset.populated = '1';
 }
 
 // Ulozeni zdroje odkud prisel uzivatel na detail kocky
@@ -9305,23 +9342,31 @@ function closeLandingAccount(e) {
       </div>
     </div>
 
-    <!-- Filter chipy s ikonami -->
-    <div class="kocky-filter-chips mobile-adoption-chips">
-      <div class="filter-chip active" onclick="filterMobileCats('all', this)">
-        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="2.5"/><circle cx="6" cy="14" r="2"/><circle cx="18" cy="14" r="2"/><circle cx="8.5" cy="6" r="1.8"/><circle cx="15.5" cy="6" r="1.8"/></svg></div>
-        <div class="filter-chip-label">Vše</div>
+    <!-- Filtr: Pohlaví / Věk / Barva -->
+    <div class="kocky-filter-rows mobile-adoption-filter">
+      <div class="filter-row">
+        <span class="filter-row-label">Pohlaví</span>
+        <div class="filter-pills" id="mobileFilterSex">
+          <span class="filter-pill active" onclick="setMobileFilter('sex', null, this)">Vše</span>
+          <span class="filter-pill" onclick="setMobileFilter('sex', 'Kočka', this)">Kočka</span>
+          <span class="filter-pill" onclick="setMobileFilter('sex', 'Kocour', this)">Kocour</span>
+        </div>
       </div>
-      <div class="filter-chip" onclick="filterMobileCats('dostupna', this)">
-        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v11h14V10"/></svg></div>
-        <div class="filter-chip-label">K adopci</div>
+      <div class="filter-row">
+        <span class="filter-row-label">Věk</span>
+        <div class="filter-pills" id="mobileFilterAge">
+          <span class="filter-pill active" onclick="setMobileFilter('age', null, this)">Vše</span>
+          <span class="filter-pill" onclick="setMobileFilter('age', 'kotata', this)">Koťata</span>
+          <span class="filter-pill" onclick="setMobileFilter('age', 'mlade', this)">Mladé</span>
+          <span class="filter-pill" onclick="setMobileFilter('age', 'dospele', this)">Dospělé</span>
+          <span class="filter-pill" onclick="setMobileFilter('age', 'seniori', this)">Senioři</span>
+        </div>
       </div>
-      <div class="filter-chip" onclick="filterMobileCats('zamluvena', this)">
-        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
-        <div class="filter-chip-label">Rezervace</div>
-      </div>
-      <div class="filter-chip" onclick="filterMobileCats('special', this)">
-        <div class="filter-chip-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <div class="filter-chip-label">Speciální</div>
+      <div class="filter-row">
+        <span class="filter-row-label">Barva</span>
+        <div class="filter-pills" id="mobileFilterColor">
+          <span class="filter-pill active" onclick="setMobileFilter('color', null, this)">Vše</span>
+        </div>
       </div>
     </div>
 
@@ -9381,15 +9426,37 @@ function closeLandingAccount(e) {
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Mobile - render kocky z catsData
-var currentMobileFilter = 'all';
+var currentMobileFilter = { sex: null, age: null, color: null };
 
-function filterMobileCats(status, el) {
-  currentMobileFilter = status;
-  if (el && el.parentElement) {
-    el.parentElement.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
-    el.classList.add('active');
+function setMobileFilter(type, value, el) {
+  var row = el.closest('.filter-pills') || el.parentElement;
+  if (row) {
+    row.querySelectorAll('.filter-pill').forEach(function(c) { c.classList.remove('active'); });
   }
+  el.classList.add('active');
+  currentMobileFilter[type] = value;
   renderMobileCats();
+}
+
+function populateMobileColorFilter() {
+  var row = document.getElementById('mobileFilterColor');
+  if (!row || !window.catsData) return;
+  if (row.dataset.populated === '1') return;
+
+  var colors = {};
+  catsData.forEach(function(c) {
+    if (c.status === 'adoptovana') return;
+    var label = (window.colorMap && colorMap[c.color]) || c.color;
+    if (label && !colors[label]) colors[label] = true;
+  });
+  Object.keys(colors).sort().forEach(function(label) {
+    var pill = document.createElement('span');
+    pill.className = 'filter-pill';
+    pill.textContent = label;
+    pill.onclick = function() { setMobileFilter('color', label, this); };
+    row.appendChild(pill);
+  });
+  row.dataset.populated = '1';
 }
 
 function renderMobileCats() {
@@ -9397,27 +9464,33 @@ function renderMobileCats() {
   if (!grid) return;
 
   loadCatsFromAPI().then(function() {
+    populateMobileColorFilter();
     var pool = catsData.filter(function(c) { return c.status !== 'adoptovana'; });
-    var cats;
-    if (currentMobileFilter === 'all') cats = pool;
-    else if (currentMobileFilter === 'dostupna') cats = pool.filter(function(c) { return c.status === 'dostupna'; });
-    else if (currentMobileFilter === 'zamluvena') cats = pool.filter(function(c) { return c.status === 'zamluvena'; });
-    else if (currentMobileFilter === 'special') cats = pool.filter(function(c) { return c.badgeClass === 'special' || (c.handicap && c.handicap.length); });
-    else cats = pool;
+    var cats = pool;
+
+    if (currentMobileFilter.sex) cats = cats.filter(function(c) { return c.sex === currentMobileFilter.sex; });
+    if (currentMobileFilter.age) cats = cats.filter(function(c) {
+      var ageRaw = String(c.age || '').toLowerCase();
+      var n = parseInt(ageRaw, 10);
+      if (currentMobileFilter.age === 'kotata') return n < 1 || ageRaw.indexOf('mes') > -1 || ageRaw.indexOf('měs') > -1;
+      if (currentMobileFilter.age === 'mlade') return n >= 1 && n < 3;
+      if (currentMobileFilter.age === 'dospele') return n >= 3 && n < 8;
+      if (currentMobileFilter.age === 'seniori') return n >= 8;
+      return true;
+    });
+    if (currentMobileFilter.color) cats = cats.filter(function(c) {
+      var label = (window.colorMap && colorMap[c.color]) || c.color;
+      return label === currentMobileFilter.color;
+    });
 
     // Maximálně 4 kočky na náhledu
     cats = cats.slice(0, 4);
 
-    // Pokud nic neodpovídá filtru, vzít první 4 dostupné
     if (cats.length === 0) {
-      cats = pool.slice(0, 4);
-    }
-    
-    if (cats.length === 0) {
-      grid.innerHTML = '<div style="color:rgba(255,255,255,0.5);text-align:center;grid-column:1/-1;">Zadne kocky</div>';
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:#8a8480;font-size:13px;">Žádné kočky neodpovídají filtru</div>';
       return;
     }
-    
+
     grid.innerHTML = cats.map(function(cat) {
       var badgeClass = '';
       var badgeText = '';
