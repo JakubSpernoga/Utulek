@@ -5339,7 +5339,7 @@ body.showing-admin .global-back-btn {
   right: auto !important;
   max-width: 1280px;
   margin: 0 auto !important;
-  padding: 32px 32px 80px !important;
+  padding: 110px 32px 80px !important;
 }
 
 /* Welcome heading */
@@ -5452,7 +5452,7 @@ body.showing-admin .global-back-btn {
 }
 @media (max-width: 768px) {
   #view-kocky .kocky-cats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-  #view-kocky .kocky-page { padding: 18px 14px 80px !important; }
+  #view-kocky .kocky-page { padding: 80px 14px 80px !important; }
   #view-kocky .kocky-welcome { font-size: 22px; margin-bottom: 14px; }
   #view-kocky .kocky-welcome small { font-size: 12px; }
 }
@@ -7647,19 +7647,26 @@ function setKockyFilter(type, value, el) {
   renderCats(currentKockyFilter);
 }
 
-// Naplnění barev podle dat (volá se po načtení koček)
+// Naplnění barev podle dat (volá se po načtení koček; vždy přegeneruje)
 function populateColorFilter() {
   var row = document.getElementById('filterColorRow');
   if (!row || !window.catsData) return;
-  if (row.dataset.populated === '1') return;
 
   var colors = {};
   catsData.forEach(function(c) {
-    if (c.status === 'adoptovana') return;
+    if (!c.color) return;
     var label = (window.colorMap && colorMap[c.color]) || c.color;
-    if (label && !colors[label]) colors[label] = true;
+    if (typeof label === 'string') label = label.trim();
+    if (label) colors[label] = true;
   });
   var labels = Object.keys(colors).sort();
+  if (!labels.length) return;
+  // Pokud už jsou všechny stejné jako naposled, nepřegenerovávej
+  var current = Array.from(row.querySelectorAll('.filter-pill')).slice(1).map(function(p){ return p.textContent; }).sort();
+  if (current.join('|') === labels.join('|')) return;
+
+  // Vyčistit kromě "Vše"
+  Array.from(row.querySelectorAll('.filter-pill')).slice(1).forEach(function(p){ p.remove(); });
   labels.forEach(function(label) {
     var pill = document.createElement('span');
     pill.className = 'filter-pill';
@@ -7667,7 +7674,6 @@ function populateColorFilter() {
     pill.onclick = function() { setKockyFilter('color', label, this); };
     row.appendChild(pill);
   });
-  row.dataset.populated = '1';
 }
 
 // Ulozeni zdroje odkud prisel uzivatel na detail kocky
@@ -9556,22 +9562,27 @@ function setMobileFilter(type, value, el) {
 function populateMobileColorFilter() {
   var row = document.getElementById('mobileFilterColor');
   if (!row || !window.catsData) return;
-  if (row.dataset.populated === '1') return;
 
   var colors = {};
   catsData.forEach(function(c) {
-    if (c.status === 'adoptovana') return;
+    if (!c.color) return;
     var label = (window.colorMap && colorMap[c.color]) || c.color;
-    if (label && !colors[label]) colors[label] = true;
+    if (typeof label === 'string') label = label.trim();
+    if (label) colors[label] = true;
   });
-  Object.keys(colors).sort().forEach(function(label) {
+  var labels = Object.keys(colors).sort();
+  if (!labels.length) return;
+  var current = Array.from(row.querySelectorAll('.filter-pill')).slice(1).map(function(p){ return p.textContent; }).sort();
+  if (current.join('|') === labels.join('|')) return;
+
+  Array.from(row.querySelectorAll('.filter-pill')).slice(1).forEach(function(p){ p.remove(); });
+  labels.forEach(function(label) {
     var pill = document.createElement('span');
     pill.className = 'filter-pill';
     pill.textContent = label;
     pill.onclick = function() { setMobileFilter('color', label, this); };
     row.appendChild(pill);
   });
-  row.dataset.populated = '1';
 }
 
 function renderMobileCats() {
