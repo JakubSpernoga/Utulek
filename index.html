@@ -5730,40 +5730,52 @@ body.show-views #view-cat-detail .cat-detail-hero-content {
   padding-top: 0 !important;
 }
 
-/* Tlačítka v hero: Chci adoptovat + Podpořit vedle sebe (i na mobilu) */
+/* Popis vlevo + tlačítka vedle popisu vpravo */
+#view-cat-detail .cat-detail-desc-row,
+body.show-views #view-cat-detail .cat-detail-desc-row {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 16px;
+  align-items: center;
+  margin: 16px 0 12px !important;
+}
+#view-cat-detail .cat-detail-desc-row .cat-detail-desc {
+  margin: 0 !important;
+}
+
+/* Tlačítka vedle popisu — stacked vertikálně (vlezou se i úzce) */
 #view-cat-detail .cat-detail-buttons,
 body.show-views #view-cat-detail .cat-detail-buttons {
   display: flex !important;
-  flex-direction: row !important;
+  flex-direction: column !important;
   flex-wrap: nowrap !important;
-  gap: 10px !important;
-  margin: 18px 0 8px !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  align-self: center;
 }
 #view-cat-detail .adopt-btn {
-  padding: 14px 16px !important;
+  padding: 12px 20px !important;
   background: #1a1a1a !important;
   border: 1px solid #1a1a1a !important;
   color: #fff !important;
   border-radius: 999px !important;
   justify-content: center;
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
   font-weight: 500;
   white-space: nowrap;
+  flex: 0 0 auto !important;
 }
 #view-cat-detail .adopt-btn:hover { background: #333 !important; }
 #view-cat-detail .sponsor-btn {
-  padding: 14px 16px !important;
+  padding: 12px 20px !important;
   background: #fff !important;
   border: 1px solid rgba(0,0,0,0.1) !important;
   color: #1a1a1a !important;
   border-radius: 999px !important;
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
   font-weight: 500;
   white-space: nowrap;
+  flex: 0 0 auto !important;
 }
 /* Skrýt SVG ikony u tlačítek (jen text vejde se lépe) */
 #view-cat-detail .cat-detail-buttons .adopt-btn svg,
@@ -8092,10 +8104,16 @@ function showCatDetail(catId, fromLanding) {
           '</div>' +
           '<div class="cat-detail-meta-row">' + detailPinSvg + '<span>Praha</span></div>' +
           (ageTextD ? '<div class="cat-detail-meta-row">' + detailCalSvg + '<span>' + ageTextD + (sexLine ? ' • ' + sexLine : '') + '</span></div>' : '') +
-          (cat.desc ? '<p class="cat-detail-desc">' + cat.desc + '</p>' : '') +
+          (cat.desc ?
+            '<div class="cat-detail-desc-row">' +
+              '<p class="cat-detail-desc">' + cat.desc + '</p>' +
+              buttonsHtml +
+            '</div>'
+            :
+            buttonsHtml
+          ) +
           handicapHtml +
           noticeHtml +
-          buttonsHtml +
         '</div>' +
       '</div>' +
       // Pod hero (od kraje ke kraji) — info, vlastnosti, galerie, příběh
