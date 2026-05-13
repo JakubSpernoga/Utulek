@@ -5375,54 +5375,86 @@ body.showing-admin .global-back-btn {
   width: 16px; height: 16px; stroke: #1a1a1a; fill: none; stroke-width: 2;
 }
 
-/* Filtr — 3 řádky pilulek (Pohlaví, Věk, Barva) */
-.kocky-filter-rows {
+/* Filtr — dropdown chipy */
+.filter-dropdowns {
   display: flex;
-  flex-direction: column;
   gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
 }
-.filter-row {
-  display: flex;
+.filter-dd {
+  position: relative;
+}
+.filter-dd-btn {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 999px;
+  padding: 10px 16px 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  font-family: inherit;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
-.filter-row-label {
-  font-size: 12px;
+.filter-dd-btn:hover { background: #faf7f4; }
+.filter-dd.open .filter-dd-btn { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.filter-dd.has-value:not(.open) .filter-dd-btn { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.filter-dd-label {
+  color: #8a8480;
+  font-weight: 500;
+}
+.filter-dd.open .filter-dd-label,
+.filter-dd.has-value:not(.open) .filter-dd-label { color: rgba(255,255,255,0.55); }
+.filter-dd-value {
   font-weight: 600;
   color: #1a1a1a;
-  flex-shrink: 0;
-  min-width: 70px;
-  letter-spacing: 0.3px;
 }
-.filter-pills {
-  display: flex;
-  gap: 6px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding-bottom: 2px;
+.filter-dd.open .filter-dd-value,
+.filter-dd.has-value:not(.open) .filter-dd-value { color: #fff; }
+.filter-dd-caret {
+  width: 12px; height: 12px;
+  stroke: #6b6b6b;
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.2s;
 }
-.filter-pills::-webkit-scrollbar { display: none; }
-.filter-pill {
+.filter-dd.open .filter-dd-caret,
+.filter-dd.has-value:not(.open) .filter-dd-caret { stroke: #fff; }
+.filter-dd.open .filter-dd-caret { transform: rotate(180deg); }
+.filter-dd-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
   background: #fff;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #6b6b6b;
+  border-radius: 14px;
+  padding: 6px;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  z-index: 50;
+  display: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.filter-dd.open .filter-dd-menu { display: block; }
+.filter-dd-opt {
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 13px;
   cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-.filter-pill:hover {
   color: #1a1a1a;
+  white-space: nowrap;
+  transition: background 0.15s;
 }
-.filter-pill.active {
-  background: #1a1a1a;
-  color: #fff;
+.filter-dd-opt:hover { background: #faf7f4; }
+.filter-dd-opt.active { background: #f5f1ec; font-weight: 600; }
+
+@media (max-width: 768px) {
+  .filter-dd-btn { padding: 9px 14px 9px 16px; font-size: 12px; }
+  .filter-dd-menu { min-width: 140px; }
 }
 
 /* Old filter elements — skryt */
@@ -6399,31 +6431,43 @@ body.showing-admin .global-back-btn {
         <h1 class="kocky-welcome">Vítejte</h1>
       </div>
 
-      <!-- Filtr: Pohlaví, Věk, Barva -->
-      <div class="kocky-filter-rows">
-        <div class="filter-row">
-          <span class="filter-row-label">Pohlaví</span>
-          <div class="filter-pills" id="filterSexRow">
-            <span class="filter-pill active" onclick="setKockyFilter('sex', null, this)">Vše</span>
-            <span class="filter-pill" onclick="setKockyFilter('sex', 'Kočka', this)">Kočka</span>
-            <span class="filter-pill" onclick="setKockyFilter('sex', 'Kocour', this)">Kocour</span>
+      <!-- Filtr: dropdown chipy -->
+      <div class="filter-dropdowns" id="kockyFilterDropdowns">
+        <div class="filter-dd" data-filter="sex">
+          <button class="filter-dd-btn" onclick="toggleFilterDd(this)">
+            <span class="filter-dd-label">Pohlaví</span>
+            <span class="filter-dd-value">Vše</span>
+            <svg class="filter-dd-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="filter-dd-menu">
+            <div class="filter-dd-opt active" onclick="pickFilterOpt(this, 'sex', null)">Vše</div>
+            <div class="filter-dd-opt" onclick="pickFilterOpt(this, 'sex', 'Kočka')">Kočka</div>
+            <div class="filter-dd-opt" onclick="pickFilterOpt(this, 'sex', 'Kocour')">Kocour</div>
           </div>
         </div>
-        <div class="filter-row">
-          <span class="filter-row-label">Věk</span>
-          <div class="filter-pills" id="filterAgeRow">
-            <span class="filter-pill active" onclick="setKockyFilter('age', null, this)">Vše</span>
-            <span class="filter-pill" onclick="setKockyFilter('age', 'kotata', this)">Koťata</span>
-            <span class="filter-pill" onclick="setKockyFilter('age', 'mlade', this)">Mladé</span>
-            <span class="filter-pill" onclick="setKockyFilter('age', 'dospele', this)">Dospělé</span>
-            <span class="filter-pill" onclick="setKockyFilter('age', 'seniori', this)">Senioři</span>
+        <div class="filter-dd" data-filter="age">
+          <button class="filter-dd-btn" onclick="toggleFilterDd(this)">
+            <span class="filter-dd-label">Věk</span>
+            <span class="filter-dd-value">Vše</span>
+            <svg class="filter-dd-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="filter-dd-menu">
+            <div class="filter-dd-opt active" onclick="pickFilterOpt(this, 'age', null)">Vše</div>
+            <div class="filter-dd-opt" onclick="pickFilterOpt(this, 'age', 'kotata')">Koťata</div>
+            <div class="filter-dd-opt" onclick="pickFilterOpt(this, 'age', 'mlade')">Mladé</div>
+            <div class="filter-dd-opt" onclick="pickFilterOpt(this, 'age', 'dospele')">Dospělé</div>
+            <div class="filter-dd-opt" onclick="pickFilterOpt(this, 'age', 'seniori')">Senioři</div>
           </div>
         </div>
-        <div class="filter-row">
-          <span class="filter-row-label">Barva</span>
-          <div class="filter-pills" id="filterColorRow">
-            <span class="filter-pill active" onclick="setKockyFilter('color', null, this)">Vše</span>
-            <!-- Barvy se doplní dynamicky podle dat -->
+        <div class="filter-dd" data-filter="color">
+          <button class="filter-dd-btn" onclick="toggleFilterDd(this)">
+            <span class="filter-dd-label">Barva</span>
+            <span class="filter-dd-value">Vše</span>
+            <svg class="filter-dd-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="filter-dd-menu" id="filterColorMenu">
+            <div class="filter-dd-opt active" onclick="pickFilterOpt(this, 'color', null)">Vše</div>
+            <!-- Barvy se doplní dynamicky -->
           </div>
         </div>
       </div>
@@ -7636,24 +7680,43 @@ function toggleKockyFilter() {
 
 var currentKockyFilter = { sex: null, age: null, color: null };
 
-function setKockyFilter(type, value, el) {
-  // Deaktivovat všechny pilulky ve stejném řádku
-  var row = el.closest('.filter-pills') || el.parentElement;
-  if (row) {
-    row.querySelectorAll('.filter-pill, .filter-chip, .kocky-filter-tag').forEach(function(t) {
-      t.classList.remove('active');
-    });
+// Zavření dropdownu při kliku jinam
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.filter-dd')) return;
+  document.querySelectorAll('.filter-dd.open').forEach(function(dd) { dd.classList.remove('open'); });
+});
+
+function toggleFilterDd(btn) {
+  var dd = btn.closest('.filter-dd');
+  var wasOpen = dd.classList.contains('open');
+  // Zavři všechny ostatní
+  document.querySelectorAll('.filter-dd.open').forEach(function(d) { d.classList.remove('open'); });
+  if (!wasOpen) dd.classList.add('open');
+}
+
+function pickFilterOpt(opt, type, value) {
+  var dd = opt.closest('.filter-dd');
+  var menu = opt.parentElement;
+  menu.querySelectorAll('.filter-dd-opt').forEach(function(o) { o.classList.remove('active'); });
+  opt.classList.add('active');
+
+  var label = opt.textContent.trim();
+  dd.querySelector('.filter-dd-value').textContent = label;
+  if (value === null || value === '') {
+    dd.classList.remove('has-value');
+  } else {
+    dd.classList.add('has-value');
   }
-  el.classList.add('active');
+  dd.classList.remove('open');
 
   currentKockyFilter[type] = value;
   renderCats(currentKockyFilter);
 }
 
-// Naplnění barev podle dat (volá se po načtení koček; vždy přegeneruje)
+// Naplnění barev v dropdownu podle dat
 function populateColorFilter() {
-  var row = document.getElementById('filterColorRow');
-  if (!row || !window.catsData) return;
+  var menu = document.getElementById('filterColorMenu');
+  if (!menu || !window.catsData) return;
 
   var colors = {};
   catsData.forEach(function(c) {
@@ -7664,18 +7727,16 @@ function populateColorFilter() {
   });
   var labels = Object.keys(colors).sort();
   if (!labels.length) return;
-  // Pokud už jsou všechny stejné jako naposled, nepřegenerovávej
-  var current = Array.from(row.querySelectorAll('.filter-pill')).slice(1).map(function(p){ return p.textContent; }).sort();
+  var current = Array.from(menu.querySelectorAll('.filter-dd-opt')).slice(1).map(function(p){ return p.textContent; }).sort();
   if (current.join('|') === labels.join('|')) return;
 
-  // Vyčistit kromě "Vše"
-  Array.from(row.querySelectorAll('.filter-pill')).slice(1).forEach(function(p){ p.remove(); });
+  Array.from(menu.querySelectorAll('.filter-dd-opt')).slice(1).forEach(function(p){ p.remove(); });
   labels.forEach(function(label) {
-    var pill = document.createElement('span');
-    pill.className = 'filter-pill';
-    pill.textContent = label;
-    pill.onclick = function() { setKockyFilter('color', label, this); };
-    row.appendChild(pill);
+    var opt = document.createElement('div');
+    opt.className = 'filter-dd-opt';
+    opt.textContent = label;
+    opt.onclick = function() { pickFilterOpt(this, 'color', label); };
+    menu.appendChild(opt);
   });
 }
 
@@ -9477,30 +9538,42 @@ function closeLandingAccount(e) {
       </div>
     </div>
 
-    <!-- Filtr: Pohlaví / Věk / Barva -->
-    <div class="kocky-filter-rows mobile-adoption-filter">
-      <div class="filter-row">
-        <span class="filter-row-label">Pohlaví</span>
-        <div class="filter-pills" id="mobileFilterSex">
-          <span class="filter-pill active" onclick="setMobileFilter('sex', null, this)">Vše</span>
-          <span class="filter-pill" onclick="setMobileFilter('sex', 'Kočka', this)">Kočka</span>
-          <span class="filter-pill" onclick="setMobileFilter('sex', 'Kocour', this)">Kocour</span>
+    <!-- Filtr: dropdown chipy -->
+    <div class="filter-dropdowns mobile-adoption-filter">
+      <div class="filter-dd" data-filter="sex">
+        <button class="filter-dd-btn" onclick="toggleFilterDd(this)">
+          <span class="filter-dd-label">Pohlaví</span>
+          <span class="filter-dd-value">Vše</span>
+          <svg class="filter-dd-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="filter-dd-menu">
+          <div class="filter-dd-opt active" onclick="pickMobileFilterOpt(this, 'sex', null)">Vše</div>
+          <div class="filter-dd-opt" onclick="pickMobileFilterOpt(this, 'sex', 'Kočka')">Kočka</div>
+          <div class="filter-dd-opt" onclick="pickMobileFilterOpt(this, 'sex', 'Kocour')">Kocour</div>
         </div>
       </div>
-      <div class="filter-row">
-        <span class="filter-row-label">Věk</span>
-        <div class="filter-pills" id="mobileFilterAge">
-          <span class="filter-pill active" onclick="setMobileFilter('age', null, this)">Vše</span>
-          <span class="filter-pill" onclick="setMobileFilter('age', 'kotata', this)">Koťata</span>
-          <span class="filter-pill" onclick="setMobileFilter('age', 'mlade', this)">Mladé</span>
-          <span class="filter-pill" onclick="setMobileFilter('age', 'dospele', this)">Dospělé</span>
-          <span class="filter-pill" onclick="setMobileFilter('age', 'seniori', this)">Senioři</span>
+      <div class="filter-dd" data-filter="age">
+        <button class="filter-dd-btn" onclick="toggleFilterDd(this)">
+          <span class="filter-dd-label">Věk</span>
+          <span class="filter-dd-value">Vše</span>
+          <svg class="filter-dd-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="filter-dd-menu">
+          <div class="filter-dd-opt active" onclick="pickMobileFilterOpt(this, 'age', null)">Vše</div>
+          <div class="filter-dd-opt" onclick="pickMobileFilterOpt(this, 'age', 'kotata')">Koťata</div>
+          <div class="filter-dd-opt" onclick="pickMobileFilterOpt(this, 'age', 'mlade')">Mladé</div>
+          <div class="filter-dd-opt" onclick="pickMobileFilterOpt(this, 'age', 'dospele')">Dospělé</div>
+          <div class="filter-dd-opt" onclick="pickMobileFilterOpt(this, 'age', 'seniori')">Senioři</div>
         </div>
       </div>
-      <div class="filter-row">
-        <span class="filter-row-label">Barva</span>
-        <div class="filter-pills" id="mobileFilterColor">
-          <span class="filter-pill active" onclick="setMobileFilter('color', null, this)">Vše</span>
+      <div class="filter-dd" data-filter="color">
+        <button class="filter-dd-btn" onclick="toggleFilterDd(this)">
+          <span class="filter-dd-label">Barva</span>
+          <span class="filter-dd-value">Vše</span>
+          <svg class="filter-dd-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="filter-dd-menu" id="mobileFilterColorMenu">
+          <div class="filter-dd-opt active" onclick="pickMobileFilterOpt(this, 'color', null)">Vše</div>
         </div>
       </div>
     </div>
@@ -9563,19 +9636,28 @@ function closeLandingAccount(e) {
 // Mobile - render kocky z catsData
 var currentMobileFilter = { sex: null, age: null, color: null };
 
-function setMobileFilter(type, value, el) {
-  var row = el.closest('.filter-pills') || el.parentElement;
-  if (row) {
-    row.querySelectorAll('.filter-pill').forEach(function(c) { c.classList.remove('active'); });
+function pickMobileFilterOpt(opt, type, value) {
+  var dd = opt.closest('.filter-dd');
+  var menu = opt.parentElement;
+  menu.querySelectorAll('.filter-dd-opt').forEach(function(o) { o.classList.remove('active'); });
+  opt.classList.add('active');
+
+  var label = opt.textContent.trim();
+  dd.querySelector('.filter-dd-value').textContent = label;
+  if (value === null || value === '') {
+    dd.classList.remove('has-value');
+  } else {
+    dd.classList.add('has-value');
   }
-  el.classList.add('active');
+  dd.classList.remove('open');
+
   currentMobileFilter[type] = value;
   renderMobileCats();
 }
 
 function populateMobileColorFilter() {
-  var row = document.getElementById('mobileFilterColor');
-  if (!row || !window.catsData) return;
+  var menu = document.getElementById('mobileFilterColorMenu');
+  if (!menu || !window.catsData) return;
 
   var colors = {};
   catsData.forEach(function(c) {
@@ -9586,16 +9668,16 @@ function populateMobileColorFilter() {
   });
   var labels = Object.keys(colors).sort();
   if (!labels.length) return;
-  var current = Array.from(row.querySelectorAll('.filter-pill')).slice(1).map(function(p){ return p.textContent; }).sort();
+  var current = Array.from(menu.querySelectorAll('.filter-dd-opt')).slice(1).map(function(p){ return p.textContent; }).sort();
   if (current.join('|') === labels.join('|')) return;
 
-  Array.from(row.querySelectorAll('.filter-pill')).slice(1).forEach(function(p){ p.remove(); });
+  Array.from(menu.querySelectorAll('.filter-dd-opt')).slice(1).forEach(function(p){ p.remove(); });
   labels.forEach(function(label) {
-    var pill = document.createElement('span');
-    pill.className = 'filter-pill';
-    pill.textContent = label;
-    pill.onclick = function() { setMobileFilter('color', label, this); };
-    row.appendChild(pill);
+    var opt = document.createElement('div');
+    opt.className = 'filter-dd-opt';
+    opt.textContent = label;
+    opt.onclick = function() { pickMobileFilterOpt(this, 'color', label); };
+    menu.appendChild(opt);
   });
 }
 
