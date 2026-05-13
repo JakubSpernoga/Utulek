@@ -5730,31 +5730,17 @@ body.show-views #view-cat-detail .cat-detail-hero-content {
   padding-top: 0 !important;
 }
 
-/* Popis vlevo + tlačítka vedle popisu vpravo */
-#view-cat-detail .cat-detail-desc-row,
-body.show-views #view-cat-detail .cat-detail-desc-row {
-  display: grid !important;
-  grid-template-columns: 1fr auto !important;
-  gap: 16px;
-  align-items: center;
-  margin: 16px 0 12px !important;
-}
-#view-cat-detail .cat-detail-desc-row .cat-detail-desc {
-  margin: 0 !important;
-}
-
-/* Tlačítka vedle popisu — stacked vertikálně (vlezou se i úzce) */
+/* Tlačítka vedle sebe (horizontálně) */
 #view-cat-detail .cat-detail-buttons,
 body.show-views #view-cat-detail .cat-detail-buttons {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 8px !important;
-  margin: 0 !important;
-  align-self: center;
+  gap: 10px !important;
+  margin: 16px 0 !important;
 }
 #view-cat-detail .adopt-btn {
-  padding: 12px 20px !important;
+  padding: 13px 22px !important;
   background: #1a1a1a !important;
   border: 1px solid #1a1a1a !important;
   color: #fff !important;
@@ -5763,11 +5749,11 @@ body.show-views #view-cat-detail .cat-detail-buttons {
   font-size: 13px !important;
   font-weight: 500;
   white-space: nowrap;
-  flex: 0 0 auto !important;
+  flex: 1 1 auto !important;
 }
 #view-cat-detail .adopt-btn:hover { background: #333 !important; }
 #view-cat-detail .sponsor-btn {
-  padding: 12px 20px !important;
+  padding: 13px 22px !important;
   background: #fff !important;
   border: 1px solid rgba(0,0,0,0.1) !important;
   color: #1a1a1a !important;
@@ -5775,7 +5761,7 @@ body.show-views #view-cat-detail .cat-detail-buttons {
   font-size: 13px !important;
   font-weight: 500;
   white-space: nowrap;
-  flex: 0 0 auto !important;
+  flex: 1 1 auto !important;
 }
 /* Skrýt SVG ikony u tlačítek (jen text vejde se lépe) */
 #view-cat-detail .cat-detail-buttons .adopt-btn svg,
@@ -8104,16 +8090,10 @@ function showCatDetail(catId, fromLanding) {
           '</div>' +
           '<div class="cat-detail-meta-row">' + detailPinSvg + '<span>Praha</span></div>' +
           (ageTextD ? '<div class="cat-detail-meta-row">' + detailCalSvg + '<span>' + ageTextD + (sexLine ? ' • ' + sexLine : '') + '</span></div>' : '') +
-          (cat.desc ?
-            '<div class="cat-detail-desc-row">' +
-              '<p class="cat-detail-desc">' + cat.desc + '</p>' +
-              buttonsHtml +
-            '</div>'
-            :
-            buttonsHtml
-          ) +
+          (cat.desc ? '<p class="cat-detail-desc">' + cat.desc + '</p>' : '') +
           handicapHtml +
           noticeHtml +
+          buttonsHtml +
         '</div>' +
       '</div>' +
       // Pod hero (od kraje ke kraji) — info, vlastnosti, galerie, příběh
