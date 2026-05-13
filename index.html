@@ -6163,26 +6163,22 @@ body.showing-admin .global-back-btn {
 .sidebar-left { display: none !important; }
 
 /* ======================================================
-   Plynulý scroll mezi sekcemi s MĚKKÝM snapem (proximity)
-   - skroluješ volně, ale když dojedeš blízko hranice,
-     stránka se měkce zafixuje. Trochu víc poscrolluješ
-     a posune se dál.
+   Plynulý scroll s vlastním měkkým snapem (řízeno JS)
+   - browser snap je vypnutý, snap se dělá animací v JS
    ====================================================== */
 .sections {
-  scroll-snap-type: y proximity !important;
-  scroll-behavior: smooth;
+  scroll-snap-type: none !important;
 }
 .section {
-  scroll-snap-align: start !important;
+  scroll-snap-align: none !important;
   scroll-snap-stop: normal !important;
 }
 .magazine {
-  scroll-snap-type: y proximity !important;
-  scroll-behavior: smooth;
+  scroll-snap-type: none !important;
 }
 .magazine .article,
 .magazine .cover {
-  scroll-snap-align: start !important;
+  scroll-snap-align: none !important;
   scroll-snap-stop: normal !important;
 }
 
@@ -7643,12 +7639,11 @@ function scrollPrev() {
 }
 
 if (sectionsEl) {
-  // Plynulá detekce sekce v zobrazení — switch téma jakmile je nová sekce z větší poloviny vidět
+  // 1) Plynulá detekce sekce v zobrazení (pro změnu tématu)
   var ticking = false;
   function detectSection() {
     var scrollTop = sectionsEl.scrollTop;
     var height = sectionsEl.clientHeight;
-    // Použijeme "polovinu" jako trigger point: která sekce je u poloviny viewportu, je aktivní
     var newSection = Math.floor((scrollTop + height * 0.5) / height);
     newSection = Math.max(0, Math.min(sectionEls.length - 1, newSection));
     if (newSection !== currentSection) {
@@ -7657,12 +7652,52 @@ if (sectionsEl) {
     }
     ticking = false;
   }
+
+  // 2) MĚKKÝ SNAP — když přestaneš scrollovat blízko hranice, jemně domotá
+  var snapTimeout;
+  var isSnapping = false;
+  function softSnapTo(target, duration) {
+    isSnapping = true;
+    var start = sectionsEl.scrollTop;
+    var change = target - start;
+    var startTime = performance.now();
+    function step(now) {
+      var t = Math.min((now - startTime) / duration, 1);
+      // easeOutCubic — pomalu se zastaví
+      var eased = 1 - Math.pow(1 - t, 3);
+      sectionsEl.scrollTop = start + change * eased;
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        isSnapping = false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function maybeSnap() {
+    if (isSnapping) return;
+    var scrollTop = sectionsEl.scrollTop;
+    var height = sectionsEl.clientHeight;
+    var nearest = Math.round(scrollTop / height);
+    nearest = Math.max(0, Math.min(sectionEls.length - 1, nearest));
+    var target = nearest * height;
+    var distance = Math.abs(scrollTop - target);
+    // Snap jen když jsi blízko (do 25 % výšky viewportu) — jinak nech být
+    if (distance > 1 && distance < height * 0.25) {
+      softSnapTo(target, 700); // 700 ms jemná animace
+    }
+  }
+
   sectionsEl.addEventListener('scroll', function() {
     if (!ticking) {
       requestAnimationFrame(detectSection);
       ticking = true;
     }
+    clearTimeout(snapTimeout);
+    snapTimeout = setTimeout(maybeSnap, 160);
   }, { passive: true });
+
   updateTheme(0);
 }
 
