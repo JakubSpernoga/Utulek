@@ -5377,21 +5377,28 @@ body.showing-admin .global-back-btn {
 
 /* Filter CHIPY s ikonami (jako ve vzoru) */
 #view-kocky .kocky-filter-chips {
-  display: flex;
-  gap: 16px;
+  display: flex !important;
+  gap: 12px;
   margin-bottom: 24px;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.kocky-filter-chips {
+  display: flex !important;
+  gap: 12px;
+  flex-wrap: nowrap !important;
+  width: 100%;
 }
 .filter-chip {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
   align-items: center;
   cursor: pointer;
-  gap: 8px;
-  flex: 1;
-  min-width: 60px;
-  max-width: 90px;
+  gap: 6px;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
   transition: transform 0.15s;
 }
 .filter-chip:hover { transform: translateY(-2px); }
@@ -5903,7 +5910,7 @@ body.showing-admin .global-back-btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin: 20px 0 20px;
   }
   .mobile-adoption .mobile-adoption-welcome {
     font-size: 22px;
@@ -5911,20 +5918,21 @@ body.showing-admin .global-back-btn {
     color: #1a1a1a;
   }
   .mobile-adoption .mobile-adoption-bag {
-    width: 42px; height: 42px;
-    background: #fff;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .mobile-adoption .mobile-adoption-bag svg {
-    width: 18px; height: 18px; stroke: #1a1a1a; fill: none; stroke-width: 1.8;
+    display: none !important;
   }
 
-  /* Filter chips na mobilu */
+  /* Filter chips na mobilu — vždy do řádku */
   .mobile-adoption .mobile-adoption-chips {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    justify-content: space-between !important;
+  }
+  .mobile-adoption .mobile-adoption-chips .filter-chip {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
   }
   .mobile-adoption .mobile-adoption-chips .filter-chip-icon {
     width: 46px; height: 46px;
@@ -5933,7 +5941,11 @@ body.showing-admin .global-back-btn {
     width: 18px; height: 18px;
   }
   .mobile-adoption .mobile-adoption-chips .filter-chip-label {
-    font-size: 11px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   .mobile-adoption .mobile-cat-grid {
