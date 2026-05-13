@@ -6163,6 +6163,50 @@ body.showing-admin .global-back-btn {
 .sidebar-left { display: none !important; }
 
 /* ======================================================
+   Plynulý scroll mezi sekcemi (vypnout snap)
+   + plynulá změna barev při přechodu
+   ====================================================== */
+.sections {
+  scroll-snap-type: none !important;
+  scroll-behavior: smooth;
+}
+.section {
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
+}
+.magazine {
+  scroll-snap-type: none !important;
+  scroll-behavior: smooth;
+}
+.magazine .article,
+.magazine .cover {
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
+}
+
+/* Plynulé přechody barev tématu */
+.header,
+.header .logo,
+.header .nav a,
+.header .header-right svg,
+.header .header-right svg path,
+.header .logo-icon svg {
+  transition: color 0.45s ease, background 0.45s ease, stroke 0.45s ease, fill 0.45s ease;
+}
+.arrows svg,
+.sidebar-right .number,
+.sidebar-right .line {
+  transition: stroke 0.45s ease, color 0.45s ease, background 0.45s ease, width 0.45s ease;
+}
+.section,
+.section .content,
+.section h1, .section h2,
+.section .subtitle,
+.section p {
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* ======================================================
    Příběhy — reálná fotka v rámečku vedle textu (jako karta)
    ====================================================== */
 .magazine .article {
@@ -7597,19 +7641,26 @@ function scrollPrev() {
 }
 
 if (sectionsEl) {
-  var scrollTimeout;
+  // Plynulá detekce sekce v zobrazení — switch téma jakmile je nová sekce z větší poloviny vidět
+  var ticking = false;
+  function detectSection() {
+    var scrollTop = sectionsEl.scrollTop;
+    var height = sectionsEl.clientHeight;
+    // Použijeme "polovinu" jako trigger point: která sekce je u poloviny viewportu, je aktivní
+    var newSection = Math.floor((scrollTop + height * 0.5) / height);
+    newSection = Math.max(0, Math.min(sectionEls.length - 1, newSection));
+    if (newSection !== currentSection) {
+      currentSection = newSection;
+      updateTheme(newSection);
+    }
+    ticking = false;
+  }
   sectionsEl.addEventListener('scroll', function() {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function() {
-      var scrollTop = sectionsEl.scrollTop;
-      var height = sectionsEl.clientHeight;
-      var newSection = Math.round(scrollTop / height);
-      if (newSection !== currentSection) {
-        currentSection = newSection;
-        updateTheme(newSection);
-      }
-    }, 50);
-  });
+    if (!ticking) {
+      requestAnimationFrame(detectSection);
+      ticking = true;
+    }
+  }, { passive: true });
   updateTheme(0);
 }
 
